@@ -2,35 +2,29 @@
 layout: default
 ---
 
-<div id="bio">
-  <h1><a href="http://github.com/mlr" title="Ronnie Miller - Software Developer">Ronnie Miller | Software Developer</a></h1>
+<div id="about">
+  <p>I'm a highly versatile freelance web/software developer with over seven years of professional experience.</p>
+  <a href="#more" class="showmore">Read More</a>
 
-  <img src="/images/etc/photo.png" width="275" height="200" alt="Ronnie Miller" />
-  <div id="profiles">
-    <a href="http://www.linkedin.com/in/ronniemlr" target="_blank" id="linkedin">Contact me on LinkedIn</a>
-  </div>
-
+  <h3>Prossional Skills</h3>
   <ul>
-    <li class="narrow">I'm a highly versatile freelance web/software developer with over six years of professional experience. I am skilled in:
+    <li><a href="http://ruby-lang.org/" target="blank">Ruby</a> and <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a></li>
+    <li>Objective-C and various <a href="http://developer.apple.com/technologies/ios/" target="blank">iOS frameworks</a></li>
+    <li><a href="http://php.net/" target="blank">PHP</a>, <a href="http://mysql.org/" target="blank">MySQL</a>, <a href="http://wordpress.org/" target="blank">WordPress</a>, and <a href="http://codeigniter.com/" target="blank">CodeIgniter</a></li>
+    <li>Front-end technologies such as:
       <ul>
-        <li><a href="http://ruby-lang.org/" target="blank">Ruby</a> and <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a></li>
-        <li>Objective-C and various <a href="http://developer.apple.com/technologies/ios/" target="blank">iOS frameworks</a></li>
-        <li><a href="http://php.net/" target="blank">PHP</a>, <a href="http://mysql.org/" target="blank">MySQL</a>, <a href="http://wordpress.org/" target="blank">WordPress</a>, and <a href="http://codeigniter.com/" target="blank">CodeIgniter</a></li>
-        <li>Front-end technologies such as:
-          <ul>
-            <li>HTML5 &amp; CSS3 including pixel perfect PSD conversion</li>
-            <li>JavaScript including frameworks like <a href="http://jquery.com/" target="blank">jQuery</a> and <a href="http://jqueryui.com/" target="blank">jQuery UI</a></li>
-            <li>Cross browser support for all major browser vendors</li>
-          </ul>
-        </li>
-        <li>I'm an API geek. I love using APIs like Google's <a href="https://developers.google.com/chart/" target="blank">Charts</a>, <a href="https://developers.google.com/maps/documentation/javascript/" target="blank">Maps</a>, and <a href="https://developers.google.com/maps/documentation/directions/" target="blank">Directions</a>. Payment gateways, social APIs, you name it.
+        <li>HTML5 &amp; CSS3 including pixel perfect PSD conversion</li>
+        <li>JavaScript including frameworks like <a href="http://jquery.com/" target="blank">jQuery</a> and <a href="http://jqueryui.com/" target="blank">jQuery UI</a></li>
+        <li>Cross browser support for all major browser vendors</li>
       </ul>
     </li>
+    <li>Third-party APIs such as Google <a href="https://developers.google.com/chart/" target="blank">charts</a> and <a href="https://developers.google.com/maps/documentation/javascript/" target="blank">maps</a>, <a href="https://dev.twitter.com/" target="_blank">Twitter API</a>, <a href="http://developer.github.com/" target="_blank">Github API</a>, etc.
+    <li>Payment gateway integration including <a href="https://stripe.com/" target="_blank">Stripe</a>, <a href="http://www.authorize.net/" target="_blank">Authorize.net</a> and PayPal.</li>
   </ul>
 </div>
 
 <!-- <div id="blog">
-  <h1>Blog Posts</h1>
+  <h3>Blog Posts</h3>
   <ul class="posts">
     {% for post in site.posts %}
       <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
@@ -38,42 +32,8 @@ layout: default
   </ul>
 </div> -->
 
-<div id="activity">
-  <div id="github">
-    <h3>Open Source Projects</h3>
-    <p>From time to time I release projects I've written for work or just for fun. You can view them all on <a href="https://github.com/mlr/" title="Ronnie Miller's GitHub Profile">my GitHub profile</a>.</p>
-
-    <div id="repos">
-      <div class="repo github odd sc-scraper">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/sc-scraper">sc scraper</a></h4>
-        <p>A command-line ruby script to scrape HTML and download SoundCloud files.</p>
-      </div>
-      <div class="repo github even float">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/float">float</a></h4>
-        <p>a jQuery plugin that makes an input field only allow a float or integer value.</p>
-      </div>
-      <div class="repo github odd selecta">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/selecta">selecta</a></h4>
-        <p>a jQuery plugin that progressively enhances HTML &lt;select&gt; tags.</p>
-      </div>
-      <div class="repo github even wpification">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/WPification">WPification</a></h4>
-        <p>A small set of helper functions for making common WordPress tasks easier.</p>
-      </div>
-      <div class="repo github odd mysqldb">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/mysqlDB">mysqlDB</a></h4>
-        <p>An abstraction class for PHP's mysqli library. Sanitizes inputs, prepares statements, and more.</p>
-      </div>
-      <div class="repo github even vslider">
-        <div class="tape"></div>
-        <h4><a href="https://github.com/mlr/vslider">vslider</a></h4>
-        <p>A simple content slider that allows you to make a list of elements scrollable with animation.</p>
-      </div>
-    </div>
-  </div>
+<div id="github">
+  <h3>Open Source Projects</h3>
+  <p>Occasionally I release projects I've written for work or just for fun. You can view them all on <a href="https://github.com/mlr/" title="Ronnie Miller's GitHub Profile">my GitHub profile</a>.</p>
+  {% github mlr %}
 </div>

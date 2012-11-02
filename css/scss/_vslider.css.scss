@@ -1,0 +1,79 @@
+body.jquery_vslider {
+  #wrapper {
+    width: 500px;
+  }
+
+  h1 {
+    margin: 15px auto;
+    text-align: center;
+    width: 350px;
+  }
+
+  #items {
+    box-shadow: 0px 0px 10px #aaa;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border: 3px solid #135;
+    border-radius: 10px;
+
+    background-image: linear-gradient(bottom, rgb(255,255,255) 100%, rgb(224,224,224) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(255,255,255) 100%, rgb(224,224,224) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 100%, rgb(224,224,224) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 100%, rgb(224,224,224) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 100%, rgb(224,224,224) 0%);
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(1, rgb(255,255,255)),
+      color-stop(0, rgb(224,224,224))
+    );
+
+    margin: 25px auto 15px;
+    width: 350px;
+  }
+
+  #items ul {
+    overflow: hidden;
+    height: 320px;
+    width: 350px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  #items ul li {
+    font-weight: bold;
+    list-style: none;
+    margin: 0px;
+  }
+
+  #items ul li a {
+    text-decoration: none;
+    padding: 15px 25px;
+    line-height: 50px;
+    font-size: 24px;
+    display: block;
+    height: 50px;
+    outline: 0px;
+    color: #555;
+  }
+
+  #items ul li a:hover {
+    color: #000;
+  }
+
+  #items ul li.last { border-bottom: none; }
+
+  .vslider_buttons a {
+    text-shadow: 0px 0px 1px #ddd;
+    margin-top: 25px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 25px;
+    display: block;
+    float: left;
+    height: 30px;
+    width: 50px;
+    color: #666;
+  }
+}
