@@ -1,7 +1,36 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-language" content="en-us" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="Ronnie Miller is a freelance software developer based in the bay area CA. He spends his time writing database driven web applications using Ruby on Rails and mobile applications using iOS." />
+  <meta name="keywords" content="Ronnie Miller, consultant, freelancer, web developer, software developer, mysql, ruby, ruby on rails, jquery, iOS" />
+  <title>Ronnie Miller &ndash; Web &amp; Software Developer</title>
+  <link rel="stylesheet" type="text/css" href="css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="css/syntax.css" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Doppio+One" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="js/global.js"></script>
+</head>
 
+<body>
+<div id="wrapper">
+  <div id="header">
+    <h1>
+      <a href="/" title="Ronnie Miller - Software Developer">
+        Ronnie Miller
+        <span>Software Developer</span>
+      </a>
+    </h1>
+
+    <div id="profiles">
+      <a href="http://www.linkedin.com/in/ronniemlr" id="linkedin">Contact me on LinkedIn</a>
+    </div>
+  </div>
+
+  <div id="content">
 <div id="about">
   <p>I'm a highly versatile freelance web/software developer with over seven years of professional experience.</p>
   <a href="#more" class="showmore">Read More</a>
@@ -26,14 +55,79 @@ layout: default
 <!-- <div id="blog">
   <h3>Blog Posts</h3>
   <ul class="posts">
-    {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
+    
+      <li><span>04 Sep 2012</span> &raquo; <a href="/2012/09/04/example-post.html">Example post</a></li>
+    
   </ul>
 </div> -->
 
 <div id="github">
   <h3>Open Source Projects</h3>
   <p>Occasionally I release projects I've written for work or just for fun. You can view them all on <a href="https://github.com/mlr/" title="Ronnie Miller's GitHub Profile">my GitHub profile</a>.</p>
-  {% github mlr %}
+  
+      <div id="repos">
+              <div>
+        <h4><a href="https://github.com/mlr/vslider" target="_blank">vslider</a></h4>
+        <p>A simple content slider that allows you to make a list of elements scrollable with animation.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/mysqlDB" target="_blank">mysqlDB</a></h4>
+        <p>An abstraction class for PHP&apos;s mysqli library. Sanitizes inputs, prepares statements, and more.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/WPification" target="_blank">WPification</a></h4>
+        <p>Helper functions for making common WordPress tasks easier.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/selecta" target="_blank">selecta</a></h4>
+        <p>jQuery plugin that progressively enhances HTML &lt;select&gt; tags.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/float" target="_blank">float</a></h4>
+        <p>jQuery plugin that makes an input field only allow a float or integer value.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/sc-scraper" target="_blank">sc-scraper</a></h4>
+        <p>Command-line ruby script to scrape HTML and download SoundCloud files.</p>
+      </div>
+
+      <div>
+        <h4><a href="https://github.com/mlr/mlr.github.com" target="_blank">mlr.github.com</a></h4>
+        <p>Source code for new jekyll-based website for my portfolio, projects, and blog.</p>
+      </div>
+
+      </div>
+
 </div>
+
+  </div>
+
+  <div id="footer">
+    <div>
+      <p>Ronnie Miller</p>
+      <p><a href="mailto:me@ronniemlr.com">me@ronniemlr.com</a></p>
+    </div>
+    <div>
+      <p><a href="http://github.com/mlr">github:&nbsp; mlr</a></p>
+      <p><a href="http://twitter.com/ronniemlr">twitter: @ronniemlr</a></p>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-19173573-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+</html>
