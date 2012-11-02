@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Ronnie Miller</title>
+ <link href="http://mlr.github.com/atom.xml" rel="self"/>
+ <link href="http://mlr.github.com/"/>
+ <updated>2012-11-02T03:20:11-07:00</updated>
+ <id>http://mlr.github.com/</id>
+ <author>
+   <name>Ronnie Miller</name>
+   <email>me@ronniemlr.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Example post</title>
+   <link href="http://mlr.github.com/2012/09/04/example-post.html"/>
+   <updated>2012-09-04T00:00:00-07:00</updated>
+   <id>http://mlr.github.com/2012/09/04/example-post</id>
+   <content type="html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
