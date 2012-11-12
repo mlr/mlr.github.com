@@ -85,7 +85,7 @@ module Jekyll
     end
 
     def <=>(repo)
-      @pushed_at <=> repo.pushed_at
+      repo.pushed_at <=> @pushed_at
     end
   end
 end
