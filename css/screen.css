@@ -37,7 +37,7 @@ html, body {
   height: 100%; }
 
 body {
-  background: #fefefe;
+  background: #fefefe url(../images/layout/background.png);
   font-family: "Helvetica Neue", "Myriad Pro", Helvetica, Arial, sans-serif;
   font-weight: 300;
   text-align: center;
