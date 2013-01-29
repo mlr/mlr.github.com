@@ -37,13 +37,13 @@ html, body {
   height: 100%; }
 
 body {
-  background: url(/images/layout/background.gif);
+  background: #fefefe;
   font-family: "Helvetica Neue", "Myriad Pro", Helvetica, Arial, sans-serif;
   font-weight: 300;
   text-align: center;
   font-size: 16px;
   margin: 0px;
-  color: #222; }
+  color: #444; }
 
 h1, h2, h3 {
   font-family: Georgia, Helvetica, serif;
@@ -58,7 +58,7 @@ h1 {
   margin-top: 0px; }
   h1 a {
     text-decoration: none;
-    color: #333 !important; }
+    color: #333333 !important; }
 
 h2 {
   font-family: Verdana, Arial, sans-serif;
@@ -75,7 +75,7 @@ h4 {
   margin-bottom: 12px; }
 
 img {
-  border: 1px solid #555; }
+  border: 1px solid #555555; }
 
 a {
   text-decoration: none;
@@ -86,43 +86,17 @@ a {
 #wrapper {
   padding: 15px 0px 40px;
   text-align: left;
-  margin: 0px auto;
-  width: 880px; }
+  margin: 25px auto;
+  width: 480px; }
 
-#header {
-  overflow: hidden;
-  height: 87px; }
-  #header h1, #header div {
-    display: inline;
-    float: left; }
-  #header h1 {
-    background: url("/images/layout/card-logo-sm.png") no-repeat 0px 50%;
-    padding-left: 80px;
-    padding-top: 20px;
-    line-height: 24px;
-    text-align: left;
-    font-size: 32px;
-    height: 60px;
-    width: 188px; }
-    #header h1 span {
-      color: #666;
-      display: block;
-      padding-left: 1px;
-      font-family: 'Lucida Grande', Arial, sans-serif;
-      font-size: 16px; }
-  #header #profiles {
-    margin-top: 47px;
-    float: right; }
-    #header #profiles a {
-      text-decoration: none;
-      padding-left: 22px;
-      padding-top: 3px;
-      font-size: 13px;
-      display: block;
-      height: 16px;
-      color: #069; }
-      #header #profiles a#linkedin {
-        background: url("/images/icons/linkedin.png") no-repeat 0px 50%; }
+#about {
+  margin-bottom: 25px;
+  text-align: center; }
+  #about h1 {
+    margin-bottom: 10px;
+    font-family: "Rambla", "Helvetica Neue", Helvetica;
+    font-weight: bold;
+    font-size: 36px; }
 
 #content ul {
   margin-top: 10px;
@@ -131,71 +105,29 @@ a {
   #content ul li {
     margin-bottom: 10px;
     line-height: 22px; }
-#content .showmore {
-  position: absolute;
-  right: 17px;
-  top: 16px; }
-
-#blog, #about, #github {
-  background: #FFF;
-  border: 1px solid #BBB;
-  padding: 15px 20px 8px;
-  width: 838px;
-  box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px; }
-  #blog p, #about p, #github p {
-    margin-bottom: 8px; }
 
 #about {
-  height: 24px;
-  overflow: hidden;
   position: relative; }
   #about h3 {
     margin-top: 25px; }
 
-#github h3 {
-  background: url("/images/icons/github.png") no-repeat 0px 1px;
-  padding-left: 25px;
-  padding-top: 2px;
-  height: 20px; }
-#github #repos {
-  margin-top: 30px; }
-  #github #repos > div {
-    border-bottom: 1px solid #ccc;
-    position: relative;
-    overflow: hidden;
-    margin-top: 10px;
-    padding: 0px 3px;
-    line-height: 13px; }
-    #github #repos > div h4 {
-      width: 150px; }
-      #github #repos > div h4 a {
-        text-decoration: none;
-        margin-bottom: 5px;
-        color: #333; }
-    #github #repos > div h4, #github #repos > div p {
-      display: inline;
-      float: left; }
-    #github #repos > div p {
-      margin-top: 1px;
-      color: #555; }
-    #github #repos > div.last, #github #repos > div:last-child {
-      border: none; }
-
-#footer {
-  padding-top: 15px;
-  border-top: 1px dotted #aaa;
-  font-size: 12px;
-  overflow: hidden;
-  clear: both; }
-  #footer > div {
+ul#profiles {
+  margin: 0 auto;
+  width: 168px; }
+  ul#profiles li {
+    list-style: none;
     display: inline;
-    float: left;
-    width: 150px;
-    color: #666; }
-    #footer > div p {
-      margin-bottom: 7px; }
-  #footer a {
-    color: #666; }
+    float: left; }
+    ul#profiles li a {
+      background-repeat: no-repeat;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      padding: 10px;
+      height: 64px;
+      width: 64px; }
+    ul#profiles li.github a {
+      background-image: url(../images/icons/github.png); }
+    ul#profiles li.twitter a {
+      background-image: url(../images/icons/twitter.png); }

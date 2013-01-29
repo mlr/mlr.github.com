@@ -3,55 +3,19 @@
 #wrapper {
   padding: 15px 0px 40px;
   text-align: left;
-  margin: 0px auto;
-  width: 880px;
+  margin: 25px auto;
+  width: 480px;
 }
 
-#header {
-  overflow: hidden;
-  height: 87px;
-
-  h1, div {
-    display: inline;
-    float: left;
-  }
+#about {
+  margin-bottom: 25px;
+  text-align: center;
 
   h1 {
-    background: url('/images/layout/card-logo-sm.png') no-repeat 0px 50%;
-    padding-left: 80px;
-    padding-top: 20px;
-    line-height: 24px;
-    text-align: left;
-    font-size: 32px;
-    height: 60px;
-    width: 188px;
-
-    span {
-      color: #666;
-      display: block;
-      padding-left: 1px;
-      font-family: 'Lucida Grande', Arial, sans-serif;
-      font-size: 16px;
-    }
-  }
-
-  #profiles {
-    margin-top: 47px;
-    float: right;
-
-    a {
-      text-decoration: none;
-      padding-left: 22px;
-      padding-top: 3px;
-      font-size: 13px;
-      display: block;
-      height: 16px;
-      color: #069;
-
-      &#linkedin {
-        background: url('/images/icons/linkedin.png') no-repeat 0px 50%;
-      }
-    }
+    margin-bottom: 10px;
+    font-family: "Rambla", "Helvetica Neue", Helvetica;
+    font-weight: bold;
+    font-size: 36px;
   }
 }
 
@@ -66,21 +30,9 @@
       line-height: 22px;
     }
   }
-
-  .showmore {
-    position: absolute;
-    right: 17px;
-    top: 16px;
-  }
-}
-
-#blog, #about, #github {
-  @include box;
 }
 
 #about {
-  height: 24px;
-  overflow: hidden;
   position: relative;
 
   h3 {
@@ -88,71 +40,27 @@
   }
 }
 
-#github {
-  h3 {
-    background: url('/images/icons/github.png') no-repeat 0px 1px;
-    padding-left: 25px;
-    padding-top: 2px;
-    height: 20px;
-  }
+ul#profiles {
+  margin: 0 auto;
+  width: 168px;
 
-  #repos {
-    margin-top: 30px;
-
-    & > div {
-      border-bottom: 1px solid #ccc;
-      position: relative;
-      overflow: hidden;
-      margin-top: 10px;
-      padding: 0px 3px;
-      line-height: 13px;
-
-      h4 {
-        width: 150px;
-
-        a {
-          text-decoration: none;
-          margin-bottom: 5px;
-          color: #333;
-        }
-      }
-
-      h4, p {
-        display: inline;
-        float: left;
-      }
-
-      p {
-        margin-top: 1px;
-        color: #555;
-      }
-
-      &.last, &:last-child {
-        border: none;
-      }
-    } // repo
-  }
-} //github
-
-#footer {
-  padding-top: 15px;
-  border-top: 1px dotted #aaa;
-  font-size: 12px;
-  overflow: hidden;
-  clear: both;
-
-  & > div {
+  li {
+    list-style: none;
     display: inline;
     float: left;
-    width: 150px;
-    color: #666;
 
-    p {
-      margin-bottom: 7px;
+    a {
+      background-repeat: no-repeat;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      padding: 10px;
+      height: 64px;
+      width: 64px;
     }
-  }
 
-  a {
-    color: #666;
+    &.github  a { background-image: url(../images/icons/github.png);  }
+    &.twitter a { background-image: url(../images/icons/twitter.png); }
   }
 }
