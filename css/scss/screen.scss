@@ -1,66 +1,78 @@
-@import "core";
+body {
+  background: #fefefe;
+}
+
+@font-face {
+    font-family: 'Mono Social Icons Font';
+    src: url('MonoSocialIconsFont-1.10.eot');
+    src: url('MonoSocialIconsFont-1.10.eot?#iefix') format('embedded-opentype'),
+         url('MonoSocialIconsFont-1.10.woff') format('woff'),
+         url('MonoSocialIconsFont-1.10.ttf') format('truetype'),
+         url('MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont') format('svg');
+    src: url('MonoSocialIconsFont-1.10.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.symbol, a.symbol:before {
+  font-family: 'Mono Social Icons Font';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #217fbb;
+  text-decoration: none;
+  font-weight: bold;
+}
 
 #wrapper {
-  padding: 15px 0px 40px;
-  text-align: left;
+  padding: 15px 0px 0px;
   margin: 25px auto;
-  width: 480px;
-}
-
-#about {
-  margin-bottom: 25px;
-  text-align: center;
+  text-align: left;
+  width: 70%;
 
   h1 {
-    margin-bottom: 10px;
-    font-family: "Rambla", "Helvetica Neue", Helvetica;
-    font-weight: bold;
-    font-size: 36px;
+    font-family: "Helvetica Neue", Helvetica;
+    margin-bottom: 25px;
+    font-size: 24px;
   }
 }
 
-#content {
-  ul {
-    margin-top: 10px;
-    list-style: disc;
-    margin-left: 25px;
+#container {
+  p {
+    font-family: "Helvetica Neue", Helvetica;
+    text-align: left;
+    line-height: 30px;
 
-    li {
-      margin-bottom: 10px;
-      line-height: 22px;
+    &:first-child {
+      margin-top: 0px;
     }
-  }
-}
 
-#about {
-  position: relative;
-
-  h3 {
-    margin-top: 25px;
+    &:last-child {
+      margin-bottom: 0px;
+    }
   }
 }
 
 ul#profiles {
-  margin: 0 auto;
-  width: 168px;
+  margin-left: -40px;
+  margin-top: 25px;
+  font-size: 42px;
+  overflow: auto;
+  float: left;
 
   li {
+    margin-right: 15px;
     list-style: none;
-    display: inline;
     float: left;
+  }
 
-    a {
-      background-repeat: no-repeat;
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      display: block;
-      padding: 10px;
-      height: 64px;
-      width: 64px;
-    }
-
-    &.github  a { background-image: url(../images/icons/github.png);  }
-    &.twitter a { background-image: url(../images/icons/twitter.png); }
+  a {
+    color: #bbb;
   }
 }
