@@ -120,7 +120,7 @@ ul#profiles {
 body#work #content h4 {
   margin-top: 35px; }
   body#work #content h4:first-child {
-    margin-top: 0px; }
+    margin-top: 5px; }
 body#work #content p a:first-child {
   display: block;
   margin: -20px 0px 10px;
