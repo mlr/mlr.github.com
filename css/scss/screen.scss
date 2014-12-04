@@ -1,12 +1,13 @@
 @import "font";
+@import "pocketgrid";
+
 body {
   background: #fefefe;
 }
 
 a {
-  color: #217fbb;
   text-decoration: none;
-  font-weight: bold;
+  color: #444;
 }
 
 #wrapper {
@@ -22,9 +23,49 @@ a {
   }
 }
 
+#header {
+  @extend .block-group;
+
+  div {
+    @extend .block;
+    width: 50%;
+  }
+
+  .menu {
+    padding-right: 20px;
+    padding-top: 8px;
+    text-align: right;
+
+    ul {
+      font-weight: bold;
+      list-style: none;
+      float: right;
+
+      li {
+        margin-left: 20px;
+        display: inline;
+        float: left;
+      }
+
+      a {
+        padding-bottom: 7px;
+        &.current {
+          padding-bottom: 5px;
+          border-bottom: 2px solid #BBB;
+        }
+      }
+    }
+  }
+}
+
 #container {
+  @extend .block-group;
+
+  a {
+    color: #217fbb;
+  }
+
   p {
-    font-family: "Helvetica Neue", Helvetica;
     text-align: left;
     line-height: 30px;
 
@@ -34,6 +75,17 @@ a {
 
     &:last-child {
       margin-bottom: 0px;
+    }
+  }
+}
+
+#content {
+  @extend .block;
+  width: 75%;
+
+  &.homepage {
+    a {
+      font-weight: bold;
     }
   }
 }
@@ -53,5 +105,24 @@ ul#profiles {
 
   a {
     color: #bbb;
+  }
+}
+
+body#work {
+  #content {
+    h4 {
+      margin-top: 35px;
+      &:first-child {
+        margin-top: 0px;
+      }
+    }
+
+    p {
+      a:first-child {
+        display: block;
+        margin: -20px 0px 10px;
+        width: 110px;
+      }
+    }
   }
 }

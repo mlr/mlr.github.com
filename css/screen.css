@@ -1,5 +1,6 @@
-body {
-  background: #fefefe; }
+html, body {
+  font-family: "Helvetica Neue", Helvetica;
+  color: #444; }
 
 @font-face {
   font-family: 'Mono Social Icons Font';
@@ -17,10 +18,46 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased; }
 
+/*! PocketGrid 1.1.0
+* Copyright 2013 Arnaud Leray
+* MIT License
+*/
+.block-group, #header, #container, .block, #header div, #content, .block-group:after, #header:after, #container:after, .block:after, #header div:after, #content:after, .block-group:before, #header:before, #container:before, .block:before, #header div:before, #content:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.block-group, #header, #container {
+  *zoom: 1; }
+
+.block-group:before, #header:before, #container:before, .block-group:after, #header:after, #container:after {
+  display: table;
+  content: "";
+  line-height: 0; }
+
+.block-group:after, #header:after, #container:after {
+  clear: both; }
+
+.block-group, #header, #container {
+  list-style-type: none;
+  padding: 0;
+  margin: 0; }
+
+.block-group > .block-group, #header > .block-group, #container > .block-group, .block-group > #header, #header > #header, #container > #header, .block-group > #container, #header > #container, #container > #container {
+  clear: none;
+  float: left;
+  margin: 0 !important; }
+
+.block, #header div, #content {
+  float: left;
+  width: 100%; }
+
+body {
+  background: #fefefe; }
+
 a {
-  color: #217fbb;
   text-decoration: none;
-  font-weight: bold; }
+  color: #444; }
 
 #wrapper {
   padding: 15px 0px 0px;
@@ -32,14 +69,40 @@ a {
     margin-bottom: 25px;
     font-size: 24px; }
 
+#header div {
+  width: 50%; }
+#header .menu {
+  padding-right: 20px;
+  padding-top: 8px;
+  text-align: right; }
+  #header .menu ul {
+    font-weight: bold;
+    list-style: none;
+    float: right; }
+    #header .menu ul li {
+      margin-left: 20px;
+      display: inline;
+      float: left; }
+    #header .menu ul a {
+      padding-bottom: 7px; }
+      #header .menu ul a.current {
+        padding-bottom: 5px;
+        border-bottom: 2px solid #BBB; }
+
+#container a {
+  color: #217fbb; }
 #container p {
-  font-family: "Helvetica Neue", Helvetica;
   text-align: left;
   line-height: 30px; }
   #container p:first-child {
     margin-top: 0px; }
   #container p:last-child {
     margin-bottom: 0px; }
+
+#content {
+  width: 75%; }
+  #content.homepage a {
+    font-weight: bold; }
 
 ul#profiles {
   margin-left: -40px;
@@ -53,3 +116,12 @@ ul#profiles {
     float: left; }
   ul#profiles a {
     color: #bbb; }
+
+body#work #content h4 {
+  margin-top: 35px; }
+  body#work #content h4:first-child {
+    margin-top: 0px; }
+body#work #content p a:first-child {
+  display: block;
+  margin: -20px 0px 10px;
+  width: 110px; }
