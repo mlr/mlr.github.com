@@ -1,5 +1,12 @@
+---
+---
 @import "font";
 @import "pocketgrid";
+
+html, body {
+  font-family: "Helvetica Neue", Helvetica;
+  color: #444;
+}
 
 body {
   background: #fefefe;
@@ -23,7 +30,7 @@ a {
   }
 }
 
-#header {
+header {
   @extend .block-group;
 
   div {
@@ -31,10 +38,15 @@ a {
     width: 50%;
   }
 
-  .menu {
+  h1, nav {
+    display: inline-block;
+  }
+
+  nav {
     padding-right: 20px;
     padding-top: 8px;
     text-align: right;
+    float: right;
 
     ul {
       font-weight: bold;
@@ -45,14 +57,15 @@ a {
         margin-left: 20px;
         display: inline;
         float: left;
+
+        a {
+          padding-bottom: 7px;
+        }
       }
 
-      a {
-        padding-bottom: 7px;
-        &.current {
-          padding-bottom: 5px;
-          border-bottom: 2px solid #BBB;
-        }
+      li.active a {
+        padding-bottom: 5px;
+        border-bottom: 2px solid #BBB;
       }
     }
   }
@@ -103,9 +116,8 @@ ul#profiles {
     float: left;
   }
 
-  a {
-    color: #bbb;
-  }
+  a { color: #bbb; }
+  a:hover { color: #888; }
 }
 
 body#work {

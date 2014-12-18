@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+{% include head.html %}
+</head>
+
+<body>
+<div id="wrapper">
+  <header>
+    <h1><a href="/">Ronnie Miller</a></h1>
+    <nav>
+      <ul>
+        {% for node in site.html_pages %}
+          <li{% if page.url == node.url %} class="active"{% endif %}><a href="{{node.url | remove: "index.html" }}">{{node.nav_title}}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  <div id="container">
+    <div id="content" class="homepage">
+    {{ content }}
+    </div>
+  </div>
+
+  <footer>
+    <ul id="profiles">
+      <li><a href="http://github.com/mlr" class="symbol">circlegithubalt</span></a></li>
+      <li><a href="http://twitter.com/ronniemlr" class="symbol">circletwitter</span></a></li>
+      <li><a href="http://linkedin.com/in/ronniemlr" class="symbol">circlelinkedin</span></a></li>
+      <li><a href="http://instagram.com/ronniemlr" class="symbol">circleinstagram</span></a></li>
+    </ul>
+  </footer>
+</div>
+{% include google_ga.html %}
+</body>
+</html>
