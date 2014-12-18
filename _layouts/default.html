@@ -11,7 +11,7 @@
     <nav>
       <ul>
         {% for node in site.html_pages %}
-          <li{% if page.url == node.url %} class="active"{% endif %}><a href="{{node.url | remove: "index.html" }}">{{node.nav_title}}</a></li>
+          <li{% if page.url == node.url %} class="active"{% endif %}><a href="{{node.url | remove: "index.html" }}">{{node.title}}</a></li>
         {% endfor %}
       </ul>
     </nav>
