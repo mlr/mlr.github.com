@@ -1,0 +1,33 @@
+#content.blog-post {
+  h1:first-child {
+    margin-bottom: 0px;
+  }
+
+  div.post-meta {
+    @extend .row;
+    margin-bottom: 33px;
+    font-size: 1.5rem;
+    color: #888;
+
+    & > div {
+      display: inline;
+      margin-top: 5px;
+      float: left;
+    }
+
+    .post-comments-count {
+      span {
+        display: inline-block;
+        padding: 0 5px 0 10px;
+      }
+
+      a {
+        color: #888;
+      }
+    }
+  }
+
+  div.post-content {
+    margin-bottom: 35px;
+  }
+}

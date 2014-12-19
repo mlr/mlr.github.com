@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+{% include head.html %}
+</head>
+
+<body>
+<div id="wrapper">
+  <header>
+    <div id="name"><a href="/">Ronnie Miller</a></div>
+    <nav>
+      <ul>
+        {% for node in site.html_pages %}
+          <li{% if page.url == node.url or page.id and node.path contains "writings" %} class="active"{% endif %}><a href="{{ node.url }}">{{node.title}}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  <div id="container">
