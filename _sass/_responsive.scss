@@ -1,0 +1,12 @@
+@media (max-width: $larger-than-phablet) {
+  header {
+    nav {
+      float: none;
+      padding-top: 45px;
+
+      ul li:first-child {
+        margin-left: 0px;
+      }
+    }
+  }
+}

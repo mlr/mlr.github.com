@@ -1,7 +1,9 @@
 ---
 ---
+
 @import "font";
-@import "pocketgrid";
+@import "skeleton";
+@import "responsive";
 
 html, body {
   font-family: "Helvetica Neue", Helvetica;
@@ -18,40 +20,27 @@ a {
 }
 
 #wrapper {
-  padding: 15px 0px 0px;
-  margin: 25px auto;
-  text-align: left;
-  width: 70%;
-
-  h1 {
-    font-family: "Helvetica Neue", Helvetica;
-    margin-bottom: 25px;
-    font-size: 24px;
-  }
+  @extend .container;
 }
 
 header {
-  @extend .block-group;
+  @extend .row;
+  padding-top: 25px;
 
-  div {
-    @extend .block;
-    width: 50%;
-  }
-
-  h1, nav {
-    display: inline-block;
+  #name {
+    @extend .eight;
+    @extend .columns;
+    font-size: 24px;
+    font-weight: bold;
   }
 
   nav {
-    padding-right: 20px;
-    padding-top: 8px;
-    text-align: right;
-    float: right;
+    @extend .u-pull-right;
+    margin-top: 12px;
 
     ul {
       font-weight: bold;
       list-style: none;
-      float: right;
 
       li {
         margin-left: 20px;
@@ -72,43 +61,27 @@ header {
 }
 
 #container {
-  @extend .block-group;
+  @extend .row;
 
   a {
     color: #217fbb;
   }
-
-  p {
-    text-align: left;
-    line-height: 30px;
-
-    &:first-child {
-      margin-top: 0px;
-    }
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
-  }
 }
 
 #content {
-  @extend .block;
-  width: 75%;
+  @extend .twelve;
+  @extend .columns;
+}
 
-  &.homepage {
-    a {
-      font-weight: bold;
-    }
-  }
+footer {
+  @extend .row;
 }
 
 ul#profiles {
-  margin-left: -40px;
-  margin-top: 25px;
+  @extend .twelve;
+  @extend .columns;
   font-size: 42px;
-  overflow: auto;
-  float: left;
+  margin-top: -25px;
 
   li {
     margin-right: 15px;
@@ -120,21 +93,19 @@ ul#profiles {
   a:hover { color: #888; }
 }
 
-body#work {
-  #content {
-    h4 {
-      margin-top: 35px;
-      &:first-child {
-        margin-top: 5px;
-      }
+#work {
+  h5 {
+    margin-top: 35px;
+    &:first-child {
+      margin-top: 5px;
     }
+  }
 
-    p {
-      a:first-child {
-        display: block;
-        margin: -20px 0px 10px;
-        width: 110px;
-      }
+  p {
+    a:first-child {
+      display: block;
+      margin: -20px 0px 10px;
+      width: 110px;
     }
   }
 }
