@@ -1,11 +1,15 @@
 #content.blog-post {
   h1:first-child {
     margin-bottom: 0px;
+
+    a {
+      color: #444;
+    }
   }
 
   div.post-meta {
     @extend .row;
-    margin-bottom: 33px;
+    margin-bottom: 25px;
     font-size: 1.5rem;
     color: #888;
 

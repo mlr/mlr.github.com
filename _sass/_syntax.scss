@@ -5,7 +5,7 @@
 .highlight .gr{color:#FFF!important;background-color:#900!important;}
 .highlight .gi{color:#E6E1DC!important;background-color:#144212!important;}
 .highlight .kt{color:#DA4939!important;}
-.highlight .no{color:#6D9CBE!important;}
+.highlight .no{color:#7BA5C4!important;}
 .highlight .c,.highlight .cm,.highlight .c1,.highlight .cs{color:#BC9458!important;font-style:italic!important;}
 .highlight .err,.highlight .g,.highlight .l,.highlight .n,.highlight .o,.highlight .x,.highlight .p,.highlight .ge,
 .highlight .go,.highlight .gp,.highlight .gs,.highlight .gt,.highlight .ld,.highlight .nb,.highlight .nc,.highlight .nd,
@@ -51,6 +51,41 @@ td.linenos, td.code {
   -webkit-overflow-scrolling: touch;
   white-space: pre;
   word-wrap: normal;
+}
+
+:not(pre) > code {
+  border-radius: 3px;
+  background: #e0e0e0;
+  color: #666;
+
+  margin: 0 1px 0 2px;
+  padding: 3px 5px;
+  position: relative;
+  top: -1px;
+}
+
+figure {
+  margin: 0px;
+
+  figcaption {
+    margin: -5px 0 -10px;
+    font-size: 1.35rem;
+
+    font-family: Consolas, monospace;
+    color: #888;
+  }
+
+  &.vscroll {
+    .highlight code {
+      max-height: 250px;
+    }
+
+    .highlight code:after {
+      line-height: 10px;
+      display: block;
+      content: "\A";
+    }
+  }
 }
 
 @media (max-width: $larger-than-tablet) {
