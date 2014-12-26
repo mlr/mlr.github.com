@@ -1,5 +1,5 @@
 {% include header.html %}
-    <div id="content">
+    <div id="content" class="page {{ page.name | split: '.' | first }}">
       {{ content }}
     </div>
 {% include footer.html %}
