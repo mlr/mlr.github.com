@@ -2,7 +2,7 @@
 title: About
 ---
 
-I'm a software developer located in Southern California. I work
+I'm a software developer located in Portland, OR. I work
 primarily in [Ruby](http://ruby-lang.org) and [Ruby on Rails](http://rubyonrails.org).
 I'm a firm believer in automated testing so I'm well versed in TDD tools, such as
 [RSpec](https://relishapp.com/rspec). I also like to dabble in frontend
