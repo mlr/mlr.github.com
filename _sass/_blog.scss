@@ -7,6 +7,10 @@
     }
   }
 
+  h1:first-child + h3 {
+    margin-bottom: 0px;
+  }
+
   div.post-meta {
     @extend .row;
     margin-bottom: 25px;
