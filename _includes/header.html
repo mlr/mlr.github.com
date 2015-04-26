@@ -10,9 +10,9 @@
     <div id="name"><a href="/">Ronnie Miller</a></div>
     <nav>
       <ul>
-        {% for node in site.html_pages %}
-          <li{% if page.url == node.url or page.id and node.path contains "writings" %} class="active"{% endif %}><a href="{{ node.url }}">{{node.title}}</a></li>
-        {% endfor %}
+        <li{% if page.url == '/'      %} class="active"{% endif %}><a href="/">About</a></li>
+        <li{% if page.url == '/blog/' %} class="active"{% endif %}><a href="/blog">Blog</a></li>
+        <li{% if page.url == '/work/' %} class="active"{% endif %}><a href="/work">Work</a></li>
       </ul>
     </nav>
   </header>

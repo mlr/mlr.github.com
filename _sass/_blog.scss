@@ -1,3 +1,17 @@
+#content.page.blog {
+  ul {
+    li {
+      margin-left: -14px;
+      list-style: none;
+      font-size: 0.9em;
+    }
+  }
+
+  span.blog-title-link {
+    font-family: Monaco, "Lucida Console", monospace;
+  }
+}
+
 #content.blog-post {
   h1:first-child {
     margin-bottom: 0px;

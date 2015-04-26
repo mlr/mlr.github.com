@@ -1,0 +1,2 @@
+{% for post in site.posts %}
+  * <span class="blog-title-link">{{ post.date | date: "%b %d, %Y" }} &ndash; [{{ post.title }}]({{ post.url }})</span>{% endfor %}

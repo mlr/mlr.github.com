@@ -7,5 +7,4 @@ I'm a software developer located in Portland, OR.  I work primarily in
 but lately I've been dabbling in [Ember](http://emberjs.com) as well.
 I like hiking mountains and flying planes.
 
-Get in touch:
-
+#### Get in touch
