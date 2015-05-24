@@ -1,5 +1,4 @@
 ---
-title: About
 ---
 
 I'm a software developer located in Portland, OR.  I work primarily in
