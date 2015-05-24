@@ -1,0 +1,12 @@
+html, body {
+  background: #fff; }
+
+body {
+  margin-top: 50px; }
+
+body, * {
+  color: #222 !important; }
+
+div {
+  width: 100%;
+  max-width: 100%; }

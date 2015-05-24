@@ -39,6 +39,14 @@ I instinctively act as a voice for the user in planning and decision making.
 * Improve security and access control of internal systems and tools
 * Lead automation efforts to reduce repetition and team toil
 
+### Lead Developer, Technical Officer - KABI, LLC.
+#### October 2015 &ndash; Present; Part-time
+
+* Responsible for technical design and development of patented SaaS products for the automotive industry
+* Manage infrastructure for mission critical SaaS products used by auto dealerships nationwide
+* Help coordinate development of intersecting technical projects driven by a small team of engineers
+* Contribute to the overall product direction balancing customer feedback and business goals
+
 ### Software Engineer - CrowdCompass by Cvent
 #### January 2015 &ndash; February 2017
 
