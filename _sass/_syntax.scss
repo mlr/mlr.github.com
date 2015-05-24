@@ -75,6 +75,10 @@ figure {
     color: #888;
   }
 
+  figcaption + table.highlighttable {
+    margin-top: 10px;
+  }
+
   &.vscroll {
     .highlight code {
       max-height: 250px;

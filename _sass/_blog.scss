@@ -1,11 +1,16 @@
-#content.page.blog {
-  ul {
-    li {
-      margin-left: -14px;
-      list-style: none;
-    }
+#content {
+  ul li {
+    margin-left: -14px;
+    list-style: none;
   }
 
+  ol li {
+    margin-left: 12px;
+    list-style-position: outside;
+  }
+}
+
+#content.page.blog {
   span.blog-post-date {
     font-family: Monaco, "Lucida Console", monospace;
     font-size: 0.9em;
