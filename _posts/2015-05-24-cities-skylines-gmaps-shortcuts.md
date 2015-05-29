@@ -2,12 +2,15 @@
 title: "Cities: Skylines &hearts; Google Maps"
 ---
 
-I've been playing a bit of
-[Cities: Skylines](http://store.steampowered.com/app/255710/) on and off this
-month. It brings back memories of the early SimCity franchise --
-before the [always online fiaso](http://mic.com/articles/29213/) -- except with
-finer control over the city, not to mention a thriving [community of mod
-makers](https://steamcommunity.com/workshop/browse/?appid=255710&requiredtags[]=Mod).
+I've been playing some [Cities: Skylines](http://store.steampowered.com/app/255710/)
+this month. It brings back memories of the SimCity franchise,
+before the [always online fiaso](http://mic.com/articles/29213/), except with
+finer control over the city and a thriving [library of
+mods](https://steamcommunity.com/workshop/browse/?appid=255710&requiredtags[]=Mod).
+Including [this mod](https://steamcommunity.com/sharedfiles/filedetails/?id=416064574)
+that has a feature to export your creation to OpenStreetMap data. It's pretty awesome.
+
+![Cities: Skylines]({{site.url}}/images/posts/cities-skylines-map.png)
 
 Anyway, I noticed I quickly developed some muscle memory for the game's keyboard
 shortcuts for manipulating the map. I wanted to be able to use the same keyboard

@@ -1,5 +1,6 @@
+{% capture post_slug %}{{ page.url | remove_first:'/' | split:'/' | last }}{% endcapture %}
 {% include header.html %}
-    <div id="content" class="blog-post">
+    <div id="content" class="blog-post {{post_slug}}">
       <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
       {% if page.subtitle %}
         <h3>{{ page.subtitle }}</h3>
