@@ -1,4 +1,9 @@
 #content {
+  ol, ul {
+    margin-left: 10px;
+    li { line-height: 20px; }
+  }
+
   ul li {
     margin-left: -14px;
     list-style: none;
@@ -7,6 +12,18 @@
   ol li {
     margin-left: 12px;
     list-style-position: outside;
+  }
+
+  blockquote {
+    border-left: 5px solid #f0f0f0;
+    background: #fafafa;
+    padding: 5px 10px;
+    margin-left: 0px;
+    width: 95%;
+
+    p {
+      margin-bottom: 0px;
+    }
   }
 }
 
@@ -60,6 +77,15 @@
 
   p img {
     border: 1px solid #888;
+  }
+
+  p img.console-image  {
+    box-shadow: 0px 0px 30px 3px #999;
+    margin: 50px auto;
+    border: none;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background: #777;
   }
 
   &.rails-conf-2015 {
