@@ -11,6 +11,14 @@
   }
 }
 
+@media (max-width: $larger-than-tablet) {
+  body #content.blog-post {
+    p img.console-image  {
+      border-radius: 4px;
+    }
+  }
+}
+
 .post-content {
   img {
     max-width: 100% !important;
