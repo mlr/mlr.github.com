@@ -11,11 +11,12 @@
 
   ol li {
     margin-left: 12px;
+    line-height: 24px;
     list-style-position: outside;
   }
 
   blockquote {
-    border-left: 5px solid #f0f0f0;
+    border-left: 5px solid #e5e5e5;
     background: #fafafa;
     padding: 5px 10px;
     margin-left: 0px;
@@ -28,6 +29,14 @@
 }
 
 #content.page.blog {
+  ul {
+    margin-bottom: 30px;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+
   span.blog-post-date {
     font-family: Monaco, "Lucida Console", monospace;
     font-size: 0.9em;
@@ -80,8 +89,8 @@
   }
 
   p img.console-image  {
-    box-shadow: 0px 0px 30px 3px #999;
-    margin: 50px auto;
+    box-shadow: 0px 0px 30px 0px #999;
+    margin: 40px auto;
     border: none;
     border: 1px solid #aaa;
     border-radius: 8px;
