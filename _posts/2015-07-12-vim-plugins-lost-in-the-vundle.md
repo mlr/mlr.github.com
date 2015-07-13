@@ -129,8 +129,8 @@ invoke find to using the `/` key to invoke a pattern search and typing a couple
 characters to search within the whole file.
 
 This has the added bonus of not needing to be on the same line as the search
-term and I can use `?` (`shift + /`) similar to `F` to search backward. Now I tend to
-just type `/` and begin typing the code I'm trying to jump to.
+term and I can use `?` (`shift+/`) similar to `F` to search backward. Now I tend to
+just type `/` or `?` and begin typing the code I'm trying to jump to.
 
 **Conclusion: removed from bundle**
 
