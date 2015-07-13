@@ -116,12 +116,12 @@ Bundle 'terryma/vim-expand-region'
 
 ![Vim seek install date]({{site.url}}/images/posts/vim-bundle-vim-seek.png){: .console-image }
 
-I remember installing [vim-seek](https://github.com/goldfeld/vim-seek) because
-my habit when writing code tends to be to use the `f` character to motion jump
-around to the part of the line I need to change. The problem comes when the line
-has more than one of a given character, which tends to happen more often than not.
-Vim seek maps the `s` character to behave similar to find, but takes two
-characters then jumps to the first instance of those two characters.
+I remember installing vim-seek because my habit when writing code tends to be to
+use the `f` character to motion jump around to the part of the line I need to change.
+The problem comes when the line has more than one of a given character, which tends
+to happen more often than not. Vim seek maps the `s` character to behave similar
+to find, but takes two characters then jumps to the first instance of
+those two characters.
 
 This works great, but I found myself forgetting the key mapping was there.
 Furthermore, I simply adjusted my habit from tending to use the `f` key to
