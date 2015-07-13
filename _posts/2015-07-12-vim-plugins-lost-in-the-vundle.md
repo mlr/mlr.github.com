@@ -57,7 +57,7 @@ Bundle 'benmills/vimux'
 Bundle 'jgdavey/vim-turbux'
 
 " Code editing enhancements
-Bundle 'tsaleh/vim-matchit'
+Bundle 'tmhedberg/vim-matchit'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/tComment'
