@@ -197,7 +197,8 @@ inside of whatever text object I'm in. For example `yi(` or `ci[`.
 
 I do frequently select entire blocks of code, for instance an if statement to
 indent further, but in that case I typically place my cursor on the `if` or the
-`end` and do `V%` to select to the entire block.
+`end` and do `V%` to select to the entire block. The `%` mapping comes from the
+excellent [vim-matchit](https://github.com/tmhedberg/matchit) plugin.
 
 **Conclusion: removed from bundle**
 
