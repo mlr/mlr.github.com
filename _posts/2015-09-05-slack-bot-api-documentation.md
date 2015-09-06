@@ -4,11 +4,10 @@ title: Slack bot for API Documentation
 
 The number of Slack bots, Slack plug-ins and other integrations available
 recently seems to have skyrocketed. There are plug-ins to help facilitate [live
-blogging](https://twitter.com/moriogawa/status/629485213849157632/),
-bots that can [book rooms for your team](https://www.roomino.com/) (hopefully
-better than your company's travel department), there's even a
-Slack bot that will [listen to all of your
-frustrations](http://christinac.github.io/ellie-slack/).
+blogging](https://twitter.com/moriogawa/status/629485213849157632/), bots that
+can [book rooms for your team](https://www.roomino.com/) (hopefully better than
+your company's travel department), there's even a Slack bot that will
+[listen to all of your frustrations](http://christinac.github.io/ellie-slack/).
 
 At work we switched to Slack recently and there are many things I've been
 wanting to try. One being to create a bot that will give API documentation
@@ -25,9 +24,9 @@ for the Slack integration, the excellent
 
 I just recently started diving into JSON schema, so I'm still fairly new myself.
 I found the online book *[Understanding JSON
-Schema](http://spacetelescope.github.io/understanding-json-schema/)* to be a great resource.
-For the purposes of this blog post I'm going to use a generic "person" schema.
-This person object will have a first name, last name, and an email address.
+Schema](http://spacetelescope.github.io/understanding-json-schema/)* to be a
+great resource. For the purposes of this blog post I'm going to use a generic "person"
+schema. This person object will have a first name, last name, and an email address.
 
 We'll use Prmd to combine a `meta.yml` and a `person.yml` file into our
 `schema.json` file.
@@ -214,10 +213,10 @@ We will need the following files:
 
 {% highlight bash %}
 docutron/
-    response.rb
+  response.rb
 docutron.rb
 Gemfile
-schema.json (the generated output from above)
+schema.json # the generated output from above
 {% endhighlight %}
 
 ### Gemfile
@@ -255,9 +254,11 @@ end
 Docutron::App.instance.run
 {% endhighlight %}
 
-We match against the incoming message using the SlackRubyBot's built in `#match` method.
-We're looking for a message in the form of `[request method] [resource name]`. For
-instance `GET person`.
+We match against the incoming message using the SlackRubyBot's `.match` method.
+We're looking for a message in the form of `[request method] [resource name]`,
+For instance:
+
+> GET person
 
 When a message is received, we create a new `Docutron::Response` instance and pass
 it the request method and the resource. We then call `#send` to respond in the
@@ -311,8 +312,8 @@ module Docutron
 end
 {% endhighlight %}
 
-The initializer of the `Docutron::Response` class sets up some instance methods and creates a
-new `Prmd::Schema` instance using the schema.json data.
+The initializer of the `Docutron::Response` class sets up some instance variables
+and creates a new `Prmd::Schema` instance using the schema.json data.
 
 The `#link` method finds the schema's link definition for the resource and the request
 method of the incoming Slack message. Our basic person schema defines one link:
@@ -350,8 +351,8 @@ the example values defined in the schema. For person it looks like this:
 {% endhighlight %}
 
 Finally, the `#message` method wraps the JSON example in triple back ticks so
-that Slack will format the message as a code snippet. The `#send` method as you
-recall is what our Slack bot actually calls to send the message.
+that Slack will format the message as preformatted text. The `#send` method as
+you recall is what our Slack bot actually calls to send the message.
 
 ## Configure Slack
 
@@ -376,7 +377,6 @@ For the documentation to be truly useful, you'll of course want more
 information. Maybe some details about each property, for example.
 Prmd has templates to handle generating that which could be
 adapted for docutron, but I leave that as an exercise for the reader.
-
 
 Happy Slacking!
 
