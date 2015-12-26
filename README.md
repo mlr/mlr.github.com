@@ -1,6 +1,6 @@
-# Hey there!
+## Hey there!
 
-You've stumbled across the development repo of my personal website.
-I'll soon be switching to a jekyll implementation.
-The entire website will remain open source here on github.
-You can view what I have so far at [mlr.github.com](http://mlr.github.com/).
+You've stumbled across the source repository of my personal website.
+You can view the website at [ronniemlr.com](http://ronniemlr.com/).
+This website is built with [jekyll](https://jekyllrb.com/)
+and will remain open source here on GitHub.
