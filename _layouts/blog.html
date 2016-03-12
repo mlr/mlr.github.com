@@ -13,17 +13,10 @@
           {% case d %}{% when "1" or "21" or "31" %}{{ d }}st{% when "2" or "22" %}{{ d }}nd{% when "3" or "23" %}{{ d }}rd{% else %}{{ d }}th{% endcase %},
           {{ page.date | date: "%Y" }}
         </div>
-        <div class="post-comments-count">
-          <span>&middot;</span> <a href="{{ page.url }}#disqus_thread">0 Comments</a>
-        </div>
       </div>
 
       <div class="post-content">
         {{ content }}
-      </div>
-
-      <div class="post-comments">
-        {% include disqus_comments.html %}
       </div>
     </div>
 {% include footer.html %}
