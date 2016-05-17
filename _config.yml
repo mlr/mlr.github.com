@@ -1,4 +1,9 @@
 permalink: pretty
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Rakefile
+  - README.md
 defaults:
   -
     scope:
