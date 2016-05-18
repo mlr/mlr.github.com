@@ -1,7 +1,8 @@
 #content {
   ol, ul {
     margin-left: 0px;
-    li { line-height: 20px; }
+    margin-bottom: 30px;
+    li { line-height: 25px; }
   }
 
   ul li {
@@ -85,6 +86,10 @@
 
   p img {
     border: 1px solid #888;
+
+    &.center {
+      margin: 0px auto;
+    }
   }
 
   p img.console-image  {

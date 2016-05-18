@@ -105,4 +105,9 @@ figure {
   td.code {
     max-width: $larger-than-tablet - $larger-than-phablet;
   }
+
+  code {
+    word-wrap: nowrap !important;
+    display: inline-block;
+  }
 }
