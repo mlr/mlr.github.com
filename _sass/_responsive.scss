@@ -9,6 +9,19 @@
       }
     }
   }
+
+  #content.page.blog {
+    li {
+      flex-direction: column !important;
+    }
+
+    span.blog-post-date {
+      margin: 0px !important;
+      margin-top: 3px !important;
+      font-size: .80em !important;
+      order: 2;
+    }
+  }
 }
 
 @media (max-width: $larger-than-tablet) {
