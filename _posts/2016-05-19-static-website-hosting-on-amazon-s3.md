@@ -220,7 +220,7 @@ take very long. Running the task with `rake deploy` puts the site online in
 under a minute. Right now, I just run this command manually when I want to deploy
 changes, but this could easily be called by a git hook.
 
-## Using a Custom Domain Name
+## Using a Custom Domain
 
 The S3 documentation of course recommends that you use Amazon's Route 53 service
 to route your custom domain to your S3 bucket. The difference in the documented
@@ -230,9 +230,8 @@ recommends you create in order to redirect that traffic to the main bucket.
 
 Instead I use DNSimple <small>([shameless referral link](https://dnsimple.com/r/d21999fd16e53e))</small>
 which I've used to manage my domains for many years. Personally, I love DNSimple
-because they make it push-button easy to point your domain at your S3 bucket.
-Assuming you named your S3 bucket correctly, when you enable the service, it
-"Just Works&trade;."
+because they make it push-button easy to point your domain at S3. Assuming your
+bucket is named correctly it "Just Works&trade;."
 
 <img alt="DNSimple S3 Service" src="{{site.url}}/images/posts/dns-simple-s3.png" width="625" height="160" class="center" />
 
