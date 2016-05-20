@@ -5,7 +5,7 @@
       padding-top: 45px;
 
       ul li:first-child {
-        margin-left: -6px;
+        margin-left: -14px;
       }
     }
   }
@@ -26,6 +26,19 @@
 
 @media (max-width: $larger-than-tablet) {
   body #content.blog-post {
+    h1 {
+      font-size: 2.8rem;
+    }
+
+    h2 {
+      font-size: 2.3rem;
+      line-height: 35px;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+    }
+
     p img.console-image  {
       border-radius: 4px;
     }

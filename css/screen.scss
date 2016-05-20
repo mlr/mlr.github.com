@@ -39,7 +39,7 @@ header {
 
   nav {
     @extend .u-pull-right;
-    margin-top: 12px;
+    margin-top: 8px;
 
     ul {
       font-weight: bold;
@@ -71,11 +71,6 @@ header {
   }
 }
 
-#content {
-  @extend .twelve;
-  @extend .columns;
-}
-
 #content.work {
   h3 {
     margin-top: 35px;
@@ -103,6 +98,7 @@ ul#profiles {
   @extend .columns;
   font-size: 42px;
   margin-top: -45px;
+  margin-left: -15px !important;
 
   li {
     margin-right: 15px;
