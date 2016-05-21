@@ -73,6 +73,7 @@ aws_secret_access_key = <your default secret key>
 {% highlight ruby %}
 source 'https://rubygems.org'
 gem 'aws-sdk'
+gem 'dotenv' # we'll use this later
 {% endhighlight %}
 </figure>
 
@@ -183,6 +184,11 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+# Load region and S3 credentials from .env file, ex:
+# REGION:             us-west-2
+# BUCKET:             ronniemlr.com
+# ACCESS_KEY_ID:      <your access key>
+# SECRET_ACCESS_KEY:  <your secret key>
 require 'dotenv'
 Dotenv.load
 
@@ -200,7 +206,7 @@ task :deploy do
   build = Pathname.new("_site")
 
   Dir.glob("_site/**/*.*").each do |file|
-    # Glob can still sometimes pick up directories
+    # Glob can still pick up directories
     next if File.directory?(file)
 
     source = Pathname.new(file)
