@@ -18,45 +18,6 @@ require 'dotenv'
 # SECRET_ACCESS_KEY:  your secret key
 Dotenv.load
 
-desc "Create website bucket on s3"
-task :create do
-  client = Aws::S3::Client.new(region: ENV['REGION'],
-                               access_key_id: ENV['ACCESS_KEY_ID'],
-                               secret_access_key: ENV['SECRET_ACCESS_KEY'])
-
-  client.delete_object(bucket: ENV['bucket'], key: 'index.html')
-  client.delete_bucket(bucket: ENV['bucket'])
-
-  client.create_bucket(bucket: ENV['bucket'])
-
-  client.put_bucket_website({
-    bucket: ENV['bucket'],
-    website_configuration: {
-      index_document: {
-        suffix: "index.html",
-      }
-    }
-  })
-
-  client.put_bucket_policy({
-    bucket: ENV['bucket'],
-    policy: {
-      "Version" => "2012-10-17",
-      "Statement" => [
-        {
-          "Sid"       => "AddPerm",
-          "Effect"    => "Allow",
-          "Principal" => "*",
-          "Action"    => "s3:GetObject",
-          "Resource"  => "arn:aws:s3:::#{ENV['bucket']}/*"
-        }
-      ]
-    }.to_json
-  })
-
-  client.put_object(bucket: ENV['bucket'], key: 'index.html', body: "Hello World!")
-end
-
 desc "Deploy website to s3"
 task :deploy do
   puts "Building website"
