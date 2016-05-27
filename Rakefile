@@ -30,14 +30,16 @@ task :deploy do
                              secret_access_key: ENV['SECRET_ACCESS_KEY'])
 
   build = Pathname.new("_site")
+  changed_files = `git show --name-only HEAD | tail -n+3`.split(/\n/)
 
   Dir.glob("_site/**/*.*").each do |file|
-    # Glob can still sometimes pick up directories
-    next if File.directory?(file)
+    # Only deploy changed files in the last commit
+    next unless changed_files.include?(file)
 
     source = Pathname.new(file)
     destination = source.relative_path_from(build)
     object = s3.bucket(ENV['BUCKET']).object(destination.to_s)
+    puts "Uploading #{destination.to_s}"
     object.upload_file(source)
   end
 
