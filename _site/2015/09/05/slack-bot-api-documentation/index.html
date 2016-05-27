@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-language" content="en-us" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="Ronnie Miller is a software developer living in Portland, Oregon. He utilizes Ruby, Rails and a variety of frontend tools to build workflow tools, web applications and whatever else happens to catch his interest." />
+  <meta name="keywords" content="Ronnie Miller, software developer, web developer, software engineer, consultant, ruby, ruby on rails, jquery, emberjs, postgresql" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Slack bot for API Documentation - Ronnie Miller - Software Developer</title>
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+
+</head>
+
+<body>
+<div id="wrapper">
+  <header>
+    <div id="name"><a href="/">Ronnie Miller</a></div>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/work">Work</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="container">
+
+    <div id="content" class="blog-post slack-bot-api-documentation">
+      <h1><a href="/2015/09/05/slack-bot-api-documentation/">Slack bot for API Documentation</a></h1>
+      
+
+      <div class="post-meta">
+        <div class="post-date">
+          September
+          
+          5th,
+          2015
+        </div>
+      </div>
+
+      <div class="post-content">
+        <p>The number of Slack bots, Slack plug-ins and other integrations available
+recently seems to have skyrocketed. There are plug-ins to help facilitate <a href="https://twitter.com/moriogawa/status/629485213849157632/">live
+blogging</a>, bots that
+can <a href="https://www.roomino.com/">book rooms for your team</a> (hopefully better than
+your company’s travel department), there’s even a Slack bot that will
+<a href="http://christinac.github.io/ellie-slack/">listen to all of your frustrations</a>.</p>
+
+<p>At work we switched to Slack recently and there are many things I’ve been
+wanting to try. One being to create a bot that will give API documentation
+and example responses.</p>
+
+<p>In order to do this we’ll take a simple JSON schema, parse it a bit,
+then provide a sample response based on the schema. To handle this I’m
+leaning heavily on both <a href="http://github.com/interagent/prmd">Prmd</a>,
+a tool for managing JSON schemas and generating documentation from them and
+for the Slack integration, the excellent
+<a href="http://github.com/dblock/slack-ruby-bot">slack-ruby-bot</a>.</p>
+
+<h2 id="creating-a-json-schema">Creating a JSON Schema</h2>
+
+<p>I just recently started diving into JSON schema, so I’m still fairly new myself.
+I found the online book <em><a href="http://spacetelescope.github.io/understanding-json-schema/">Understanding JSON
+Schema</a></em> to be a
+great resource. For the purposes of this blog post I’m going to use a generic “person”
+schema. This person object will have a first name, last name, and an email address.</p>
+
+<p>We’ll use Prmd to combine a <code>meta.yml</code> and a <code>person.yml</code> file into our
+<code>schema.json</code> file.</p>
+
+<figure>
+<figcaption>meta.yml</figcaption>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span> <span class="s">"person-api"</span>
+<span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"Person</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">API"</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> <span class="s">"Person</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">API"</span>
+<span class="l-Scalar-Plain">links</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">href</span><span class="p-Indicator">:</span> <span class="s">"https://api.example.com"</span>
+    <span class="l-Scalar-Plain">rel</span><span class="p-Indicator">:</span> <span class="s">"self"</span>
+<span class="l-Scalar-Plain">definitions</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">identity</span><span class="p-Indicator">:</span>
+    <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/definitions/id"</span>
+  <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"Unique</span><span class="nv"> </span><span class="s">identifier</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">resource."</span>
+    <span class="l-Scalar-Plain">example</span><span class="p-Indicator">:</span> <span class="s">"1dc3567e-acd4-4819-afd5-21d0ef677dcd"</span>
+    <span class="l-Scalar-Plain">readOnly</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+    <span class="l-Scalar-Plain">format</span><span class="p-Indicator">:</span> <span class="s">"uuid"</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">"string"</span></code></pre></div>
+
+</figure>
+
+<figure>
+<figcaption>person.yml</figcaption>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span> <span class="s">"person"</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> <span class="s">"Person"</span>
+<span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span>
+    <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/definitions/id"</span>
+  <span class="l-Scalar-Plain">first_name</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"The</span><span class="nv"> </span><span class="s">person's</span><span class="nv"> </span><span class="s">first</span><span class="nv"> </span><span class="s">name."</span>
+    <span class="l-Scalar-Plain">example</span><span class="p-Indicator">:</span> <span class="s">"Jean-Luc"</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">"string"</span>
+  <span class="l-Scalar-Plain">last_name</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"The</span><span class="nv"> </span><span class="s">person's</span><span class="nv"> </span><span class="s">last</span><span class="nv"> </span><span class="s">name."</span>
+    <span class="l-Scalar-Plain">example</span><span class="p-Indicator">:</span> <span class="s">"Picard"</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">"string"</span>
+  <span class="l-Scalar-Plain">email_address</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"The</span><span class="nv"> </span><span class="s">person's</span><span class="nv"> </span><span class="s">email</span><span class="nv"> </span><span class="s">address."</span>
+    <span class="l-Scalar-Plain">example</span><span class="p-Indicator">:</span> <span class="s">"locutus@borg.hive"</span>
+    <span class="l-Scalar-Plain">format</span><span class="p-Indicator">:</span> <span class="s">"email"</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">"string"</span>
+<span class="l-Scalar-Plain">definitions</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">person</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"A</span><span class="nv"> </span><span class="s">single</span><span class="nv"> </span><span class="s">person"</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span>
+        <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/id"</span>
+      <span class="l-Scalar-Plain">first_name</span><span class="p-Indicator">:</span>
+        <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/first_name"</span>
+      <span class="l-Scalar-Plain">last_name</span><span class="p-Indicator">:</span>
+        <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/last_name"</span>
+      <span class="l-Scalar-Plain">email_address</span><span class="p-Indicator">:</span>
+        <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/email_address"</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">"object"</span>
+<span class="l-Scalar-Plain">links</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> <span class="s">"Person</span><span class="nv"> </span><span class="s">details"</span>
+    <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">"Get</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">details</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">person"</span>
+    <span class="l-Scalar-Plain">method</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">GET</span>
+    <span class="l-Scalar-Plain">href</span><span class="p-Indicator">:</span> <span class="s">"/person/{#/definitions/identity}"</span>
+    <span class="l-Scalar-Plain">targetSchema</span><span class="p-Indicator">:</span>
+      <span class="s">"$ref"</span><span class="p-Indicator">:</span> <span class="s">"#/person"</span></code></pre></div>
+
+</figure>
+
+<p>Combining these into a single schema file is easy:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">prmd combine --meta meta.yml person.yml &gt; schema.json</code></pre></div>
+
+<p>This produces:</p>
+
+<figure>
+<figcaption>schema.json</figcaption>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="s2">"$schema"</span><span class="o">:</span> <span class="s2">"http://interagent.github.io/interagent-hyper-schema"</span><span class="p">,</span>
+  <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">"object"</span>
+  <span class="p">],</span>
+  <span class="s2">"definitions"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"identity"</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/id"</span>
+    <span class="p">},</span>
+    <span class="s2">"id"</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"Unique identifier of a resource."</span><span class="p">,</span>
+      <span class="s2">"example"</span><span class="o">:</span> <span class="s2">"1dc3567e-acd4-4819-afd5-21d0ef677dcd"</span><span class="p">,</span>
+      <span class="s2">"readOnly"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s2">"format"</span><span class="o">:</span> <span class="s2">"uuid"</span><span class="p">,</span>
+      <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">"string"</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">"person"</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">"title"</span><span class="o">:</span> <span class="s2">"Person"</span><span class="p">,</span>
+      <span class="s2">"properties"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"id"</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/id"</span>
+        <span class="p">},</span>
+        <span class="s2">"first_name"</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"The person's first name."</span><span class="p">,</span>
+          <span class="s2">"example"</span><span class="o">:</span> <span class="s2">"Jean-Luc"</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">"string"</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">"last_name"</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"The person's last name."</span><span class="p">,</span>
+          <span class="s2">"example"</span><span class="o">:</span> <span class="s2">"Picard"</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">"string"</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">"email_address"</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"The person's email address."</span><span class="p">,</span>
+          <span class="s2">"example"</span><span class="o">:</span> <span class="s2">"locutus@borg.hive"</span><span class="p">,</span>
+          <span class="s2">"format"</span><span class="o">:</span> <span class="s2">"email"</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">"string"</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">"definitions"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"person"</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"A single person"</span><span class="p">,</span>
+          <span class="s2">"properties"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"id"</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/id"</span>
+            <span class="p">},</span>
+            <span class="s2">"first_name"</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/first_name"</span>
+            <span class="p">},</span>
+            <span class="s2">"last_name"</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/last_name"</span>
+            <span class="p">},</span>
+            <span class="s2">"email_address"</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/email_address"</span>
+            <span class="p">}</span>
+          <span class="p">},</span>
+          <span class="s2">"type"</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">"object"</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">"links"</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">"title"</span><span class="o">:</span> <span class="s2">"Person details"</span><span class="p">,</span>
+          <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"Get the details of a person"</span><span class="p">,</span>
+          <span class="s2">"method"</span><span class="o">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+          <span class="s2">"href"</span><span class="o">:</span> <span class="s2">"/person/{#/definitions/identity}"</span><span class="p">,</span>
+          <span class="s2">"targetSchema"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/person"</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">"properties"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"person"</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">"$ref"</span><span class="o">:</span> <span class="s2">"#/definitions/person"</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">"id"</span><span class="o">:</span> <span class="s2">"person-api"</span><span class="p">,</span>
+  <span class="s2">"description"</span><span class="o">:</span> <span class="s2">"Person Example API"</span><span class="p">,</span>
+  <span class="s2">"title"</span><span class="o">:</span> <span class="s2">"Person Example API"</span><span class="p">,</span>
+  <span class="s2">"links"</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"href"</span><span class="o">:</span> <span class="s2">"https://api.example.com"</span><span class="p">,</span>
+      <span class="s2">"rel"</span><span class="o">:</span> <span class="s2">"self"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></div>
+
+</figure>
+
+<h2 id="creating-a-basic-slack-bot">Creating a basic Slack bot</h2>
+
+<p>We will need the following files:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docutron/
+  response.rb
+docutron.rb
+Gemfile
+schema.json <span class="c"># the generated output from above</span></code></pre></div>
+
+<h3 id="gemfile">Gemfile</h3>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">'http://rubygems.org'</span>
+
+<span class="n">gem</span> <span class="s1">'slack-ruby-bot'</span>
+<span class="n">gem</span> <span class="s1">'prmd'</span></code></pre></div>
+
+<h2 id="docutronrb">docutron.rb</h2>
+
+<p>This will be the main entry point into the bot when a webhook payload is received.</p>
+
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-ruby" data-lang="ruby"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">'slack-ruby-bot'</span>
+<span class="n">require_relative</span> <span class="s1">'docutron/response'</span>
+
+<span class="k">module</span> <span class="nn">Docutron</span>
+  <span class="k">class</span> <span class="nc">App</span> <span class="o">&lt;</span> <span class="no">SlackRubyBot</span><span class="o">::</span><span class="no">App</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="nc">SlackBot</span> <span class="o">&lt;</span> <span class="no">SlackRubyBot</span><span class="o">::</span><span class="no">Commands</span><span class="o">::</span><span class="no">Base</span>
+    <span class="no">DOC_REQUEST</span> <span class="o">=</span> <span class="sr">/^(?&lt;request_method&gt;\w*) (?&lt;resource&gt;\w*)$/</span>
+
+    <span class="n">match</span> <span class="no">DOC_REQUEST</span> <span class="k">do</span> <span class="o">|</span><span class="n">client</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">match</span><span class="o">|</span>
+      <span class="nb">method</span><span class="p">,</span> <span class="n">resource</span> <span class="o">=</span> <span class="n">match</span><span class="o">[</span><span class="ss">:request_method</span><span class="o">]</span><span class="p">,</span> <span class="n">match</span><span class="o">[</span><span class="ss">:resource</span><span class="o">]</span>
+      <span class="n">response</span> <span class="o">=</span> <span class="no">Docutron</span><span class="o">::</span><span class="no">Response</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+      <span class="n">response</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Docutron</span><span class="o">::</span><span class="no">App</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">run</span>
+</pre></div>
+</td></tr></table>
+
+<p>We match against the incoming message using the SlackRubyBot’s <code>.match</code> method.
+We’re looking for a message in the form of <code>[request method] [resource name]</code>,
+For instance:</p>
+
+<blockquote>
+  <p>GET person</p>
+</blockquote>
+
+<p>When a message is received, we create a new <code>Docutron::Response</code> instance and pass
+it the request method and the resource. We then call <code>#send</code> to respond in the
+Slack channel the message was sent from.</p>
+
+<h2 id="docutronresponserb">docutron/response.rb</h2>
+
+<p>This is where we’ll do the bulk of the work of loading and parsing the schema,
+choosing the correct schema link for the requested resource, then returning the
+appropriate response.</p>
+
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-ruby" data-lang="ruby"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">'prmd'</span>
+
+<span class="k">module</span> <span class="nn">Docutron</span>
+  <span class="k">class</span> <span class="nc">Response</span>
+    <span class="no">UnknownResponse</span> <span class="o">=</span> <span class="s2">"Sorry, I don't know about that resource."</span><span class="o">.</span><span class="n">freeze</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+      <span class="vi">@method</span>   <span class="o">=</span> <span class="nb">method</span><span class="o">.</span><span class="n">upcase</span>
+      <span class="vi">@resource</span> <span class="o">=</span> <span class="n">resource</span>
+      <span class="vi">@schemata</span> <span class="o">=</span> <span class="s2">"#/definitions/</span><span class="si">#{</span><span class="vi">@resource</span><span class="si">}</span><span class="s2">"</span>
+      <span class="vi">@schema</span>   <span class="o">=</span> <span class="no">Prmd</span><span class="o">::</span><span class="no">Schema</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">'schema.json'</span><span class="p">)))</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">link</span>
+      <span class="vi">@schema</span><span class="o">[</span><span class="s1">'definitions'</span><span class="o">][</span><span class="vi">@resource</span><span class="o">][</span><span class="s1">'links'</span><span class="o">].</span><span class="n">detect</span> <span class="k">do</span> <span class="o">|</span><span class="n">link</span><span class="o">|</span>
+        <span class="n">link</span><span class="o">[</span><span class="s1">'method'</span><span class="o">]</span> <span class="o">==</span> <span class="vi">@method</span>
+      <span class="k">end</span> <span class="ow">or</span> <span class="k">raise</span> <span class="no">UnknownResponse</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">json_example</span>
+      <span class="k">if</span> <span class="n">link</span><span class="o">[</span><span class="s1">'rel'</span><span class="o">]</span> <span class="o">==</span> <span class="s1">'empty'</span>
+      <span class="k">elsif</span> <span class="n">link</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="s1">'targetSchema'</span><span class="p">)</span>
+        <span class="no">JSON</span><span class="o">.</span><span class="n">pretty_generate</span><span class="p">(</span><span class="vi">@schema</span><span class="o">.</span><span class="n">schema_example</span><span class="p">(</span><span class="n">link</span><span class="o">[</span><span class="s1">'targetSchema'</span><span class="o">]</span><span class="p">))</span>
+      <span class="k">elsif</span> <span class="n">link</span><span class="o">[</span><span class="s1">'rel'</span><span class="o">]</span> <span class="o">==</span> <span class="s1">'instances'</span>
+        <span class="no">JSON</span><span class="o">.</span><span class="n">pretty_generate</span><span class="p">(</span><span class="o">[</span><span class="vi">@schema</span><span class="o">.</span><span class="n">schemata_example</span><span class="p">(</span><span class="vi">@schemata</span><span class="p">)</span><span class="o">]</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="no">JSON</span><span class="o">.</span><span class="n">pretty_generate</span><span class="p">(</span><span class="vi">@schema</span><span class="o">.</span><span class="n">schemata_example</span><span class="p">(</span><span class="vi">@schemata</span><span class="p">))</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">message</span>
+      <span class="s2">"```</span><span class="si">#{</span><span class="n">json_example</span><span class="si">}</span><span class="s2">```"</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+      <span class="n">client</span><span class="o">.</span><span class="n">message</span> <span class="ss">text</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="ss">channel</span><span class="p">:</span> <span class="n">channel</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</td></tr></table>
+
+<p>The initializer of the <code>Docutron::Response</code> class sets up some instance variables
+and creates a new <code>Prmd::Schema</code> instance using the schema.json data.</p>
+
+<p>The <code>#link</code> method finds the schema’s link definition for the resource and the request
+method of the incoming Slack message. Our basic person schema defines one link:</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"Person details"</span><span class="p">,</span>
+  <span class="nt">"description"</span><span class="p">:</span> <span class="s2">"Get the details of a person"</span><span class="p">,</span>
+  <span class="nt">"method"</span><span class="p">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+  <span class="nt">"href"</span><span class="p">:</span> <span class="s2">"/person/{#/definitions/identity}"</span><span class="p">,</span>
+  <span class="nt">"targetSchema"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"$ref"</span><span class="p">:</span> <span class="s2">"#/definitions/person"</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The <code>#json_example</code> method uses the link to generate a JSON example either using
+the <code>targetSchema</code> of the link if it exists, or by using a default json
+reference for the resource, in this case <code>#/definitions/person</code>. If the link has
+a rel of “instances”, it wraps the response in an array. This
+method is adapted from <a href="https://github.com/interagent/prmd/blob/master/lib/prmd/templates/schemata/link.md.erb">Prmd’s link.md.erb
+template</a>.</p>
+
+<p>The important bit here is the <code>@schema.schemata_example(@schemata)</code> which
+returns a JSON object based on the properties defined for a given “schemata” and
+the example values defined in the schema. For person it looks like this:</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"1dc3567e-acd4-4819-afd5-21d0ef677dcd"</span><span class="p">,</span>
+  <span class="nt">"first_name"</span><span class="p">:</span> <span class="s2">"Jean-Luc"</span><span class="p">,</span>
+  <span class="nt">"last_name"</span><span class="p">:</span> <span class="s2">"Picard"</span><span class="p">,</span>
+  <span class="nt">"email_address"</span><span class="p">:</span> <span class="s2">"locutus@borg.hive"</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Finally, the <code>#message</code> method wraps the JSON example in triple back ticks so
+that Slack will format the message as preformatted text. The <code>#send</code> method as
+you recall is what our Slack bot actually calls to send the message.</p>
+
+<h2 id="configure-slack">Configure Slack</h2>
+
+<p>The final step to run this basic Slack bot is to configure your team’s
+integrations. First create a new bot by going to the <a href="https://slack.com/services/new/bot">Add Bot</a>
+page. Create a new bot and obtain the bot’s API token. You’ll need this to start the bot.
+Next, from the <a href="https://slack.com/services/new/outgoing-webhook">Add Outgoing Webhooks</a>
+page create a new outgoing webhook and choose a specific
+channel for your bot to monitor.</p>
+
+<p>To run the bot use the command:</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">SLACK_API_TOKEN=bot_api_token_here ruby docutron.rb</code></pre></div>
+
+<p><img src="/images/posts/slackbot-docutron.gif" alt="Slackbot: Docutron" class="console-image" /></p>
+
+<h2 id="just-the-beginning">Just the beginning</h2>
+
+<p>For the documentation to be truly useful, you’ll of course want more
+information. Maybe some details about each property, for example.
+Prmd has templates to handle generating that which could be
+adapted for docutron, but I leave that as an exercise for the reader.</p>
+
+<p>Happy Slacking!</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><a href="http://github.com/mlr/docutron">Docutron source code</a></li>
+  <li><a href="http://spacetelescope.github.io/understanding-json-schema/">Understanding JSON Schema</a></li>
+  <li><a href="https://github.com/dblock/slack-ruby-bot">slack-ruby-bot</a></li>
+  <li><a href="https://github.com/interagent/prmd">Prmd</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <hr />
+
+    <h4 id="blog-about">About</h4>
+    <p>
+      Ronnie is a software developer located in Portland, OR.
+      He works primarily in <a href="http://ruby-lang.org">Ruby</a> and
+      <a href="http://rubyonrails.org">Ruby on Rails</a>, but he's also experienced
+      in frontend development. In his spare time he enjoys hiking, snowboarding and
+      flying planes.
+    </p>
+  </div>
+
+  <footer>
+    <ul id="profiles">
+      <li><a href="http://github.com/mlr" class="symbol">circlegithubalt</span></a></li>
+      <li><a href="http://linkedin.com/in/ronniemlr" class="symbol">circlelinkedin</span></a></li>
+    </ul>
+  </footer>
+</div>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-19173573-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</body>
+</html>
+
