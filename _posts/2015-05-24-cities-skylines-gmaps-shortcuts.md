@@ -1,5 +1,5 @@
 ---
-title: "Cities: Skylines &hearts; Google Maps"
+title: "Cities: Skylines &lt;3 Google Maps"
 ---
 
 I've been playing some [Cities: Skylines](http://store.steampowered.com/app/255710/)
