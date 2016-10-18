@@ -592,6 +592,23 @@ there.
   margin-left: 5px;
   list-style: disc; }
 
+#content.page.cv {
+  padding-bottom: 25px; }
+  #content.page.cv p {
+    width: 97%; }
+  #content.page.cv ul li {
+    margin-left: 10px;
+    list-style: disc; }
+  #content.page.cv h2 {
+    border-bottom: 1px solid #888;
+    padding-bottom: 5px;
+    width: 90%; }
+  #content.page.cv h3 {
+    margin-bottom: -5px;
+    padding-bottom: 5px; }
+  #content.page.cv h4 {
+    font-size: 1.05em; }
+
 /* RailsCasts syntax highlighting */
 .highlight, .highlight pre, .highlight table {
   background: #2B2B2B !important;

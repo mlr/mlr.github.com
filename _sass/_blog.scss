@@ -112,3 +112,31 @@
     list-style: disc;
   }
 }
+
+#content.page.cv {
+  padding-bottom: 25px;
+
+  p {
+    width: 97%;
+  }
+
+  ul li {
+    margin-left: 10px;
+    list-style: disc;
+  }
+
+  h2 {
+    border-bottom: 1px solid #888;
+    padding-bottom: 5px;
+    width: 90%;
+  }
+
+  h3 {
+    margin-bottom: -5px;
+    padding-bottom: 5px;
+  }
+
+  h4 {
+    font-size: 1.05em;
+  }
+}
