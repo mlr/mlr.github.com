@@ -28,7 +28,7 @@
   color: #86C1B8;
 }
 
-table.highlighttable, div.highlight, div.highlight pre {
+table.highlighttable, .highlight, .highlight pre {
   border-radius: 5px;
   background: #2B2B2B;
   width: 100%;
@@ -46,7 +46,7 @@ table.highlighttable, div.highlight, div.highlight pre {
   margin: 0;
 }
 
-td.linenos, td.code {
+.linenos, td.code {
   border-bottom: none;
   padding: 0;
   margin: 0;
@@ -82,6 +82,22 @@ figure {
 
     font-family: Consolas, monospace;
     color: #888;
+  }
+
+  code {
+    table {
+      margin-bottom: 0px;
+
+      td.gutter, pre {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      td.gutter {
+        padding-right: 15px;
+        border: none;
+      }
+    }
   }
 
   figcaption + table.highlighttable {

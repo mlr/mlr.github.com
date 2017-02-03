@@ -62,18 +62,18 @@ review of a few plugins I have tried, but just haven’t stuck.</p>
 <a href="https://github.com/VundleVim/Vundle.vim"><em>Vundle</em></a> to manage my vim bundle.
 I’ve considered trying <a href="https://github.com/tpope/vim-pathogen">Tim Pope’s <em>Pathogen</em></a>,
 but that’s a topic for another post. Anyway, my
-<a href="https://github.com/mlr/dotfiles/blob/master/vimrc.bundles"><code>.vimrc.bundles</code></a>
+<a href="https://github.com/mlr/dotfiles/blob/master/vimrc.bundles"><code class="highlighter-rouge">.vimrc.bundles</code></a>
 file looks like this:</p>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-vim" data-lang="vim"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
+<figure class="highlight"><pre><code class="language-vim" data-lang="vim"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
 10
 11
 12
@@ -124,10 +124,10 @@ file looks like this:</p>
 57
 58
 59
-60</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
+60</pre></td><td class="code"><pre><span class="k">set</span> nocompatible
 <span class="k">filetype</span> off
 
-<span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle<span class="sr">/vundle/</span>
+<span class="k">set</span> rtp<span class="p">+=~</span><span class="sr">/.vim/</span>bundle<span class="sr">/vundle/</span>
 <span class="k">call</span> vundle#rc<span class="p">()</span>
 
 <span class="c">" Let Vundle manage Vundle</span>
@@ -183,9 +183,8 @@ Bundle <span class="s1">'MarcWeber/vim-addon-mw-utils'</span>
 Bundle <span class="s1">'tomtom/tlib_vim'</span>
 Bundle <span class="s1">'garbas/vim-snipmate'</span>
 
-<span class="k">filetype</span> <span class="k">on</span>
-</pre></div>
-</td></tr></table>
+<span class="k">filetype</span> <span class="k">on</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As you can see it’s organized into 5 semi-defined sections:</p>
 
@@ -201,10 +200,10 @@ Bundle <span class="s1">'garbas/vim-snipmate'</span>
 most churn tends to happens. There’s four plugins in particular that I wanted to
 review for removal:</p>
 
-<div class="highlight"><pre><code class="language-vim" data-lang="vim">Bundle <span class="s1">'goldfeld/vim-seek'</span>
+<figure class="highlight"><pre><code class="language-vim" data-lang="vim">Bundle <span class="s1">'goldfeld/vim-seek'</span>
 Bundle <span class="s1">'PeterRincker/vim-argumentative'</span>
 Bundle <span class="s1">'tommcdo/vim-exchange.git'</span>
-Bundle <span class="s1">'terryma/vim-expand-region'</span></code></pre></div>
+Bundle <span class="s1">'terryma/vim-expand-region'</span></code></pre></figure>
 
 <h2 id="vim-seek">Vim seek</h2>
 
@@ -217,21 +216,21 @@ Bundle <span class="s1">'terryma/vim-expand-region'</span></code></pre></div>
 <p><img src="/images/posts/vim-bundle-vim-seek.png" alt="Vim seek install date" class="console-image" /></p>
 
 <p>I remember installing vim-seek because my habit when writing code tends to be to
-use the <code>f</code> character to motion jump around to the part of the line I need to change.
+use the <code class="highlighter-rouge">f</code> character to motion jump around to the part of the line I need to change.
 The problem comes when the line has more than one of a given character, which tends
-to happen more often than not. Vim seek maps the <code>s</code> character to behave similar
+to happen more often than not. Vim seek maps the <code class="highlighter-rouge">s</code> character to behave similar
 to find, but takes two characters then jumps to the first instance of
 those two characters.</p>
 
 <p>This works great, but I found myself forgetting the key mapping was there.
-Furthermore, I simply adjusted my habit from tending to use the <code>f</code> key to
-invoke find to using the <code>/</code> key to invoke a pattern search and typing a couple
+Furthermore, I simply adjusted my habit from tending to use the <code class="highlighter-rouge">f</code> key to
+invoke find to using the <code class="highlighter-rouge">/</code> key to invoke a pattern search and typing a couple
 characters to search within the whole file.</p>
 
 <p>Since the search is made relative to the current cursor position it
 usually works well. This also has the added bonus of not needing to be
-on the same line as the search term and I can use <code>?</code> (<code>shift+/</code>) similar
-to <code>F</code> to search backward. Now I tend to just type <code>/</code> or <code>?</code> and begin
+on the same line as the search term and I can use <code class="highlighter-rouge">?</code> (<code class="highlighter-rouge">shift+/</code>) similar
+to <code class="highlighter-rouge">F</code> to search backward. Now I tend to just type <code class="highlighter-rouge">/</code> or <code class="highlighter-rouge">?</code> and begin
 typing the code I’m trying to jump to.</p>
 
 <p><strong>Conclusion: removed from bundle</strong></p>
@@ -245,14 +244,14 @@ typing the code I’m trying to jump to.</p>
 </blockquote>
 
 <p>As can be seen in the example below, argumentative lets you easily swap the
-order of method arguments. Argumentative defines the <code>&gt;,</code> and <code>&lt;,</code> mappings. You
+order of method arguments. Argumentative defines the <code class="highlighter-rouge">&gt;,</code> and <code class="highlighter-rouge">&lt;,</code> mappings. You
 simply place the cursor on one argument and use the former to swap it right and
 the latter to swap it left.</p>
 
 <p><img src="/images/posts/vim-bundle-vim-argumentative.gif" alt="Vim argumentative usage" class="console-image" /></p>
 
-<p>In addition, it defines two new text objects <code>a,</code> and <code>i,</code> which allows you to
-further manipulate function arguments. For instance <code>vi,</code> and <code>va,</code> can be used to
+<p>In addition, it defines two new text objects <code class="highlighter-rouge">a,</code> and <code class="highlighter-rouge">i,</code> which allows you to
+further manipulate function arguments. For instance <code class="highlighter-rouge">vi,</code> and <code class="highlighter-rouge">va,</code> can be used to
 make a visual selection inside the method argument under the cursor or select around it, respectively.</p>
 
 <p>Although I still love the idea of this plugin, I have not noticed myself using
@@ -296,16 +295,16 @@ text using the same key combination.</p>
 
 <p><img src="/images/posts/vim-bundle-vim-expand-region.gif" alt="Vim expand region usage" class="console-image" /></p>
 
-<p>Using the <code>+</code> and <code>_</code> key mappings provided by vim-expand-region, you can easily
+<p>Using the <code class="highlighter-rouge">+</code> and <code class="highlighter-rouge">_</code> key mappings provided by vim-expand-region, you can easily
 grow and shrink a visual selection as seen above.</p>
 
 <p>Since I don’t typically visually select some piece of text before operating on
 it, I don’t need to modify my selection very often. I tend to just yank or change
-inside of whatever text object I’m in. For example <code>yi(</code> or <code>ci[</code>.</p>
+inside of whatever text object I’m in. For example <code class="highlighter-rouge">yi(</code> or <code class="highlighter-rouge">ci[</code>.</p>
 
 <p>I do frequently select entire blocks of code, for instance an if statement to
-indent further, but in that case I typically place my cursor on the <code>if</code> or the
-<code>end</code> and do <code>V%</code> to select to the entire block. The <code>%</code> mapping comes from the
+indent further, but in that case I typically place my cursor on the <code class="highlighter-rouge">if</code> or the
+<code class="highlighter-rouge">end</code> and do <code class="highlighter-rouge">V%</code> to select to the entire block. The <code class="highlighter-rouge">%</code> mapping comes from the
 excellent <a href="https://github.com/tmhedberg/matchit">vim-matchit</a> plugin.</p>
 
 <p><strong>Conclusion: removed from bundle</strong></p>

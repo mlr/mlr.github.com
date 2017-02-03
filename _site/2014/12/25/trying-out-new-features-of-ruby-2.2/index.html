@@ -50,8 +50,8 @@ both incremental garbage and symbol garbage collection.</p>
 and will allow the Rails core team to “<a href="http://weblog.rubyonrails.org/2014/8/20/Rails-4-2-beta1/#maintenance-consequences-and-rails-5-0">shed a lot of weight</a>”
 with regards to user input and how strings are handled.</p>
 
-<p>Let’s try out a couple of the new features, namely <code>Enumerable#slice_after</code> and
-<code>Enumerable#slice_when</code></p>
+<p>Let’s try out a couple of the new features, namely <code class="highlighter-rouge">Enumerable#slice_after</code> and
+<code class="highlighter-rouge">Enumerable#slice_when</code></p>
 
 <h2 id="install-ruby-220">Install Ruby 2.2.0</h2>
 
@@ -59,42 +59,42 @@ with regards to user input and how strings are handled.</p>
 that’s how I installed the new version on my system. If you’re not already using
 it, I highly recommend it.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">ruby-install -u http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.bz2 ruby 2.2</code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ruby-install -u http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.bz2 ruby 2.2</code></pre></figure>
 
 <p>Once that’s done downloading and compiling, I simply use
 <a href="https://github.com/postmodern/chruby">chruby</a> to switch to the new version.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">chruby 2.2</code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">chruby 2.2</code></pre></figure>
 
-<h2 id="enumerablesliceafter">Enumerable#slice_after</h2>
+<h2 id="enumerableslice_after">Enumerable#slice_after</h2>
 
-<p><code>#slice_after</code> is a counterpart to the already existing <code>#slice_before</code></p>
+<p><code class="highlighter-rouge">#slice_after</code> is a counterpart to the already existing <code class="highlighter-rouge">#slice_before</code></p>
 
 <p>This method lets you split an enumerator with each item being grouped into a new
 chunk when the result of the block is true.  So in the example below, you can
 see a new chunk is created after each odd number.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="o">].</span><span class="n">slice_after</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:odd?</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
-<span class="c1"># =&gt; [[0, 2, 4, 1], [2, 4, 5], [3], [1], [4, 2]]</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">].</span><span class="nf">slice_after</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:odd?</span><span class="p">).</span><span class="nf">to_a</span>
+<span class="c1"># =&gt; [[0, 2, 4, 1], [2, 4, 5], [3], [1], [4, 2]]</span></code></pre></figure>
 
-<h2 id="enumerableslicewhen">Enumerable#slice_when</h2>
+<h2 id="enumerableslice_when">Enumerable#slice_when</h2>
 
 <p>This method allows you to slice the enumerable by comparing adjacent elements.
 When the block is true a new chunk is created. Say you have an array of numbers
 and you want to list them where subsequent numbers are grouped into ranges,
 like “1, 5, 9-12, 15” for example.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">numbers</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="o">]</span>
-<span class="n">grouped</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="n">slice_when</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">|</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">j</span> <span class="p">}</span>
-<span class="nb">p</span> <span class="n">grouped</span><span class="o">.</span><span class="n">to_a</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+<span class="n">grouped</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">slice_when</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">|</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">j</span> <span class="p">}</span>
+<span class="nb">p</span> <span class="n">grouped</span><span class="p">.</span><span class="nf">to_a</span>
 <span class="c1"># =&gt; [[1], [5], [9, 10, 11, 12], [15]]</span>
 
-<span class="n">ranges</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="n">a</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">?</span> <span class="n">a</span> <span class="p">:</span> <span class="s2">"</span><span class="si">#{</span><span class="n">a</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2">-</span><span class="si">#{</span><span class="n">a</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
+<span class="n">ranges</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="n">a</span><span class="p">.</span><span class="nf">length</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">?</span> <span class="n">a</span> <span class="p">:</span> <span class="s2">"</span><span class="si">#{</span><span class="n">a</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2">-</span><span class="si">#{</span><span class="n">a</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
 <span class="nb">p</span> <span class="n">ranges</span>
 <span class="c1"># =&gt; [[1], [5], "9-12", [15]]</span>
 
-<span class="nb">p</span> <span class="n">ranges</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span>
-<span class="c1"># =&gt; "1, 5, 9-12, 15"</span></code></pre></div>
+<span class="nb">p</span> <span class="n">ranges</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span>
+<span class="c1"># =&gt; "1, 5, 9-12, 15"</span></code></pre></figure>
 
 <p>Let me know what you like about this release. Go forth and be productive!</p>
 

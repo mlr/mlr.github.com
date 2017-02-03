@@ -60,10 +60,10 @@ to do is make it a Chrome extension!</p>
 but here’s what I wanted to do:</p>
 
 <ul>
-  <li><code>w</code><code>a</code><code>s</code><code>d</code> - pan - <em>This was not possible! <a href="#wasdfail">read why</a> below.</em></li>
-  <li><code>z</code><code>x</code> - zoom in/out</li>
-  <li><code>q</code><code>e</code> - rotate left/right</li>
-  <li><code>t</code> - tilt</li>
+  <li><code class="highlighter-rouge">w</code><code class="highlighter-rouge">a</code><code class="highlighter-rouge">s</code><code class="highlighter-rouge">d</code> - pan - <em>This was not possible! <a href="#wasdfail">read why</a> below.</em></li>
+  <li><code class="highlighter-rouge">z</code><code class="highlighter-rouge">x</code> - zoom in/out</li>
+  <li><code class="highlighter-rouge">q</code><code class="highlighter-rouge">e</code> - rotate left/right</li>
+  <li><code class="highlighter-rouge">t</code> - tilt</li>
 </ul>
 
 <h2 id="setting-up-the-chrome-extension">Setting up the Chrome extension</h2>
@@ -78,43 +78,42 @@ and ready to start developing.</p>
 <figure>
 <figcaption>manifest.json</figcaption>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-json" data-lang="json"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
 10
 11
 12
 13
 14
 15
-16</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"manifest_version"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"CS: Google Maps"</span><span class="p">,</span>
-  <span class="nt">"version"</span><span class="p">:</span> <span class="s2">"1.0"</span><span class="p">,</span>
-  <span class="nt">"description"</span><span class="p">:</span> <span class="s2">"A Cities: Skylines inspired keymapping for Google maps."</span><span class="p">,</span>
-  <span class="nt">"content_scripts"</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="nt">"matches"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"https://www.google.com/maps/*"</span><span class="p">],</span>
-      <span class="nt">"js"</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">"content_scripts/jquery.js"</span><span class="p">,</span>
-        <span class="s2">"content_scripts/mapkeys.js"</span>
-      <span class="p">],</span>
-      <span class="nt">"run_at"</span><span class="p">:</span> <span class="s2">"document_start"</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</td></tr></table>
+16</pre></td><td class="code"><pre><span class="p">{</span><span class="w">
+  </span><span class="nt">"manifest_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CS: Google Maps"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Cities: Skylines inspired keymapping for Google maps."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content_scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"matches"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://www.google.com/maps/*"</span><span class="p">],</span><span class="w">
+      </span><span class="nt">"js"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"content_scripts/jquery.js"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"content_scripts/mapkeys.js"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"run_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"document_start"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 </figure>
 
-<p>Now navigating to <code>chrome://extensions</code> and clicking on the
+<p>Now navigating to <code class="highlighter-rouge">chrome://extensions</code> and clicking on the
 “Load unpacked Extension…” button allows you to load this new extension.</p>
 
 <p>It turns out, this is a pretty basic manifest as far as Chrome extensions go.
@@ -139,15 +138,15 @@ need to call.</p>
 handlers on the page handle the rest. These five lines end up being the bulk of
 the extension’s behavior:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.left"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// rotate left</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.left"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// rotate left</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.right"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// rotate left</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.right"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// rotate left</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button.widget-tilt-button'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// tilt</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'button.widget-tilt-button'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// tilt</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-in'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// zoom in</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-in'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// zoom in</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-out'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// zoom out</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-out'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span> <span class="c1">// zoom out</span></code></pre></figure>
 
 <p>Google’s CSS class names make it pretty obvious what these do.  Try them in the
 console of a Google maps page! You might have noticed, there’s nothing above for
@@ -181,7 +180,7 @@ Don’t automatically switch to Earth view when zooming because that’s
 available on the default map view.</p>
   </li>
   <li>
-    <p><strong>Bind keydown handler to the</strong> <code>window</code> <strong>object</strong> -
+    <p><strong>Bind keydown handler to the</strong> <code class="highlighter-rouge">window</code> <strong>object</strong> -
 When the keydown event is captured, we must stop its propagation
 then and there. This is why you’ll see I bound my keydown listener
 directly on the window object. Any lower and I wouldn’t be able to prevent
@@ -201,15 +200,15 @@ check out the <a href="http://github.com/mlr/gmaps-keyboard-shortcuts">repositor
 <figure>
 <figcaption>mapkeys.js</figcaption>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-javascript" data-lang="javascript"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
 10
 11
 12
@@ -249,7 +248,7 @@ check out the <a href="http://github.com/mlr/gmaps-keyboard-shortcuts">repositor
 46
 47
 48
-49</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'keydown'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+49</pre></td><td class="code"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'keydown'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'#searchboxinput'</span><span class="p">).</span><span class="nx">is</span><span class="p">(</span><span class="s1">':focus'</span><span class="p">))</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
   <span class="k">if</span><span class="p">(</span><span class="nx">currentlyPanningMap</span><span class="p">(</span><span class="nx">event</span><span class="p">))</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 
@@ -279,32 +278,31 @@ check out the <a href="http://github.com/mlr/gmaps-keyboard-shortcuts">repositor
 
 <span class="nx">applyKeyMapping</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">letter</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">switch</span><span class="p">(</span><span class="nx">letter</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="s1">'Q'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">'Q'</span><span class="err">:</span>
       <span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.left"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span>
       <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="s1">'E'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">'E'</span><span class="err">:</span>
       <span class="nx">$</span><span class="p">(</span><span class="s1">'button[jsaction="compass.right"]'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span>
       <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="s1">'Z'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">'Z'</span><span class="err">:</span>
       <span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-in'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span>
       <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="s1">'X'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">'X'</span><span class="err">:</span>
       <span class="nx">$</span><span class="p">(</span><span class="s1">'.widget-zoom-out'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span>
       <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="s1">'T'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">'T'</span><span class="err">:</span>
       <span class="nx">$</span><span class="p">(</span><span class="s1">'button.widget-tilt-button'</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">'click'</span><span class="p">);</span>
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 
   <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</td></tr></table>
+<span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 </figure>
 
 <p>The first 10 lines execute the logic of this extension when a key is pressed,
-including each of the four UX considerations I outlined above. The <code>applyKeyMapping</code>
+including each of the four UX considerations I outlined above. The <code class="highlighter-rouge">applyKeyMapping</code>
 function takes the letter pressed and fires a click on the appropriate Google map button.
 I’m checking the letter pressed rather than the keycode simply for easier modification later.</p>
 
@@ -324,13 +322,13 @@ pretty trivial to implement. There are no buttons for panning unfortunately.</p>
 <p>Google already has panning available using the keyboard’s arrow keys. Maybe you
 could just emulating the arrow buttons being pressed!</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// added to switch statement</span>
-<span class="k">case</span> <span class="s1">'S'</span><span class="o">:</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// added to switch statement</span>
+<span class="k">case</span> <span class="s1">'S'</span><span class="err">:</span>
   <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="s1">'keydown'</span><span class="p">);</span>
   <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span> <span class="c1">// down arrow</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
   <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
-  <span class="k">break</span><span class="p">;</span></code></pre></div>
+  <span class="k">break</span><span class="p">;</span></code></pre></figure>
 
 <p>Unfortunately, this solution doesn’t work.  Neither do the other <a href="http://stackoverflow.com/questions/10455626/">various
 solutions for keypress emulation</a>.

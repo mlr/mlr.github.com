@@ -224,19 +224,19 @@ h2 {
   line-height: 1.25; }
 
 h3 {
-  font-size: 2.0rem;
+  font-size: 2.2rem;
   line-height: 1.8; }
 
 h4 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   line-height: 1.45; }
 
 h5 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.5; }
 
 h6 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   line-height: 1.6; }
 
 p {
@@ -508,6 +508,9 @@ there.
     font-size: .80em !important;
     order: 2; } }
 @media (max-width: 750px) {
+  body #content ul#markdown-toc {
+    display: none; }
+
   body #content.blog-post h1 {
     font-size: 2.8rem; }
   body #content.blog-post h2 {
@@ -542,6 +545,10 @@ there.
   width: 95%; }
   #content blockquote p {
     margin-bottom: 0px; }
+#content blockquote + p cite {
+  display: block;
+  font-size: .9em;
+  margin-top: -15px; }
 
 #content.page.index ul {
   margin-bottom: 30px; }
@@ -550,13 +557,13 @@ there.
     flex-direction: row;
     display: flex; }
 #content.page.index span.blog-post-title {
-  min-width: 300px; }
+  min-width: 450px; }
 #content.page.index span.blog-post-date {
   font-family: Monaco, "Lucida Console", monospace;
   font-size: 0.9em;
   margin-top: 1px;
   margin-left: auto;
-  margin-right: 255px;
+  margin-right: 3px;
   order: 2; }
 
 #content.blog-post h1:first-child {
@@ -592,22 +599,45 @@ there.
   margin-left: 5px;
   list-style: disc; }
 
-#content.page.cv {
+#content.page.resume {
   padding-bottom: 25px; }
-  #content.page.cv p {
+  #content.page.resume p {
     width: 97%; }
-  #content.page.cv ul li {
+  #content.page.resume ul li {
     margin-left: 10px;
     list-style: disc; }
-  #content.page.cv h2 {
+  #content.page.resume h2 {
     border-bottom: 1px solid #888;
     padding-bottom: 5px;
     width: 90%; }
-  #content.page.cv h3 {
+  #content.page.resume h3 {
     margin-bottom: -5px;
     padding-bottom: 5px; }
-  #content.page.cv h4 {
+  #content.page.resume h4 {
     font-size: 1.05em; }
+
+#content ul#markdown-toc {
+  padding-left: 40px;
+  float: right; }
+  #content ul#markdown-toc li, #content ul#markdown-toc li ul {
+    margin: 0px; }
+
+#content.blog-post.painless-image-uploads-google-apps-scripts h1 {
+  font-size: 2em; }
+#content.blog-post.painless-image-uploads-google-apps-scripts div.googleapps-image {
+  margin-bottom: 15px; }
+  #content.blog-post.painless-image-uploads-google-apps-scripts div.googleapps-image img {
+    border: none; }
+#content.blog-post.painless-image-uploads-google-apps-scripts div.googleapps-image + p {
+  margin-top: 25px; }
+#content.blog-post.painless-image-uploads-google-apps-scripts blockquote {
+  padding: 15px; }
+#content.blog-post.painless-image-uploads-google-apps-scripts div.googleapps-image {
+  display: flex;
+  justify-content: center; }
+  #content.blog-post.painless-image-uploads-google-apps-scripts div.googleapps-image img {
+    align-self: center;
+    min-width: 350px; }
 
 /* RailsCasts syntax highlighting */
 .highlight, .highlight pre, .highlight table {
@@ -669,7 +699,7 @@ there.
 .p-Indicator {
   color: #86C1B8; }
 
-table.highlighttable, div.highlight, div.highlight pre {
+table.highlighttable, .highlight, .highlight pre {
   border-radius: 5px;
   background: #2B2B2B;
   width: 100%;
@@ -684,7 +714,7 @@ table.highlighttable, div.highlight, div.highlight pre {
   padding: 0;
   margin: 0; }
 
-td.linenos, td.code {
+.linenos, td.code {
   border-bottom: none;
   padding: 0;
   margin: 0; }
@@ -714,6 +744,14 @@ figure {
     font-size: 1.35rem;
     font-family: Consolas, monospace;
     color: #888; }
+  figure code table {
+    margin-bottom: 0px; }
+    figure code table td.gutter, figure code table pre {
+      padding: 0px;
+      margin: 0px; }
+    figure code table td.gutter {
+      padding-right: 15px;
+      border: none; }
   figure figcaption + table.highlighttable {
     margin-top: 10px; }
   figure.vscroll .highlight code {

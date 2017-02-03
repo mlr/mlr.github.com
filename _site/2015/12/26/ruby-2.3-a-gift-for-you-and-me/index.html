@@ -53,7 +53,7 @@ for <a href="https://bugs.ruby-lang.org/issues/11473">immutability in Ruby 3.0</
 and a large chunk of the release provided new syntax and language features.</p>
 
 <p>Let’s take a look at a few of the new features.
-I was most looking forward to both the <code>Hash#dig</code> and <code>Array#dig</code> methods.
+I was most looking forward to both the <code class="highlighter-rouge">Hash#dig</code> and <code class="highlighter-rouge">Array#dig</code> methods.
 The “safe navigation” operator was added, which apparently is a
 <a href="https://blog.heroku.com/archives/2015/12/25/ruby-2-3-0-on-heroku-with-matz#do-you-have-any-favorite-features-coming-in-ruby-2-3">favorite of Matz</a>.
 Additionally, the <a href="https://bugs.ruby-lang.org/issues/11252">did_you_mean gem</a> is
@@ -65,12 +65,12 @@ I am so fond.</p>
 <p>Using <a href="https://github.com/postmodern/ruby-install">ruby-install</a> we can quickly
 grab the latest version of ruby.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">ruby-install -M https://ftp.ruby-lang.org/pub/ruby ruby 2.3.0</code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ruby-install -M https://ftp.ruby-lang.org/pub/ruby ruby 2.3.0</code></pre></figure>
 
 <p>Once that’s done downloading and compiling, I like
 <a href="https://github.com/postmodern/chruby">chruby</a> for switching to the new version.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">chruby 2.3</code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">chruby 2.3</code></pre></figure>
 
 <h2 id="hashdig-and-arraydig">Hash#dig and Array#dig</h2>
 
@@ -79,73 +79,73 @@ may or may not have control over. Think complex API responses, legacy system int
 etc. They allow you to safely traverse into the data structure without raising
 an error if a single node in the lookup doesn’t exist.</p>
 
-<h3 id="hashdig"><code>Hash#dig</code></h3>
+<h3 id="hashdig"><code class="highlighter-rouge">Hash#dig</code></h3>
 
 <p>Given a hash that looks like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">people</span><span class="p">:</span> <span class="o">[</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">people: </span><span class="p">[</span>
     <span class="p">{</span>
-      <span class="ss">first_name</span><span class="p">:</span> <span class="s2">"Jamie"</span><span class="p">,</span>
-      <span class="ss">last_name</span><span class="p">:</span> <span class="s2">"Jackson"</span><span class="p">,</span>
-      <span class="ss">team</span><span class="p">:</span> <span class="s2">"Blue Squad"</span><span class="p">,</span>
-      <span class="ss">qualifications</span><span class="p">:</span> <span class="o">[</span>
+      <span class="ss">first_name: </span><span class="s2">"Jamie"</span><span class="p">,</span>
+      <span class="ss">last_name: </span><span class="s2">"Jackson"</span><span class="p">,</span>
+      <span class="ss">team: </span><span class="s2">"Blue Squad"</span><span class="p">,</span>
+      <span class="ss">qualifications: </span><span class="p">[</span>
         <span class="p">{</span>
-          <span class="ss">skill</span><span class="p">:</span> <span class="s2">"Oil Change"</span><span class="p">,</span>
-          <span class="ss">type</span><span class="p">:</span> <span class="s2">"primary"</span>
+          <span class="ss">skill: </span><span class="s2">"Oil Change"</span><span class="p">,</span>
+          <span class="ss">type: </span><span class="s2">"primary"</span>
         <span class="p">},</span>
         <span class="p">{</span>
-          <span class="ss">skill</span><span class="p">:</span> <span class="s2">"Alignment"</span><span class="p">,</span>
-          <span class="ss">type</span><span class="p">:</span> <span class="s2">"advanced"</span>
+          <span class="ss">skill: </span><span class="s2">"Alignment"</span><span class="p">,</span>
+          <span class="ss">type: </span><span class="s2">"advanced"</span>
         <span class="p">}</span>
-      <span class="o">]</span>
+      <span class="p">]</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="ss">first_name</span><span class="p">:</span> <span class="s2">"Jordan"</span><span class="p">,</span>
-      <span class="ss">last_name</span><span class="p">:</span> <span class="s2">"Jacobs"</span><span class="p">,</span>
-      <span class="ss">team</span><span class="p">:</span> <span class="s2">"Red Squad"</span><span class="p">,</span>
-      <span class="ss">qualifications</span><span class="p">:</span> <span class="o">[]</span>
+      <span class="ss">first_name: </span><span class="s2">"Jordan"</span><span class="p">,</span>
+      <span class="ss">last_name: </span><span class="s2">"Jacobs"</span><span class="p">,</span>
+      <span class="ss">team: </span><span class="s2">"Red Squad"</span><span class="p">,</span>
+      <span class="ss">qualifications: </span><span class="p">[]</span>
     <span class="p">}</span>
-  <span class="o">]</span>
-<span class="p">}</span></code></pre></div>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></figure>
 
-<p>The dig method allows you to pull out data or simply get <code>nil</code> if the piece
+<p>The dig method allows you to pull out data or simply get <code class="highlighter-rouge">nil</code> if the piece
 of data doesn’t exist at the path you’ve “dug” to. For instance:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span><span class="o">[</span><span class="ss">:people</span><span class="o">][</span><span class="mi">0</span><span class="o">][</span><span class="ss">:qualifications</span><span class="o">][</span><span class="mi">0</span><span class="o">][</span><span class="ss">:skill</span><span class="o">]</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span><span class="p">[</span><span class="ss">:people</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="ss">:qualifications</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="ss">:skill</span><span class="p">]</span>
 <span class="c1"># =&gt; Oil Change</span>
-<span class="n">data</span><span class="o">[</span><span class="ss">:people</span><span class="o">][</span><span class="mi">1</span><span class="o">][</span><span class="ss">:qualifications</span><span class="o">][</span><span class="mi">0</span><span class="o">][</span><span class="ss">:skill</span><span class="o">]</span>
+<span class="n">data</span><span class="p">[</span><span class="ss">:people</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="ss">:qualifications</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="ss">:skill</span><span class="p">]</span>
 <span class="c1"># =&gt; NoMethodError: undefined method `[]' for nil:NilClass</span>
 <span class="c1"># thrown since data[:people][1][:qualifications][0] is nil</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">dig</span><span class="p">(</span><span class="ss">:people</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:qualifications</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:skill</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="ss">:people</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:qualifications</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:skill</span><span class="p">)</span>
 <span class="c1"># =&gt; Oil Change</span>
-<span class="n">data</span><span class="o">.</span><span class="n">dig</span><span class="p">(</span><span class="ss">:people</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:qualifications</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:skill</span><span class="p">)</span>
-<span class="c1"># =&gt; nil</span></code></pre></div>
+<span class="n">data</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="ss">:people</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:qualifications</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:skill</span><span class="p">)</span>
+<span class="c1"># =&gt; nil</span></code></pre></figure>
 
-<h3 id="arraydig"><code>Array#dig</code></h3>
+<h3 id="arraydig"><code class="highlighter-rouge">Array#dig</code></h3>
 
 <p>The dig method for Array works similarly:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="o">[</span>
-  <span class="o">[</span><span class="mi">10</span><span class="p">,</span> <span class="o">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="o">]]</span><span class="p">,</span>
-  <span class="o">[</span><span class="mi">15</span><span class="p">,</span> <span class="o">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="o">]]</span><span class="p">,</span>
-  <span class="o">[</span><span class="mi">20</span><span class="o">]</span>
-<span class="o">]</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
+  <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span>
+  <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+<span class="p">]</span>
 
-<span class="n">data</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># =&gt; 10</span>
-<span class="n">data</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># =&gt; 15</span>
-<span class="n">data</span><span class="o">[</span><span class="mi">2</span><span class="o">][</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># =&gt; NoMethodError: undefined method `[]' for nil:NilClass</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">dig</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="c1"># =&gt; 10</span>
-<span class="n">data</span><span class="o">.</span><span class="n">dig</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="c1"># =&gt; 15</span>
-<span class="n">data</span><span class="o">.</span><span class="n">dig</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="c1"># =&gt; nil</span></code></pre></div>
+<span class="n">data</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># =&gt; nil</span></code></pre></figure>
 
 <h2 id="safe-navigation-operator">Safe Navigation Operator</h2>
 
@@ -154,24 +154,24 @@ would be a smell otherwise. The “safe navigation” operator allows you to cal
 a method on a variable that might be nil. Other languages, such as C# and Swift,
 have a similar feature.</p>
 
-<p>In Ruby it looks like this: <code>&amp;.</code></p>
+<p>In Ruby it looks like this: <code class="highlighter-rouge">&amp;.</code></p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># assume nilly is nil because User was not found</span>
-<span class="n">nilly</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">username</span><span class="p">:</span> <span class="s2">"nilly"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># assume nilly is nil because User was not found</span>
+<span class="n">nilly</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">username: </span><span class="s2">"nilly"</span><span class="p">)</span>
 
 <span class="c1"># Before Ruby 2.3</span>
-<span class="n">nilly</span><span class="o">.</span><span class="n">notify!</span>           <span class="c1"># NoMethodError error because nilly is nil!</span>
-<span class="n">nilly</span> <span class="o">&amp;&amp;</span> <span class="n">nilly</span><span class="o">.</span><span class="n">notify!</span>  <span class="c1"># avoid NoMethodError using short-circuit conditional</span>
+<span class="n">nilly</span><span class="p">.</span><span class="nf">notify!</span>           <span class="c1"># NoMethodError error because nilly is nil!</span>
+<span class="n">nilly</span> <span class="o">&amp;&amp;</span> <span class="n">nilly</span><span class="p">.</span><span class="nf">notify!</span>  <span class="c1"># avoid NoMethodError using short-circuit conditional</span>
 
 <span class="c1"># After Ruby 2.3</span>
-<span class="n">nilly</span><span class="o">&amp;.</span><span class="n">notify!</span>          <span class="c1"># will only call notify! if nilly is not nil</span>
-<span class="c1"># =&gt; nil                # just returns nil when object is nil</span></code></pre></div>
+<span class="n">nilly</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">notify!</span>          <span class="c1"># will only call notify! if nilly is not nil</span>
+<span class="c1"># =&gt; nil                # just returns nil when object is nil</span></code></pre></figure>
 
 <p>I can see this coming in handy in some situations, but I would consider using a
 <a href="https://www.google.com/search?q=null+object+pattern">null object pattern</a>
 if I frequently found myself calling methods on something that is possibly nil.</p>
 
-<h2 id="didyoumean">did_you_mean</h2>
+<h2 id="did_you_mean">did_you_mean</h2>
 
 <p>The <a href="https://github.com/yuki24/did_you_mean">did_you_mean gem</a> is a nice little
 tool that provides helpful suggestions when you mispell or tpyo a word. It’s
@@ -180,21 +180,21 @@ little help.</p>
 
 <p>Check it out:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">puhs</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">puhs</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="c1"># NoMethodError: undefined method `puhs' for [1, 2, 3, 4]:Array</span>
 <span class="c1"># Did you mean?  push</span>
 <span class="c1">#                puts</span>
-<span class="n">data</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">sliver</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="nf">sliver</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="c1"># NoMethodError: undefined method `sliver' for [1, 2, 3, 4, 5]:Array</span>
 <span class="c1"># Did you mean?  slice</span>
 <span class="c1">#                slice!</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="c1"># =&gt; [3, 4, 5]</span></code></pre></div>
+<span class="n">data</span><span class="p">.</span><span class="nf">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># =&gt; [3, 4, 5]</span></code></pre></figure>
 
 <p>What do you like about this release?</p>
 

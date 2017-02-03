@@ -25,6 +25,10 @@
 }
 
 @media (max-width: $larger-than-tablet) {
+  body #content ul#markdown-toc {
+    display: none;
+  }
+
   body #content.blog-post {
     h1 {
       font-size: 2.8rem;

@@ -91,7 +91,7 @@ the AWS Management Console to create and configure the bucket.</p>
 
 <p>We can also do it with code, so why not?</p>
 
-<p>The <a href="https://github.com/aws/aws-sdk-ruby"><code>aws-sdk</code></a> gem supports managing
+<p>The <a href="https://github.com/aws/aws-sdk-ruby"><code class="highlighter-rouge">aws-sdk</code></a> gem supports managing
 pretty much any resource on AWS including website buckets. The following code
 configures the SDK gem and creates a bucket, then configures it for
 static website hosting by creating a policy that allows access to all files in
@@ -101,33 +101,33 @@ policy.</p>
 <figure>
 <figcaption>~/.aws/credentials</figcaption>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="n">default</span><span class="o">]</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="n">default</span><span class="p">]</span>
 <span class="n">aws_access_key_id</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">default</span> <span class="n">access</span> <span class="n">key</span><span class="o">&gt;</span>
-<span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">default</span> <span class="n">secret</span> <span class="n">key</span><span class="o">&gt;</span></code></pre></div>
+<span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">default</span> <span class="n">secret</span> <span class="n">key</span><span class="o">&gt;</span></code></pre></figure>
 
 </figure>
 
 <figure>
 <figcaption>Gemfile</figcaption>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
 <span class="n">gem</span> <span class="s1">'aws-sdk'</span>
-<span class="n">gem</span> <span class="s1">'dotenv'</span> <span class="c1"># we'll use this later</span></code></pre></div>
+<span class="n">gem</span> <span class="s1">'dotenv'</span> <span class="c1"># we'll use this later</span></code></pre></figure>
 
 </figure>
 
 <figure>
 <figcaption>Rakefile</figcaption>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-ruby" data-lang="ruby"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
 10
 11
 12
@@ -169,15 +169,15 @@ policy.</p>
 48
 49
 50
-51</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">'rubygems'</span>
+51</pre></td><td class="code"><pre><span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'bundler'</span>
 
 <span class="k">begin</span>
-  <span class="no">Bundler</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="ss">:default</span><span class="p">,</span> <span class="ss">:development</span><span class="p">)</span>
+  <span class="no">Bundler</span><span class="p">.</span><span class="nf">setup</span><span class="p">(</span><span class="ss">:default</span><span class="p">,</span> <span class="ss">:development</span><span class="p">)</span>
 <span class="k">rescue</span> <span class="no">Bundler</span><span class="o">::</span><span class="no">BundlerError</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="vg">$stderr</span><span class="o">.</span><span class="n">puts</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
-  <span class="vg">$stderr</span><span class="o">.</span><span class="n">puts</span> <span class="s2">"Run `bundle install` to install missing gems"</span>
-  <span class="nb">exit</span> <span class="n">e</span><span class="o">.</span><span class="n">status_code</span>
+  <span class="vg">$stderr</span><span class="p">.</span><span class="nf">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">message</span>
+  <span class="vg">$stderr</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Run `bundle install` to install missing gems"</span>
+  <span class="nb">exit</span> <span class="n">e</span><span class="p">.</span><span class="nf">status_code</span>
 <span class="k">end</span>
 
 <span class="nb">require</span> <span class="s1">'aws-sdk'</span>
@@ -185,52 +185,51 @@ policy.</p>
 <span class="n">desc</span> <span class="s2">"Create website bucket on s3"</span>
 <span class="n">task</span> <span class="ss">:create</span> <span class="k">do</span>
   <span class="c1"># Perform operations in us-west-2 (or change to your preferred region)</span>
-  <span class="n">client</span> <span class="o">=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">region</span><span class="p">:</span> <span class="s1">'us-west-2'</span><span class="p">)</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">region: </span><span class="s1">'us-west-2'</span><span class="p">)</span>
 
-  <span class="n">client</span><span class="o">.</span><span class="n">create_bucket</span><span class="p">(</span><span class="ss">bucket</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'bucket'</span><span class="o">]</span><span class="p">)</span>
+  <span class="n">client</span><span class="p">.</span><span class="nf">create_bucket</span><span class="p">(</span><span class="ss">bucket: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'bucket'</span><span class="p">])</span>
 
-  <span class="n">client</span><span class="o">.</span><span class="n">put_bucket_website</span><span class="p">({</span>
-    <span class="ss">bucket</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'bucket'</span><span class="o">]</span><span class="p">,</span>
-    <span class="ss">website_configuration</span><span class="p">:</span> <span class="p">{</span>
-      <span class="ss">index_document</span><span class="p">:</span> <span class="p">{</span>
-        <span class="ss">suffix</span><span class="p">:</span> <span class="s2">"index.html"</span><span class="p">,</span>
+  <span class="n">client</span><span class="p">.</span><span class="nf">put_bucket_website</span><span class="p">({</span>
+    <span class="ss">bucket: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'bucket'</span><span class="p">],</span>
+    <span class="ss">website_configuration: </span><span class="p">{</span>
+      <span class="ss">index_document: </span><span class="p">{</span>
+        <span class="ss">suffix: </span><span class="s2">"index.html"</span><span class="p">,</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">})</span>
 
-  <span class="n">client</span><span class="o">.</span><span class="n">put_bucket_policy</span><span class="p">({</span>
-    <span class="ss">bucket</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'bucket'</span><span class="o">]</span><span class="p">,</span>
-    <span class="ss">policy</span><span class="p">:</span> <span class="p">{</span>
+  <span class="n">client</span><span class="p">.</span><span class="nf">put_bucket_policy</span><span class="p">({</span>
+    <span class="ss">bucket: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'bucket'</span><span class="p">],</span>
+    <span class="ss">policy: </span><span class="p">{</span>
       <span class="s2">"Version"</span> <span class="o">=&gt;</span> <span class="s2">"2012-10-17"</span><span class="p">,</span>
-      <span class="s2">"Statement"</span> <span class="o">=&gt;</span> <span class="o">[</span>
+      <span class="s2">"Statement"</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="p">{</span>
           <span class="s2">"Sid"</span>       <span class="o">=&gt;</span> <span class="s2">"AddPerm"</span><span class="p">,</span>
           <span class="s2">"Effect"</span>    <span class="o">=&gt;</span> <span class="s2">"Allow"</span><span class="p">,</span>
           <span class="s2">"Principal"</span> <span class="o">=&gt;</span> <span class="s2">"*"</span><span class="p">,</span>
           <span class="s2">"Action"</span>    <span class="o">=&gt;</span> <span class="s2">"s3:GetObject"</span><span class="p">,</span>
-          <span class="s2">"Resource"</span>  <span class="o">=&gt;</span> <span class="s2">"arn:aws:s3:::</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">'bucket'</span><span class="o">]</span><span class="si">}</span><span class="s2">/*"</span>
+          <span class="s2">"Resource"</span>  <span class="o">=&gt;</span> <span class="s2">"arn:aws:s3:::</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'bucket'</span><span class="p">]</span><span class="si">}</span><span class="s2">/*"</span>
         <span class="p">}</span>
-      <span class="o">]</span>
-    <span class="p">}</span><span class="o">.</span><span class="n">to_json</span>
+      <span class="p">]</span>
+    <span class="p">}.</span><span class="nf">to_json</span>
   <span class="p">})</span>
 
-  <span class="n">client</span><span class="o">.</span><span class="n">put_object</span><span class="p">({</span>
-    <span class="ss">bucket</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'bucket'</span><span class="o">]</span><span class="p">,</span>
-    <span class="ss">key</span><span class="p">:</span> <span class="s2">"index.html"</span><span class="p">,</span>
-    <span class="ss">body</span><span class="p">:</span> <span class="s2">"Hello World!"</span>
+  <span class="n">client</span><span class="p">.</span><span class="nf">put_object</span><span class="p">({</span>
+    <span class="ss">bucket: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'bucket'</span><span class="p">],</span>
+    <span class="ss">key: </span><span class="s2">"index.html"</span><span class="p">,</span>
+    <span class="ss">body: </span><span class="s2">"Hello World!"</span>
   <span class="p">})</span>
-<span class="k">end</span>
-</pre></div>
-</td></tr></table>
+<span class="k">end</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 </figure>
 
 <p>This small Rake task will put an accessible “Hello World” web page on S3.
 The first 10-15 lines are just boilerplate gem loading. By default, the
-<code>aws-sdk</code> gem will load credentials stored in your user’s home folder in
-<code>.aws/credentials</code>.</p>
+<code class="highlighter-rouge">aws-sdk</code> gem will load credentials stored in your user’s home folder in
+<code class="highlighter-rouge">.aws/credentials</code>.</p>
 
-<p>The task can be invoked with <code>rake create bucket=foobarbazbaz.com</code> where <code>bucket</code>
+<p>The task can be invoked with <code class="highlighter-rouge">rake create bucket=foobarbazbaz.com</code> where <code class="highlighter-rouge">bucket</code>
 is the domain name of the website. This isn’t the standard rake task argument syntax,
 but I find using the environment variable syntax is more readable and easier to type.</p>
 
@@ -247,7 +246,7 @@ allows access to all files using a wildcard.</li>
 greet visitors.</li>
 </ul>
 
-<p>The web page <code>http://&lt;your-bucket-name&gt;.s3-website-&lt;region&gt;.amazonaws.com</code>
+<p>The web page <code class="highlighter-rouge">http://&lt;your-bucket-name&gt;.s3-website-&lt;region&gt;.amazonaws.com</code>
 will become available after running the Rake task. In this case, running the
 task created <a href="http://foobarbazbaz.com.s3-website-us-west-2.amazonaws.com/">http://foobarbazbaz.com.s3-website-us-west-2.amazonaws.com</a>.</p>
 
@@ -259,22 +258,22 @@ of your bucket. This will be important when configuring a custom domain name.</p
 
 <p>With the bucket created and configured, all that’s left to do to make this a
 real website is put the files from the static site build into the bucket.
-With Jekyll the built site is placed into a <code>_site</code> directory. The following Rake
+With Jekyll the built site is placed into a <code class="highlighter-rouge">_site</code> directory. The following Rake
 task will iterate through each file in that directory, uploading each file to
 the same path on S3.</p>
 
 <figure>
 <figcaption>Rakefile</figcaption>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-ruby" data-lang="ruby"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
 10
 11
 12
@@ -309,15 +308,15 @@ the same path on S3.</p>
 41
 42
 43
-44</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">'rubygems'</span>
+44</pre></td><td class="code"><pre><span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'bundler'</span>
 
 <span class="k">begin</span>
-  <span class="no">Bundler</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="ss">:default</span><span class="p">,</span> <span class="ss">:development</span><span class="p">)</span>
+  <span class="no">Bundler</span><span class="p">.</span><span class="nf">setup</span><span class="p">(</span><span class="ss">:default</span><span class="p">,</span> <span class="ss">:development</span><span class="p">)</span>
 <span class="k">rescue</span> <span class="no">Bundler</span><span class="o">::</span><span class="no">BundlerError</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="vg">$stderr</span><span class="o">.</span><span class="n">puts</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
-  <span class="vg">$stderr</span><span class="o">.</span><span class="n">puts</span> <span class="s2">"Run `bundle install` to install missing gems"</span>
-  <span class="nb">exit</span> <span class="n">e</span><span class="o">.</span><span class="n">status_code</span>
+  <span class="vg">$stderr</span><span class="p">.</span><span class="nf">puts</span> <span class="n">e</span><span class="p">.</span><span class="nf">message</span>
+  <span class="vg">$stderr</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Run `bundle install` to install missing gems"</span>
+  <span class="nb">exit</span> <span class="n">e</span><span class="p">.</span><span class="nf">status_code</span>
 <span class="k">end</span>
 
 <span class="c1"># Load region and S3 credentials from .env file, ex:</span>
@@ -326,7 +325,7 @@ the same path on S3.</p>
 <span class="c1"># ACCESS_KEY_ID:      &lt;your access key&gt;</span>
 <span class="c1"># SECRET_ACCESS_KEY:  &lt;your secret key&gt;</span>
 <span class="nb">require</span> <span class="s1">'dotenv'</span>
-<span class="no">Dotenv</span><span class="o">.</span><span class="n">load</span>
+<span class="no">Dotenv</span><span class="p">.</span><span class="nf">load</span>
 
 <span class="n">desc</span> <span class="s2">"Deploy website to S3"</span>
 <span class="n">task</span> <span class="ss">:deploy</span> <span class="k">do</span>
@@ -335,32 +334,31 @@ the same path on S3.</p>
 
   <span class="nb">puts</span> <span class="s2">"Deploying website"</span>
   <span class="nb">require</span> <span class="s1">'aws-sdk'</span>
-  <span class="n">s3</span> <span class="o">=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Resource</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">region</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'REGION'</span><span class="o">]</span><span class="p">,</span>
-                             <span class="ss">access_key_id</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'ACCESS_KEY_ID'</span><span class="o">]</span><span class="p">,</span>
-                             <span class="ss">secret_access_key</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'SECRET_ACCESS_KEY'</span><span class="o">]</span><span class="p">)</span>
+  <span class="n">s3</span> <span class="o">=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Resource</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">region: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'REGION'</span><span class="p">],</span>
+                             <span class="ss">access_key_id: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'ACCESS_KEY_ID'</span><span class="p">],</span>
+                             <span class="ss">secret_access_key: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'SECRET_ACCESS_KEY'</span><span class="p">])</span>
 
-  <span class="n">build</span> <span class="o">=</span> <span class="no">Pathname</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"_site"</span><span class="p">)</span>
+  <span class="n">build</span> <span class="o">=</span> <span class="no">Pathname</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"_site"</span><span class="p">)</span>
 
-  <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"_site/**/*.*"</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+  <span class="no">Dir</span><span class="p">.</span><span class="nf">glob</span><span class="p">(</span><span class="s2">"_site/**/*.*"</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
     <span class="c1"># Glob can still pick up directories</span>
-    <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">directory?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="p">.</span><span class="nf">directory?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="no">Pathname</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="n">destination</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">relative_path_from</span><span class="p">(</span><span class="n">build</span><span class="p">)</span>
-    <span class="n">object</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">bucket</span><span class="p">(</span><span class="no">ENV</span><span class="o">[</span><span class="s1">'BUCKET'</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
-    <span class="n">object</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="no">Pathname</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">destination</span> <span class="o">=</span> <span class="n">source</span><span class="p">.</span><span class="nf">relative_path_from</span><span class="p">(</span><span class="n">build</span><span class="p">)</span>
+    <span class="n">object</span> <span class="o">=</span> <span class="n">s3</span><span class="p">.</span><span class="nf">bucket</span><span class="p">(</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'BUCKET'</span><span class="p">]).</span><span class="nf">object</span><span class="p">(</span><span class="n">destination</span><span class="p">.</span><span class="nf">to_s</span><span class="p">)</span>
+    <span class="n">object</span><span class="p">.</span><span class="nf">upload_file</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="nb">puts</span> <span class="s2">"Website deployed"</span>
-<span class="k">end</span>
-</pre></div>
-</td></tr></table>
+<span class="k">end</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 </figure>
 
 <p>This script could be improved to only deploy changed files since the last
 commit, but for a small site like this one, deploying the whole thing doesn’t
-take very long. Running the task with <code>rake deploy</code> puts the site online in
+take very long. Running the task with <code class="highlighter-rouge">rake deploy</code> puts the site online in
 under a minute. Right now, I just run this command manually when I want to deploy
 changes, but this could easily be called by a git hook.</p>
 
@@ -369,7 +367,7 @@ changes, but this could easily be called by a git hook.</p>
 <p>The S3 documentation of course recommends that you use Amazon’s Route 53 service
 to route your custom domain to your S3 bucket. The difference in the documented
 setup and the one I landed on is that I don’t use Route 53. I also don’t create
-a second bucket strictly for the <code>www</code> variant of this site, which Amazon
+a second bucket strictly for the <code class="highlighter-rouge">www</code> variant of this site, which Amazon
 recommends you create in order to redirect that traffic to the main bucket.</p>
 
 <p>Instead I use DNSimple <small>(<a href="https://dnsimple.com/r/d21999fd16e53e">shameless referral link</a>)</small>
@@ -380,7 +378,7 @@ bucket is named correctly it “Just Works&#x2122;.”</p>
 <p><img alt="DNSimple S3 Service" src="/images/posts/dns-simple-s3.png" width="625" height="160" class="center" /></p>
 
 <p>DNSimple will create an <a href="https://support.dnsimple.com/articles/alias-record/">ALIAS record</a>
-for you that makes your domain map to the S3 bucket. For the <code>www</code> redirect,
+for you that makes your domain map to the S3 bucket. For the <code class="highlighter-rouge">www</code> redirect,
 I just use a <a href="https://support.dnsimple.com/articles/url-record/">URL record</a>.
 Both of these are actually special DNS record types <a href="https://blog.dnsimple.com/2011/11/introducing-alias-record/">created by
 DNSimple</a> to make
