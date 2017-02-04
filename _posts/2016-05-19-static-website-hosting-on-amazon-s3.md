@@ -226,6 +226,10 @@ take very long. Running the task with `rake deploy` puts the site online in
 under a minute. Right now, I just run this command manually when I want to deploy
 changes, but this could easily be called by a git hook.
 
+> Update: 2/4/17: I've since switched to using the excellent
+> [s3_website](https://github.com/laurilehmijoki/s3_website) tool.
+> It handles diffing for you and even asks you if you want to clean up old files on the s3 bucket.
+
 ## Using a Custom Domain
 
 The S3 documentation of course recommends that you use Amazon's Route 53 service
