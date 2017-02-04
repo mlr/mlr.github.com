@@ -6,6 +6,7 @@ exclude:
   - Gemfile.lock
   - Rakefile
   - README.md
+  - s3_website.yml
 defaults:
   -
     scope:
