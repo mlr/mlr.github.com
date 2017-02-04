@@ -502,6 +502,8 @@ there.
 
   #content.page.index li {
     flex-direction: column !important; }
+  #content.page.index span.blog-post-title {
+    min-width: auto !important; }
   #content.page.index span.blog-post-date {
     margin: 0px !important;
     margin-top: 3px !important;
