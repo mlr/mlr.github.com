@@ -1,6 +1,6 @@
 ---
 title: Work
-permalink: work.html
+permalink: /work/index.html
 ---
 
 ### WorksTiming

@@ -1,6 +1,6 @@
 ---
 title: Resume
-permalink: resume.html
+permalink: /resume/index.html
 ---
 
 # Professional Resume
