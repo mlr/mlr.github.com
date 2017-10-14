@@ -16,8 +16,7 @@ An invoicing tool built for freelance developers and tiny businesses. Provides
 features for time tracking, invoice generation, revenue &amp; expense reporting,
 and more.
 
-### Betting Bad (now ShowOff)
-[bettingbad.com](http://www.bettingbad.com)
+### Betting Bad
 Online trivia game that allowed fans to predict the outcome of the hit TV show _Breaking Bad_.
 The [promo](https://www.youtube.com/watch?v=LO2aC_UMXMo) [videos](https://www.youtube.com/watch?v=ovlK-WXJ-pQ)
 were featured on [boingboing](http://boingboing.net/2013/07/16/nine-minute-breaking-bad-super.html).
