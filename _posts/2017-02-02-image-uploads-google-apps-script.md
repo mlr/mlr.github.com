@@ -1,6 +1,8 @@
 ---
-title: "Painless Google Doc Image Uploads using Google Apps Scripts"
+title: "Image uploads with Google Apps Script"
 published: true
+redirects:
+ - /2017/02/02/painless-image-uploads-google-apps-scripts/
 ---
 
 * TOC
@@ -11,20 +13,20 @@ Docs and Sheets. I didn't really have a need for those APIs or any good ideas
 about what to do with them. I have played with [Chrome Extensions](/2015/05/24/cities-skylines-gmaps-shortcuts/)
 a little bit in the past, but nothing very practical.
 
-It turns out the [Google Apps Scripts](https://developers.google.com/apps-script/)
+It turns out the [Google Apps Script](https://developers.google.com/apps-script/)
 platform is insanely powerful. You can build add-ons for Google Docs, Sheets,
 and Forms including things like custom menus and buttons, custom code triggered
 on an [event basis](https://developers.google.com/apps-script/guides/triggers/installable),
 or even custom Sheet formula functions.
 
-I hope to provide some insight into Google Apps Scripts based on what I learned while
+I hope to provide some insight into Google Apps Script based on what I learned while
 building a small add-on. I'll go over the steps I took to build the add-on, which is a simple
 Google Apps Script that will find and replace image URLs in your Google Doc page with the image itself.
 
 First, I'll talk about the larger concepts needed to tackle it, then
 I'll go through the add-on itself, using those concepts along the way.
 
-## Google Apps Scripts
+## Google Apps Script
 
 > &nbsp; _"11 Google apps, 1 platform in the cloud"_
 
@@ -38,7 +40,7 @@ I'll go through the add-on itself, using those concepts along the way.
 > provides easy ways to automate tasks across Google products and
 > third party services and build web applications.
 
-Google Apps Scripts has a massive API but we'll focus specifically on Docs.
+Google Apps Script has a massive API but we'll focus specifically on Docs.
 
 An example of a Google Apps Script looks something like this:
 
@@ -62,7 +64,7 @@ refers to the Google Docs class that allows you to extend Google Docs behavior a
 
 Below is a Google Doc page, but I've marked it up with some of it's common pieces.
 Each piece is an element that you can either create or manipulate using
-Google Apps Scripts, which remember is just plain old JavaScript.
+Google Apps Script, which remember is just plain old JavaScript.
 
 <div class="googleapps-image">
   <img src="{{site.url}}/images/posts/googleapps-elements.png" alt="Google Apps Elements" />
@@ -80,7 +82,7 @@ I've really got to hand it to the Google Apps team for their documentation, it's
 really well structured, so much so that the URLs are quite navigable if you have
 an idea what you're looking for. I love me some guessable URLs.
 
-### How to Run Apps Scripts
+### How to Run Apps Script
 
 So you know a Google Doc is made up of several elements in a hierarchy. Those
 elements have their own methods that can be used to manipulate (or for some, to
@@ -118,7 +120,7 @@ function myFunction() {
 Run the script by clicking the "Run" button or type ⌘ + R (you may have to give permission) then switch back to the
 Google Doc and you should see the text has been added!
 
-[![Google Apps Scripts: Logs]({{site.url}}/images/posts/googleapps-helloworld.gif)]({{site.url}}/images/posts/googleapps-helloworld.gif)
+[![Google Apps Script: Logs]({{site.url}}/images/posts/googleapps-helloworld.gif)]({{site.url}}/images/posts/googleapps-helloworld.gif)
 
 #### Using the Logger
 
@@ -134,7 +136,7 @@ myFunction() {
 Run the script using the "Run" button in the toolbar or type ⌘ + R. Then, to
 view the logs go to `View > Logs` or type ⌘ + Enter.
 
-[![Google Apps Scripts: Logs]({{site.url}}/images/posts/googleapps-scripteditor.gif)]({{site.url}}/images/posts/googleapps-scripteditor.gif)
+[![Google Apps Script: Logs]({{site.url}}/images/posts/googleapps-scripteditor.gif)]({{site.url}}/images/posts/googleapps-scripteditor.gif)
 
 This will become really useful when we're writing the script because we can
 ensure method calls are returning the things we expect. Plus we can use the log
@@ -657,19 +659,7 @@ function onOpen() {
 }
 {% endhighlight %}
 
-### Publishing the Add-on
-
-In order to reuse the App Script we've created, rather than just
-sticking the script in the script editor every time, we can publish it
-as an add-on in the [Chrome Web Store](https://chrome.google.com/webstore/).
-
-At the time of publishing this blog post, I was still waiting for approval.
-
-[![google apps scripts: chrome webstore]({{site.url}}/images/posts/googleapps-webstore.png)]({{site.url}}/images/posts/googleapps-webstore.png)
-
-Hopefully it'll be approved soon.
-
-Make something with Google Apps Scipts? Share it with me [on
+Have you made something with Google Apps Script? Share it [on
 Twitter](http://twitter.com/ronniemlr)! I'd love to see it.
 
 Cheers!
