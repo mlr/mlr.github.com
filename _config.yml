@@ -1,4 +1,5 @@
 permalink: pretty
+redirects: yes
 gems:
   - jekyll-emoji
 exclude:
