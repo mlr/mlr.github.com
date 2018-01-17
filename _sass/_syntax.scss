@@ -100,6 +100,11 @@ figure {
     }
   }
 
+  code, pre, span {
+    font-family: Monaco, Consolas, monospace;
+    font-size: 14px;
+  }
+
   figcaption + table.highlighttable {
     margin-top: 10px;
   }

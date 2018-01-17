@@ -571,7 +571,7 @@ there.
 #content.blog-post h1:first-child {
   margin-bottom: 0px; }
   #content.blog-post h1:first-child a {
-    color: #444; }
+    color: #222; }
 #content.blog-post h1:first-child + h3 {
   margin-bottom: 0px; }
 #content.blog-post div.post-meta {
@@ -754,6 +754,9 @@ figure {
     figure code table td.gutter {
       padding-right: 15px;
       border: none; }
+  figure code, figure pre, figure span {
+    font-family: Monaco, Consolas, monospace;
+    font-size: 14px; }
   figure figcaption + table.highlighttable {
     margin-top: 10px; }
   figure.vscroll .highlight code {
@@ -771,15 +774,15 @@ figure {
     word-wrap: nowrap !important;
     display: inline-block; } }
 html, body {
-  font-family: "Helvetica Neue", Helvetica;
-  color: #444; }
+  font-family: Verdana, Helvetica;
+  color: #222; }
 
 body {
-  background: #fefefe; }
+  background: #fff; }
 
 a {
   text-decoration: none;
-  color: #444; }
+  color: #222; }
 
 header {
   padding-top: 25px; }
@@ -802,6 +805,17 @@ header {
         border-bottom: 2px solid #BBB; }
 
 #container a {
+  color: #217fbb; }
+#container a:hover {
+  border-bottom: 1px solid #222; }
+#container a:visited {
+  color: #bb7f21; }
+
+#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {
+  font-family: 'Bookman Old Style', Baskerville, serif; }
+
+#content.index ul li a {
+  font-family: 'Bookman Old Style', Baskerville, serif;
   color: #217fbb; }
 
 #content.work h3 {
