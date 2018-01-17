@@ -1,6 +1,5 @@
 ---
 title: Static Website Hosting on Amazon S3
-subtitle: Saying Goodbye to GitHub Pages
 ---
 
 ## Goodbye GitHub Pages
