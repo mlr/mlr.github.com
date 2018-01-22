@@ -1,5 +1,5 @@
 ---
-title: Ronnie Miller
+title:
 permalink: index.html
 ---
 
