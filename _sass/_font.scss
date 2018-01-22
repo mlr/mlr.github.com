@@ -1,3 +1,33 @@
+// Main font settings
+
+html, body {
+  // font-family: "Lucida Bright", Verdana, Helvetica;
+
+  p {
+    line-height: 28px;
+  }
+}
+
+#name {
+  font-family: "Lucida Bright", Baskerville, serif;
+}
+
+#container {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Lucida Bright", Baskerville, serif;
+  }
+}
+
+#content.index {
+  ul li a {
+    font-family: "Lucida Sans", Verdana, sans-serif;
+  }
+
+  span.blog-post-date {
+    font-family: "Lucida Console", "Monaco", monospace;
+  }
+}
+
 // Social media icons
 
 @font-face {

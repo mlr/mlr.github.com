@@ -8,8 +8,9 @@
 @import "blog";
 @import "syntax";
 
+@import "resume";
+
 html, body {
-  font-family: Verdana, Helvetica;
   color: #222;
 }
 
@@ -31,24 +32,28 @@ header {
   padding-top: 25px;
 
   #name {
-    @extend .eight;
-    @extend .columns;
-    font-size: 24px;
+    @extend .u-full-width;
+    font-variant: small-caps;
+    letter-spacing: .1em;
+    font-size: 28px;
     font-weight: bold;
+    text-align: center;
   }
 
   nav {
-    @extend .u-pull-right;
+    @extend .u-full-width;
+    text-align: center;
     margin-top: 8px;
 
     ul {
-      font-weight: bold;
+      font-size: 1.1em;
       list-style: none;
+      padding: 0px;
+      margin: 0 0 15px;
 
       li {
-        margin-left: 20px;
-        display: inline;
-        float: left;
+        display: inline-block;
+        padding: 0px 8px;
 
         a {
           padding-bottom: 7px;
@@ -57,7 +62,7 @@ header {
 
       li.active a {
         padding-bottom: 5px;
-        border-bottom: 2px solid #BBB;
+        border-bottom: 2px solid #444;
       }
     }
   }
@@ -68,6 +73,7 @@ header {
 
   a {
     color: #217fbb;
+    border-bottom: 1px solid transparent;
   }
 
   a:hover {
@@ -79,20 +85,25 @@ header {
   }
 }
 
-#content {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bookman Old Style', Baskerville, serif;
-  }
-}
-
 #content.index {
-  ul li a {
-    font-family: 'Bookman Old Style', Baskerville, serif;
-    color: #217fbb;
+  ul li {
+    border-bottom: 1px dotted #e1e1e1;
+    padding: 3px 0 10px;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0px;
+    }
+
+    a {
+      color: #217fbb;
+      font-size: 16px;
+      letter-spacing: .03em;
+    }
   }
 }
 
-#content.work {
+#content.code {
   h3 {
     margin-top: 35px;
 
@@ -102,12 +113,19 @@ header {
   }
 
   p {
+    clear: both;
+
     a:first-child {
-      display: block;
+      float: left;
       margin: -20px 0px 10px;
-      width: 110px;
     }
   }
+}
+
+#about-me {
+  border-top: 1px solid #ddd;
+  padding-top: 30px;
+  font-size: 15px;
 }
 
 footer {

@@ -1,2 +1,12 @@
-{% for post in site.posts %}
-  * <span class="blog-post-date">{{ post.date | date: "%b %d %Y" }}</span> <span class="blog-post-title">[{{ post.title }}]({{ post.url }}){% endfor %}</span>
+<ul>
+  {% for post in site.posts %}
+  <li>
+    <span class="blog-post-date">
+      {{ post.date | date: "%Y-%m-%d" }}
+    </span>
+    <span class="blog-post-title">
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </span>
+  </li>
+  {% endfor %}
+</ul>

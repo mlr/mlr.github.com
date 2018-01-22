@@ -3,56 +3,64 @@ title: Resume
 permalink: /resume/index.html
 ---
 
-# Professional Resume
-* [ronniemiller@gmail.com](mailto:ronniemiller@gmail.com)
-* [github.com/mlr](http://github.com/mlr)
+<div id="contact-info">
+  <ul>
+    <li><a href="https://linkedin.com/in/ronniemlr">linkedin.com/in/ronniemlr</a></li>
+    <li><a href="https://github.com/mlr">github.com/mlr</a></li>
+  </ul>
+</div>
 
-## Objective
+## About
 
-Use my many years of web and software development experience to provide tools
-and services to make people's lives easier.  I'm looking for a role that allows
-me to build amazing products with a talented team, while continually sharpening
-and adapting the technical skills of myself and others through knowledge sharing,
-pairing and other collaborative efforts.
+I am a highly experienced software engineer and teacher-at-heart. I utilize over
+a decade of programming knowledge and experience to create powerful web-based
+software tools. My goal is to build great software with a talented team, to
+learn and improve my craft and to share knowledge through pairing
+and other collaboration.
 
 ## Work Experience
 
+### Software Engineer - New Relic, Inc.
+
+#### February 2017 &ndash; Present
+
+I work in the business applications department where I help to maintain the
+stability and correctness of our partnership, financial, and billing systems.  I
+work with my team to deliver timely and accurate information for finance
+reporting and auditing.
+
+---
+
 ### Software Engineer - CrowdCompass by Cvent
 
-#### January 2015 - Present
+#### January 2015 &ndash; February 2017
 
-I work closely with our product, design, quality and operations teams to hash
-out features that are both technically efficient and backward compatible, but
-also provide a great experience for our users. I also help mentor other team
-members and interns, participate in code reviews and provide feedback on
-architectural decisions. Daily development stack includes a variety of Ruby
-applications (mostly Rails), RSpec, PostgreSQL and a variety of AWS products.
+I work closely with our product, quality and operations teams to build features
+that are both technically efficient and backward compatible while also providing
+a great experience for our users. I also help mentor other team members and
+interns, participate in code reviews and provide feedback on architectural
+decisions.
 
-Some notable things I have accomplished:
-
-* Reduced infrastructure cost by migrating third-party dependencies to AWS equivalents
-* Built REST microservices for custom email templating and delivery for our client's events
-* Improved email delivery throughput by refactoring and improving delivery mechanisms
+* Reduced costs by migrating third-party dependencies to AWS equivalents.
+* Built REST microservices for custom email templating and delivery.
+* Mentored several interns and on-boarded new developers.
+* Served as a Technical Lead of the backend platforms team.
 
 ---
 
 ### Software Engineer - Advanced Industrial Services
 
-#### August 2012 - September 2014
+#### August 2012 &ndash; September 2014
 
-I worked closely with the President, CTO and Operations Managers to develop software to
-standardize and streamline internal workflows, project scheduling, fleet management and
-GPS tracking, data collection and reporting, and more.  Some things I help developed:
-
-* Employees / HR - Tracking, positions, pay rates, vacations, and absences.
-* Fleet - Tracking for company equipment, GPS tracking, and repair cost tracking.
-* Safety Management - Tracking employee certifications, and training classes.
+I collaborate with the President, CTO and Operations Managers to develop
+internal software tools to standardize and improve internal project scheduling,
+fleet management and GPS tracking, project data collection and reporting, and more.
 
 ---
 
-### Freelance Software Developer
+### Software Developer - Freelance
 
-#### May 2008 - December 2015
+#### May 2008 &ndash; December 2015
 
 As a freelance software developer and consultant I am directly involved in every stage
 of web and software products; from RFPs, to initial concepts, to information gathering,
@@ -68,21 +76,9 @@ jQuery, jQuery UI, and more.
 
 ---
 
-### Web Developer - Fluxar
-
-#### September 2010 - July 2011
-
-* Converted PSDs to HTML/CSS
-* Built large web applications using Ruby on Rails
-* Built smaller websites using Wordpress and CodeIgniter
-* Created ruby scripts to automate repetitive tasks like invoicing
-* Used jQuery to improve user experience
-
----
-
 ### Web Developer - The Marcom Group
 
-#### October 2007 - May 2010
+#### October 2007 &ndash; May 2010
 
 * Converted PSDs to HTML/CSS
 * Met and worked with clients to produce project estimates and timelines
@@ -96,9 +92,9 @@ jQuery, jQuery UI, and more.
 
 ### B.S. in Computer Information Systems, Business Administration
 
-#### California State University-Chico - August 2008 - May 2012
+#### California State University-Chico - August 2008 &ndash; May 2012
 
-* Studied wide range of languages from Assembly, C, C++, Java, Python, Obj-C and Ruby
-* Gave multiple programming related talks to linux users group student club members
+* Studied wide range of languages; Assembly, C, C++, Java, Python, Obj-C and Ruby
+* Gave multiple programming related talks to Linux users group club members
 * Created a SaaS personal invoicing software in Ruby on Rails for my senior project
 * Studied business topics including finance, basic accounting, marketing and law
