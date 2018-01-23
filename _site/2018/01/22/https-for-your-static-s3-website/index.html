@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-language" content="en-us" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="Ronnie Miller a software developer located in Portland, OR. He uses Ruby, Rails and React to deliver powerful web applications and small business software tools." />
+  <meta name="keywords" content="Ronnie Miller, software developer, web developer, software engineer, consultant, ruby, ruby on rails, jquery, react, postgresql, mysql, aws" />
+  <meta property="og:title" content="HTTPS For Your Static S3 Website - Ronnie Miller - Software Developer">
+  <meta property="og:description" content="Ronnie Miller a software developer located in Portland, OR. He uses Ruby, Rails and React to deliver powerful web applications and small business software tools.">
+  <meta property="og:image" content="http://ronniemlr.com/images/me.jpg">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HTTPS For Your Static S3 Website - Ronnie Miller - Software Developer</title>
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+
+</head>
+
+<body>
+<div id="wrapper">
+  <header>
+    <div id="name"><a href="/">Ronnie Miller</a></div>
+    <nav>
+      <ul>
+        <li><a href="/">Blog</a></li>
+        <li><a href="/code">Code</a></li>
+        <li><a href="/resume">CV</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="container">
+
+    <div id="content" class="blog-post https-for-your-static-s3-website">
+      <h1><a href="/2018/01/22/https-for-your-static-s3-website/">HTTPS For Your Static S3 Website</a></h1>
+      
+
+      <div class="post-meta">
+        <div class="post-date">
+          January
+          
+          22nd,
+          2018
+        </div>
+      </div>
+
+      <div class="post-content">
+        <h2 id="why-https">Why HTTPS?</h2>
+
+<p>This is just a static blog and personal website. Why? The better question is – why not?</p>
+
+<p>In the wake of security disclosures like
+Meltdown and Spectre we should all be thinking of ways to improve security,
+whenever and wherever possible. That said, there are <a href="https://https.cio.gov/everything/">many reasons to use HTTPS
+everywhere</a> not to mention the fact that with
+initiatives like <a href="http://letsencrypt.org">Let’s Encrypt</a> it’s becoming easier
+(and cheaper) than ever. If you aren’t going to do it now, when will you?</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Anyway, having thoroughly convinced you this is necessary, you may remember back
+in May of 2016 that I moved my website from <a href="/2016/05/19/static-website-hosting-on-amazon-s3/">GitHub pages to Amazon
+S3</a>. That’s still its home,
+and probably will be for the foreseeable future.</p>
+
+<p>Due to that it made sense to go with AWS Certificate Manager, rather than Let’s
+Encrypt for the certificate. I’ll walk through each of the steps I took to setup
+HTTPS for this website by using <a href="https://aws.amazon.com/certificate-manager/">AWS Certificate
+Manager</a> and
+<a href="https://aws.amazon.com/cloudfront/">CloudFront</a>.</p>
+
+<p>The main steps are:</p>
+
+<ol>
+  <li>Use AWS Certificate Manager to obtain an SSL Certificate</li>
+  <li>Verify ownership of your domain name by adding a CNAME entry</li>
+  <li>Setup a CloudFront Distribution to point to your website’s S3 bucket</li>
+  <li>Update your DNS to point to the CloudFront distribution URL</li>
+</ol>
+
+<p>The steps above assume you already have a <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-walkthrough.html#tutorial-contents">static S3 website with
+a custom domain</a>
+and that you can manage your domain name’s DNS records.</p>
+
+<h2 id="obtain-the-ssl-certificate">Obtain the SSL Certificate</h2>
+
+<p>AWS Certificate Manager makes it easy to obtain an SSL certificate from a
+Certified Authority, in this case Amazon. They also take care to auto-renew the
+certificate and it’s free when you use it with other Amazon products.</p>
+
+<p>To get started visit <a href="https://console.aws.amazon.com/acm/home?region=us-east-1#/">AWS Certificate
+Manager</a> in the
+<code class="highlighter-rouge">us-east-1</code> (N. Virginia) region&#x2757; Region selection becomes important when we later setup
+CloudFront, since it can only use Certificate Manager certificates you created in <code class="highlighter-rouge">us-east-1</code>. I ended
+up having to redo this step when I got further along.</p>
+
+<p>Click “Request a certificate” and you’ll be prompted to enter the domain name(s)
+for your certificate. For this website I used <code class="highlighter-rouge">ronniemlr.com</code> and
+<code class="highlighter-rouge">www.ronniemlr.com</code>.</p>
+
+<p><img src="/images/posts/amazon-cert-add-domains.png" alt="Add Domain Names" class="image center" /></p>
+
+<h2 id="verify-domain-ownership">Verify Domain Ownership</h2>
+
+<p>Next you have to prove to Amazon you own the domain name. You can do this with
+DNS verification or Email verification. I chose DNS verification, but email is
+probably even easier. With DNS verification Amazon gives you CNAME entries to
+add for each domain name variant you requested for the certificate.</p>
+
+<p><img src="/images/posts/amazon-cert-verification.png" alt="Certificate Verification" class="image center" /></p>
+
+<p>After you add the CNAME records to your domain name and wait a few minutes, the
+validation status will change from “Pending validation” to “Success” and you can
+proceed with the next step.</p>
+
+<h2 id="setup-cloudfront-distribution">Setup CloudFront Distribution</h2>
+
+<p>The next thing you need to do is create a CloudFront web distribution. This will
+give you a CloudFront URL that will respond and serve traffic over
+HTTPS, once you configure it to do so.</p>
+
+<p>Head over to the <a href="https://console.aws.amazon.com/cloudfront/home">CloudFront
+dashboard</a> and click “Create
+Distribution” then “Get Started” under the “Web” distribution type.</p>
+
+<p>You’ll be prompted to select the <em>Origin Domain Name</em>. If you click the field it will
+list your available S3 buckets.&#x2757; Don’t do this. This is another trap that I fell into.
+Because you’ve configured the bucket to be a static website host, S3 provides
+you with another URL. This is the URL you’ve probably used to point your
+custom domain name to your S3 website.</p>
+
+<p><img src="/images/posts/amazon-cert-s3-properties.png" alt="S3 Bucket URL" class="image center" /></p>
+
+<p>To find your S3 static website host URL, go to your website’s bucket in the S3 dashboard
+then click the properties tab, then the “Static website hosting” box.</p>
+
+<p>If you just use the standard S3 URL suggested for you, your settings for
+“Index document” and “Error document” and others won’t be honored.</p>
+
+<h3 id="distribution-settings">Distribution settings</h3>
+
+<p>Back in the CloudFront dashboard, you can leave the other settings for origin
+and caching as-is or set them up to your liking (I personally like to redirect
+non HTTP to HTTPS using “Viewer Protocol Policy”).</p>
+
+<p>The most important distribution settings in particular are the SSL certificate
+and the SSL Client Support settings. Choose the “Custom SSL Certificate” option,
+then you should be able to choose the certificate manager certificate you
+created previously.</p>
+
+<p><img src="/images/posts/amazon-cert-cloudfront-distribution.png" alt="Distribution Settings" class="image center" /></p>
+
+<p>Be sure to choose the <em>Only Clients That Support Server Name Indication (SNI)</em>
+option. This is the free one. You can <a href="https://https.cio.gov/sni/">read more about
+SNI</a> and its limitations, but essentially older
+clients (Internet Explorer on XP, Android 2.3 for example) won’t work.</p>
+
+<p>When the alternative costs $600/mo for a dedicated IP address, I think I can
+live with those clients not viewing my website. If you run a mission critical
+operation or one with paying customers, you’re probably reading the wrong blog post!</p>
+
+<p>Review your settings and click “Create Distribution”. After a few minutes your
+distribution will be ready to use. However, you should already see the domain name
+assigned to you. It will look something like this: <code class="highlighter-rouge">dln7ue9x0nvom.cloudfront.net</code></p>
+
+<h2 id="pointing-your-domain-to-cloudfront">Pointing your Domain to CloudFront</h2>
+
+<p>The final step is to point your custom domain name to the CloudFront
+distribution URL. The way I do this is by using an ALIAS record on my domain,
+swapping out the S3 static website URL for the CloudFront distribution URL:</p>
+
+<p><img src="/images/posts/amazon-cert-dns-alias.png" alt="Distribution Settings" class="image center" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I’ve been wanting to try Amazon Certificate Manager for a while now and I’m glad
+I got around to doing so. I was pleasantly surprised with how easy it was to
+setup and get an SSL certificate issued. I didn’t touch a single openssl command
+and not a single certificate signing request was harmed in the making of this
+blog post. Feels like a win.</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><a href="https://serverfault.com/a/776143">What can happen if you don’t use the correct S3 URL</a></li>
+  <li><a href="https://knightlab.northwestern.edu/2015/05/21/implementing-ssl-on-amazon-s3-static-websites/">Implementing SSL on Amazon S3 Static Websites</a></li>
+  <li><a href="https://https.cio.gov/sni/">What is Server Name Indication (SNI)</a></li>
+</ul>
+
+      </div>
+    </div>
+
+        <div id="about-me">
+      <h4 id="blog-about">About</h4>
+      <p>
+        I'm a software developer located in Portland, OR. I work mostly in
+        <a href="http://ruby-lang.org" title="Ruby Language">Ruby</a>,
+        <a href="http://rubyonrails.org" title="Ruby on Rails">Rails</a>, and
+        <a href="http://reactjs.org" title="React">React</a>.
+        Offline I like hiking, snowboarding, flying airplanes and spending time with my wife and son.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <ul id="profiles">
+      <li><a href="http://github.com/mlr" class="symbol">circlegithubalt</span></a></li>
+      <li><a href="http://linkedin.com/in/ronniemlr" class="symbol">circlelinkedin</span></a></li>
+      <li><a href="http://twitter.com/ronniemlr" class="symbol">circletwitter</span></a></li>
+      <li><a href="http://instagram.com/ronniemlr" class="symbol">circleinstagram</span></a></li>
+    </ul>
+  </footer>
+</div>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-19173573-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</body>
+</html>
+
