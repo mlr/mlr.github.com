@@ -29,8 +29,6 @@ stability and correctness of our partnership, financial, and billing systems.  I
 work with my team to deliver timely and accurate information for finance
 reporting and auditing.
 
----
-
 ### Software Engineer - CrowdCompass by Cvent
 
 #### January 2015 &ndash; February 2017
@@ -46,8 +44,6 @@ decisions.
 * Mentored several interns and on-boarded new developers.
 * Served as a Technical Lead of the backend platforms team.
 
----
-
 ### Software Engineer - Advanced Industrial Services
 
 #### August 2012 &ndash; September 2014
@@ -55,8 +51,6 @@ decisions.
 I collaborate with the President, CTO and Operations Managers to develop
 internal software tools to standardize and improve internal project scheduling,
 fleet management and GPS tracking, project data collection and reporting, and more.
-
----
 
 ### Software Developer - Freelance
 
@@ -74,8 +68,6 @@ I'm also very skilled in front-end technologies: HTML5 & CSS3 including pixel pe
 PSD to markup conversion; JavaScript and many of its frameworks such as React and
 jQuery, jQuery UI, and more.
 
----
-
 ### Web Developer - The Marcom Group
 
 #### October 2007 &ndash; May 2010
@@ -87,6 +79,8 @@ jQuery, jQuery UI, and more.
 * Used jQuery to improve user experience and ease of use
 * Handled minor linux and apache server maintenance
 * Managed DNS setup and changes for new websites
+
+---
 
 ## Education
 

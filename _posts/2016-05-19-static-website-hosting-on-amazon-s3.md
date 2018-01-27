@@ -242,7 +242,7 @@ which I've used to manage my domains for many years. Personally, I love DNSimple
 because they make it push-button easy to point your domain at S3. Assuming your
 bucket is named correctly it "Just Works&trade;."
 
-<img alt="DNSimple S3 Service" src="{{site.url}}/images/posts/dns-simple-s3.png" width="625" height="160" class="center" />
+<img alt="DNSimple S3 Service" src="/images/posts/dns-simple-s3.png" width="625" height="160" class="center" />
 
 DNSimple will create an [ALIAS record](https://support.dnsimple.com/articles/alias-record/)
 for you that makes your domain map to the S3 bucket. For the `www` redirect,

@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
-gem 'jekyll', '3.1.3'
+
+gem 'jekyll', '3.7.2'
 gem 'jekyll-emoji'
+gem 'jekyll-feed'
+
 gem 's3_website'
 gem 'rake'
 

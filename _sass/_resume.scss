@@ -22,15 +22,21 @@
   }
 
   h2 {
-    border-bottom: 1px dotted #b1b1b1;
     padding-bottom: 5px;
     width: 90%;
   }
 
   h3 {
+    border-top: 1px solid $light-gray;
     margin-bottom: -5px;
     padding-bottom: 5px;
+    padding-top: 20px;
     font-size: 1.2em;
+  }
+
+  h2 + h3 {
+    border-top: none;
+    padding-top: 5px;
   }
 
   h4 {

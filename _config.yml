@@ -1,7 +1,18 @@
+title: Ronnie Miller
+url: https://ronniemlr.com
+description: Ronnie Miller is a software developer located in Portland, OR. He uses Ruby, Rails and React to deliver powerful web applications and small business software tools.
+keywords: Ronnie Miller, software, developer, web developer, software engineer, consultant, ruby, ruby on rails, jquery, react, postgresql, mysql
+author:
+  name: Ronnie Miller
+  email: me@ronniemlr.com
+  uri: http://ronniemlr.com
 permalink: pretty
 redirects: yes
-gems:
+feed:
+  path: atom.xml
+plugins:
   - jekyll-emoji
+  - jekyll-feed
 exclude:
   - Gemfile
   - Gemfile.lock

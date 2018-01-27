@@ -369,7 +369,7 @@ To run the bot use the command:
 SLACK_API_TOKEN=bot_api_token_here ruby docutron.rb
 {% endhighlight %}
 
-![Slackbot: Docutron]({{site.url}}/images/posts/slackbot-docutron.gif){: .console-image }
+![Slackbot: Docutron](/images/posts/slackbot-docutron.gif){: .console-image }
 
 ## Just the beginning
 

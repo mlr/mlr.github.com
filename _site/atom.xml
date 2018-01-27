@@ -1,0 +1,1380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<generator uri="http://jekyllrb.com" version="3.7.2">Jekyll</generator>
+<link href="https://ronniemlr.com/atom.xml" rel="self" type="application/atom+xml" />
+<link href="https://ronniemlr.com/" rel="alternate" type="text/html" />
+<updated>2018-01-27T12:29:08-08:00</updated>
+<id>https://ronniemlr.com/</id>
+<subtitle>Ronnie Miller is a software developer located in Portland, OR. He uses Ruby, Rails and React to deliver powerful web applications and small business software tools.</subtitle>
+<author>
+<name>Ronnie Miller</name>
+<email>me@ronniemlr.com</email>
+<uri>http://ronniemlr.com</uri>
+</author>
+<entry>
+<title>HTTPS For Your Static S3 Website</title>
+<link href="https://ronniemlr.com/2018/01/22/https-for-your-static-s3-website/" rel="alternate" type="text/html" title="HTTPS For Your Static S3 Website" />
+<published>2018-01-22T00:00:00-08:00</published>
+<updated>2018-01-22T00:00:00-08:00</updated>
+<id>https://ronniemlr.com/2018/01/22/https-for-your-static-s3-website</id>
+<content type="html" xml:base="https://ronniemlr.com/2018/01/22/https-for-your-static-s3-website/">&lt;h2 id=&quot;why-https&quot;&gt;Why HTTPS?&lt;/h2&gt;
+
+&lt;p&gt;This is just a static blog and personal website. Why? The better question is – why not?&lt;/p&gt;
+
+&lt;p&gt;In the wake of security disclosures like
+Meltdown and Spectre we should all be thinking of ways to improve security,
+whenever and wherever possible. That said, there are &lt;a href=&quot;https://https.cio.gov/everything/&quot;&gt;many reasons to use HTTPS
+everywhere&lt;/a&gt; not to mention the fact that with
+initiatives like &lt;a href=&quot;http://letsencrypt.org&quot;&gt;Let’s Encrypt&lt;/a&gt; it’s becoming easier
+(and cheaper) than ever. If you aren’t going to do it now, when will you?&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Anyway, having thoroughly convinced you this is necessary, you may remember back
+in May of 2016 that I moved my website from &lt;a href=&quot;/2016/05/19/static-website-hosting-on-amazon-s3/&quot;&gt;GitHub pages to Amazon
+S3&lt;/a&gt;. That’s still its home,
+and probably will be for the foreseeable future.&lt;/p&gt;
+
+&lt;p&gt;Due to that it made sense to go with AWS Certificate Manager, rather than Let’s
+Encrypt for the certificate. I’ll walk through each of the steps I took to setup
+HTTPS for this website by using &lt;a href=&quot;https://aws.amazon.com/certificate-manager/&quot;&gt;AWS Certificate
+Manager&lt;/a&gt; and
+&lt;a href=&quot;https://aws.amazon.com/cloudfront/&quot;&gt;CloudFront&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The main steps are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use AWS Certificate Manager to obtain an SSL Certificate&lt;/li&gt;
+  &lt;li&gt;Verify ownership of your domain name by adding a CNAME entry&lt;/li&gt;
+  &lt;li&gt;Setup a CloudFront Distribution to point to your website’s S3 bucket&lt;/li&gt;
+  &lt;li&gt;Update your DNS to point to the CloudFront distribution URL&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The steps above assume you already have a &lt;a href=&quot;https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-walkthrough.html#tutorial-contents&quot;&gt;static S3 website with
+a custom domain&lt;/a&gt;
+and that you can manage your domain name’s DNS records.&lt;/p&gt;
+
+&lt;h2 id=&quot;obtain-the-ssl-certificate&quot;&gt;Obtain the SSL Certificate&lt;/h2&gt;
+
+&lt;p&gt;AWS Certificate Manager makes it easy to obtain an SSL certificate from a
+Certified Authority, in this case Amazon. They also take care to auto-renew the
+certificate and it’s free when you use it with other Amazon products.&lt;/p&gt;
+
+&lt;p&gt;To get started visit &lt;a href=&quot;https://console.aws.amazon.com/acm/home?region=us-east-1#/&quot;&gt;AWS Certificate
+Manager&lt;/a&gt; in the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;us-east-1&lt;/code&gt; (N. Virginia) region:exclamation: Region selection becomes important when we later setup
+CloudFront, since it can only use Certificate Manager certificates you created in &lt;code class=&quot;highlighter-rouge&quot;&gt;us-east-1&lt;/code&gt;. I ended
+up having to redo this step when I got further along.&lt;/p&gt;
+
+&lt;p&gt;Click “Request a certificate” and you’ll be prompted to enter the domain name(s)
+for your certificate. For this website I used &lt;code class=&quot;highlighter-rouge&quot;&gt;ronniemlr.com&lt;/code&gt; and
+&lt;code class=&quot;highlighter-rouge&quot;&gt;www.ronniemlr.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/amazon-cert-add-domains.png&quot; alt=&quot;Add Domain Names&quot; class=&quot;image center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;verify-domain-ownership&quot;&gt;Verify Domain Ownership&lt;/h2&gt;
+
+&lt;p&gt;Next you have to prove to Amazon you own the domain name. You can do this with
+DNS verification or Email verification. I chose DNS verification, but email is
+probably even easier. With DNS verification Amazon gives you CNAME entries to
+add for each domain name variant you requested for the certificate.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/amazon-cert-verification.png&quot; alt=&quot;Certificate Verification&quot; class=&quot;image center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After you add the CNAME records to your domain name and wait a few minutes, the
+validation status will change from “Pending validation” to “Success” and you can
+proceed with the next step.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-cloudfront-distribution&quot;&gt;Setup CloudFront Distribution&lt;/h2&gt;
+
+&lt;p&gt;The next thing you need to do is create a CloudFront web distribution. This will
+give you a CloudFront URL that will respond and serve traffic over
+HTTPS, once you configure it to do so.&lt;/p&gt;
+
+&lt;p&gt;Head over to the &lt;a href=&quot;https://console.aws.amazon.com/cloudfront/home&quot;&gt;CloudFront
+dashboard&lt;/a&gt; and click “Create
+Distribution” then “Get Started” under the “Web” distribution type.&lt;/p&gt;
+
+&lt;p&gt;You’ll be prompted to select the &lt;em&gt;Origin Domain Name&lt;/em&gt;. If you click the field it will
+list your available S3 buckets.:exclamation: Don’t do this. This is another trap that I fell into.
+Because you’ve configured the bucket to be a static website host, S3 provides
+you with another URL. This is the URL you’ve probably used to point your
+custom domain name to your S3 website.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/amazon-cert-s3-properties.png&quot; alt=&quot;S3 Bucket URL&quot; class=&quot;image center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To find your S3 static website host URL, go to your website’s bucket in the S3 dashboard
+then click the properties tab, then the “Static website hosting” box.&lt;/p&gt;
+
+&lt;p&gt;If you just use the standard S3 URL suggested for you, your settings for
+“Index document” and “Error document” and others won’t be honored.&lt;/p&gt;
+
+&lt;h3 id=&quot;distribution-settings&quot;&gt;Distribution settings&lt;/h3&gt;
+
+&lt;p&gt;Back in the CloudFront dashboard, you can leave the other settings for origin
+and caching as-is or set them up to your liking (I personally like to redirect
+non HTTP to HTTPS using “Viewer Protocol Policy”).&lt;/p&gt;
+
+&lt;p&gt;The most important distribution settings in particular are the SSL certificate
+and the SSL Client Support settings. Choose the “Custom SSL Certificate” option,
+then you should be able to choose the certificate manager certificate you
+created previously.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/amazon-cert-cloudfront-distribution.png&quot; alt=&quot;Distribution Settings&quot; class=&quot;image center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Be sure to choose the &lt;em&gt;Only Clients That Support Server Name Indication (SNI)&lt;/em&gt;
+option. This is the free one. You can &lt;a href=&quot;https://https.cio.gov/sni/&quot;&gt;read more about
+SNI&lt;/a&gt; and its limitations, but essentially older
+clients (Internet Explorer on XP, Android 2.3 for example) won’t work.&lt;/p&gt;
+
+&lt;p&gt;When the alternative costs $600/mo for a dedicated IP address, I think I can
+live with those clients not viewing my website. If you run a mission critical
+operation or one with paying customers, you’re probably reading the wrong blog post!&lt;/p&gt;
+
+&lt;p&gt;Review your settings and click “Create Distribution”. After a few minutes your
+distribution will be ready to use. However, you should already see the domain name
+assigned to you. It will look something like this: &lt;code class=&quot;highlighter-rouge&quot;&gt;dln7ue9x0nvom.cloudfront.net&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pointing-your-domain-to-cloudfront&quot;&gt;Pointing your Domain to CloudFront&lt;/h2&gt;
+
+&lt;p&gt;The final step is to point your custom domain name to the CloudFront
+distribution URL. The way I do this is by using an ALIAS record on my domain,
+swapping out the S3 static website URL for the CloudFront distribution URL:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/amazon-cert-dns-alias.png&quot; alt=&quot;Distribution Settings&quot; class=&quot;image center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I’ve been wanting to try Amazon Certificate Manager for a while now and I’m glad
+I got around to doing so. I was pleasantly surprised with how easy it was to
+setup and get an SSL certificate issued. I didn’t touch a single openssl command
+and not a single certificate signing request was harmed in the making of this
+blog post. Feels like a win.&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://serverfault.com/a/776143&quot;&gt;What can happen if you don’t use the correct S3 URL&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://knightlab.northwestern.edu/2015/05/21/implementing-ssl-on-amazon-s3-static-websites/&quot;&gt;Implementing SSL on Amazon S3 Static Websites&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://https.cio.gov/sni/&quot;&gt;What is Server Name Indication (SNI)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+<summary>Why HTTPS?</summary>
+</entry>
+<entry>
+<title>Static Website Hosting on Amazon S3</title>
+<link href="https://ronniemlr.com/2016/05/19/static-website-hosting-on-amazon-s3/" rel="alternate" type="text/html" title="Static Website Hosting on Amazon S3" />
+<published>2016-05-19T00:00:00-07:00</published>
+<updated>2016-05-19T00:00:00-07:00</updated>
+<id>https://ronniemlr.com/2016/05/19/static-website-hosting-on-amazon-s3</id>
+<content type="html" xml:base="https://ronniemlr.com/2016/05/19/static-website-hosting-on-amazon-s3/">&lt;h2 id=&quot;goodbye-github-pages&quot;&gt;Goodbye GitHub Pages&lt;/h2&gt;
+
+&lt;p&gt;For a little over 3½ years this website was hosted on
+&lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;.  It used &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;
+(and still does) to compile the layouts, content, styles, etc. into this static
+website you’re reading now. For me, the greatest thing about static site generators
+like Jekyll is their simplicity. You write the code, you run a command, it spits
+out a website. The output you receive is all of the files necessary to view your
+website, assets all compiled and ready to go.  The problem for me was that using
+GitHub Pages sometimes removed that key piece of simplicity.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0&quot;&gt;New versions of Jekyll&lt;/a&gt;
+or other &lt;a href=&quot;https://github.com/blog/2151-github-pages-drops-support-for-rdiscount-redcarpet-and-redcloth-textile-markup-engines&quot;&gt;updates&lt;/a&gt;
+would be rolled out that either dropped or changed support for certain features.
+If you weren’t on top of these announcements you may have had to do some leg work to
+get your local build behaving exactly like GitHub Pages before knowing your
+deploys were working as expected.&lt;/p&gt;
+
+&lt;p&gt;While this didn’t cause me issues frequently, it was an annoyance that ruined
+the simplicity of static site generators. It also inevitably means that you’re
+bound to the constraints that GitHub Pages imposes and can’t use custom
+plugins or parsers as freely as you might like.&lt;/p&gt;
+
+&lt;h2 id=&quot;hello-amazon-s3&quot;&gt;Hello Amazon S3&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/s3&quot;&gt;Amazon S3&lt;/a&gt; provides static website hosting using a
+standard S3 bucket and some minor configuration. What drew me to move to S3 was
+the simplicity that mirrors a typical static site generator. Essentially with S3,
+you have some files (i.e. your static website files), you upload them to S3, you
+tell S3 you want the bucket to be a website, your website is online.&lt;/p&gt;
+
+&lt;p&gt;The added benefit is that because you’re responsible for putting the files in a
+bucket that will ultimately become your website, there is no limit to how
+you can use or configure your static site generator; you take the files it
+outputs locally and you put them on S3. Done. The site you previewed locally is
+the site that shows online. No compatibility concerns with whatever is building
+the site when you deploy, as with GitHub Pages.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuring-s3-as-a-static-website-host&quot;&gt;Configuring S3 as a Static Website Host&lt;/h2&gt;
+
+&lt;p&gt;Amazon has pretty good documentation on &lt;a href=&quot;http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html#tutorial-contents&quot;&gt;configuring a bucket to be a static
+ website host&lt;/a&gt;.
+The steps are essentially what I followed for this website: create a bucket,
+configure the bucket, deploy the website. You can follow along the docs and use
+the AWS Management Console to create and configure the bucket.&lt;/p&gt;
+
+&lt;p&gt;We can also do it with code, so why not?&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/aws/aws-sdk-ruby&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;aws-sdk&lt;/code&gt;&lt;/a&gt; gem supports managing
+pretty much any resource on AWS including website buckets. The following code
+configures the SDK gem and creates a bucket, then configures it for
+static website hosting by creating a policy that allows access to all files in
+the bucket. If you had more specific access requirements you could extend the
+policy.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;~/.aws/credentials&lt;/figcaption&gt;
+{% highlight ruby %}
+[default]
+aws_access_key_id = &lt;your default=&quot;&quot; access=&quot;&quot; key=&quot;&quot;&gt;
+aws_secret_access_key = &lt;your default=&quot;&quot; secret=&quot;&quot; key=&quot;&quot;&gt;
+{% endhighlight %}
+&amp;lt;/figure&amp;gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;Gemfile&lt;/figcaption&gt;
+{% highlight ruby %}
+source 'https://rubygems.org'
+gem 'aws-sdk'
+gem 'dotenv' # we'll use this later
+{% endhighlight %}
+&lt;/figure&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;Rakefile&lt;/figcaption&gt;
+{% highlight ruby linenos=table %}
+require 'rubygems'
+require 'bundler'
+
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError =&amp;gt; e
+  $stderr.puts e.message
+  $stderr.puts &quot;Run `bundle install` to install missing gems&quot;
+  exit e.status_code
+end
+
+require 'aws-sdk'
+
+desc &quot;Create website bucket on s3&quot;
+task :create do
+  # Perform operations in us-west-2 (or change to your preferred region)
+  client = Aws::S3::Client.new(region: 'us-west-2')
+
+  client.create_bucket(bucket: ENV['bucket'])
+
+  client.put_bucket_website({
+    bucket: ENV['bucket'],
+    website_configuration: {
+      index_document: {
+        suffix: &quot;index.html&quot;,
+      }
+    }
+  })
+
+  client.put_bucket_policy({
+    bucket: ENV['bucket'],
+    policy: {
+      &quot;Version&quot; =&amp;gt; &quot;2012-10-17&quot;,
+      &quot;Statement&quot; =&amp;gt; [
+        {
+          &quot;Sid&quot;       =&amp;gt; &quot;AddPerm&quot;,
+          &quot;Effect&quot;    =&amp;gt; &quot;Allow&quot;,
+          &quot;Principal&quot; =&amp;gt; &quot;*&quot;,
+          &quot;Action&quot;    =&amp;gt; &quot;s3:GetObject&quot;,
+          &quot;Resource&quot;  =&amp;gt; &quot;arn:aws:s3:::#{ENV['bucket']}/*&quot;
+        }
+      ]
+    }.to_json
+  })
+
+  client.put_object({
+    bucket: ENV['bucket'],
+    key: &quot;index.html&quot;,
+    body: &quot;Hello World!&quot;
+  })
+end
+{% endhighlight %}
+&lt;/figure&gt;
+
+This small Rake task will put an accessible &quot;Hello World&quot; web page on S3.
+The first 10-15 lines are just boilerplate gem loading. By default, the
+`aws-sdk` gem will load credentials stored in your user's home folder in
+`.aws/credentials`.
+
+The task can be invoked with `rake create bucket=foobarbazbaz.com` where `bucket`
+is the domain name of the website. This isn't the standard rake task argument syntax,
+but I find using the environment variable syntax is more readable and easier to type.
+
+* Line 17 sets up the SDK client and defines which region the bucket will be in.
+* Line 19 creates the bucket with the name given.
+* Lines 21-28 sets the basic configuration for a bucket website. This is
+  effectively the same thing as clicking the &quot;Enable website hosting&quot; radio
+  button in the management console and providing an index page value.
+* Lines 30-44 create an access policy for the bucket. Since this is a static
+  website bucket and all files need to be accessible by the browser, the policy
+  allows access to all files using a wildcard.
+* Lines 46-50 just puts a &quot;Hello World!&quot; index.html page in the bucket, to
+  greet visitors.
+
+The web page `http://&lt;your-bucket-name&gt;.s3-website-&lt;region&gt;.amazonaws.com`
+will become available after running the Rake task. In this case, running the
+task created [http://foobarbazbaz.com.s3-website-us-west-2.amazonaws.com](http://foobarbazbaz.com.s3-website-us-west-2.amazonaws.com/).
+
+Of course, this step only needs to be done a single time. You should make sure
+whichever domain name you own that you want to host using S3 becomes the name
+of your bucket. This will be important when configuring a custom domain name.
+
+## Deploying the Website to S3
+
+With the bucket created and configured, all that's left to do to make this a
+real website is put the files from the static site build into the bucket.
+With Jekyll the built site is placed into a `_site` directory. The following Rake
+task will iterate through each file in that directory, uploading each file to
+the same path on S3.
+
+&lt;figure&gt;
+&lt;figcaption&gt;Rakefile&lt;/figcaption&gt;
+{% highlight ruby linenos=table %}
+require 'rubygems'
+require 'bundler'
+
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError =&amp;gt; e
+  $stderr.puts e.message
+  $stderr.puts &quot;Run `bundle install` to install missing gems&quot;
+  exit e.status_code
+end
+
+# Load region and S3 credentials from .env file, ex:
+# REGION:             us-west-2
+# BUCKET:             ronniemlr.com
+# ACCESS_KEY_ID:      &lt;your access=&quot;&quot; key=&quot;&quot;&gt;
+# SECRET_ACCESS_KEY:  &lt;your secret=&quot;&quot; key=&quot;&quot;&gt;
+require 'dotenv'
+Dotenv.load
+
+desc &quot;Deploy website to S3&quot;
+task :deploy do
+  puts &quot;Building website&quot;
+  `jekyll build`
+
+  puts &quot;Deploying website&quot;
+  require 'aws-sdk'
+  s3 = Aws::S3::Resource.new(region: ENV['REGION'],
+                             access_key_id: ENV['ACCESS_KEY_ID'],
+                             secret_access_key: ENV['SECRET_ACCESS_KEY'])
+
+  build = Pathname.new(&quot;_site&quot;)
+
+  Dir.glob(&quot;_site/**/*.*&quot;).each do |file|
+    # Glob can still pick up directories
+    next if File.directory?(file)
+
+    source = Pathname.new(file)
+    destination = source.relative_path_from(build)
+    object = s3.bucket(ENV['BUCKET']).object(destination.to_s)
+    object.upload_file(source)
+  end
+
+  puts &quot;Website deployed&quot;
+end
+{% endhighlight %}
+&amp;lt;/figure&amp;gt;
+
+This script could be improved to only deploy changed files since the last
+commit, but for a small site like this one, deploying the whole thing doesn't
+take very long. Running the task with `rake deploy` puts the site online in
+under a minute. Right now, I just run this command manually when I want to deploy
+changes, but this could easily be called by a git hook.
+
+&amp;gt; Update: 2/4/17: I've since switched to using the excellent
+&amp;gt; [s3_website](https://github.com/laurilehmijoki/s3_website) tool.
+&amp;gt; It handles diffing for you and even asks you if you want to clean up old files on the s3 bucket.
+
+## Using a Custom Domain
+
+The S3 documentation of course recommends that you use Amazon's Route 53 service
+to route your custom domain to your S3 bucket. The difference in the documented
+setup and the one I landed on is that I don't use Route 53. I also don't create
+a second bucket strictly for the `www` variant of this site, which Amazon
+recommends you create in order to redirect that traffic to the main bucket.
+
+Instead I use DNSimple &lt;small&gt;([shameless referral link](https://dnsimple.com/r/d21999fd16e53e))&lt;/small&gt;
+which I've used to manage my domains for many years. Personally, I love DNSimple
+because they make it push-button easy to point your domain at S3. Assuming your
+bucket is named correctly it &quot;Just Works&amp;trade;.&quot;
+
+&lt;img alt=&quot;DNSimple S3 Service&quot; src=&quot;/images/posts/dns-simple-s3.png&quot; width=&quot;625&quot; height=&quot;160&quot; class=&quot;center&quot; /&gt;
+
+DNSimple will create an [ALIAS record](https://support.dnsimple.com/articles/alias-record/)
+for you that makes your domain map to the S3 bucket. For the `www` redirect,
+I just use a [URL record](https://support.dnsimple.com/articles/url-record/).
+Both of these are actually special DNS record types [created by
+DNSimple](https://blog.dnsimple.com/2011/11/introducing-alias-record/) to make
+this stuff a no-brainer. One caveat is that URL redirect records don't work for
+HTTPS requests.
+
+## Conclusion
+
+It might look like a lot of configuration, but it doesn't take long. Overall I'm
+happy with this setup and glad to have more flexibility by having full control
+over the final build and deploy. Bye GH Pages! :wave:
+
+## Resources
+
+* [Technical reasons behind the ALIAS record](https://blog.dnsimple.com/2014/01/why-alias-record/)
+* [Hosting a Static Website on Amazon Web Services](http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html)
+* [AWS SDK Documentation - put_bucket_website](http://docs.aws.amazon.com/sdkforruby/api/Aws/S3/Client.html#put_bucket_website-instance_method)
+* [AWS SDK Documentation - put_bucket_policy](http://docs.aws.amazon.com/sdkforruby/api/Aws/S3/Client.html#put_bucket_policy-instance_method)
+&lt;/your&gt;&lt;/your&gt;&lt;/figure&gt;&lt;/region&gt;&lt;/your-bucket-name&gt;&lt;/your&gt;&lt;/your&gt;&lt;/figure&gt;
+</content>
+<summary>Goodbye GitHub Pages</summary>
+</entry>
+<entry>
+<title>Ruby 2.3 – A Gift for You and Me</title>
+<link href="https://ronniemlr.com/2015/12/26/ruby-2.3-a-gift-for-you-and-me/" rel="alternate" type="text/html" title="Ruby 2.3 &amp;ndash; A Gift for You and Me" />
+<published>2015-12-26T00:00:00-08:00</published>
+<updated>2015-12-26T00:00:00-08:00</updated>
+<id>https://ronniemlr.com/2015/12/26/ruby-2.3-a-gift-for-you-and-me</id>
+<content type="html" xml:base="https://ronniemlr.com/2015/12/26/ruby-2.3-a-gift-for-you-and-me/">&lt;p&gt;It’s beginning to feel like tradition –– for the &lt;a href=&quot;http://ronniemlr.com/2014/12/25/trying-out-new-features-of-ruby-2.2/&quot;&gt;second year
+now&lt;/a&gt;,
+the Ruby core team has shipped a minor point update on Christmas Day.
+This year gifting the world Ruby 2.3.&lt;/p&gt;
+
+&lt;p&gt;After reading up on this release, it feels more more like a major
+point update, just for the sheer amount of work that must have been involved.
+Part of the release seems to be &lt;a href=&quot;https://wyeworks.com/blog/2015/12/1/immutable-strings-in-ruby-2-dot-3&quot;&gt;paving the way&lt;/a&gt;
+for &lt;a href=&quot;https://bugs.ruby-lang.org/issues/11473&quot;&gt;immutability in Ruby 3.0&lt;/a&gt;
+and a large chunk of the release provided new syntax and language features.&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at a few of the new features.
+I was most looking forward to both the &lt;code class=&quot;highlighter-rouge&quot;&gt;Hash#dig&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Array#dig&lt;/code&gt; methods.
+The “safe navigation” operator was added, which apparently is a
+&lt;a href=&quot;https://blog.heroku.com/archives/2015/12/25/ruby-2-3-0-on-heroku-with-matz#do-you-have-any-favorite-features-coming-in-ruby-2-3&quot;&gt;favorite of Matz&lt;/a&gt;.
+Additionally, the &lt;a href=&quot;https://bugs.ruby-lang.org/issues/11252&quot;&gt;did_you_mean gem&lt;/a&gt; is
+now built into the language, a breakthrough for typo-driven-development of which
+I am so fond.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-ruby-230&quot;&gt;Install Ruby 2.3.0&lt;/h2&gt;
+
+&lt;p&gt;Using &lt;a href=&quot;https://github.com/postmodern/ruby-install&quot;&gt;ruby-install&lt;/a&gt; we can quickly
+grab the latest version of ruby.&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+ruby-install -M https://ftp.ruby-lang.org/pub/ruby ruby 2.3.0
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;Once that’s done downloading and compiling, I like
+&lt;a href=&quot;https://github.com/postmodern/chruby&quot;&gt;chruby&lt;/a&gt; for switching to the new version.&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+chruby 2.3
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;hashdig-and-arraydig&quot;&gt;Hash#dig and Array#dig&lt;/h2&gt;
+
+&lt;p&gt;Both of these methods are great if you’re dealing with unwieldy data sets that you
+may or may not have control over. Think complex API responses, legacy system interfaces,
+etc. They allow you to safely traverse into the data structure without raising
+an error if a single node in the lookup doesn’t exist.&lt;/p&gt;
+
+&lt;h3 id=&quot;hashdig&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Hash#dig&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;Given a hash that looks like this:&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+data = {
+  people: [
+    {
+      first_name: “Jamie”,
+      last_name: “Jackson”,
+      team: “Blue Squad”,
+      qualifications: [
+        {
+          skill: “Oil Change”,
+          type: “primary”
+        },
+        {
+          skill: “Alignment”,
+          type: “advanced”
+        }
+      ]
+    },
+    {
+      first_name: “Jordan”,
+      last_name: “Jacobs”,
+      team: “Red Squad”,
+      qualifications: []
+    }
+  ]
+}
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;The dig method allows you to pull out data or simply get &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; if the piece
+of data doesn’t exist at the path you’ve “dug” to. For instance:&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+data[:people][0][:qualifications][0][:skill]&lt;/p&gt;
+&lt;h1 id=&quot;-oil-change&quot;&gt;=&amp;gt; Oil Change&lt;/h1&gt;
+&lt;p&gt;data[:people][1][:qualifications][0][:skill]&lt;/p&gt;
+&lt;h1 id=&quot;-nomethoderror-undefined-method--for-nilnilclass&quot;&gt;=&amp;gt; NoMethodError: undefined method `[]’ for nil:NilClass&lt;/h1&gt;
+&lt;h1 id=&quot;thrown-since-datapeople1qualifications0-is-nil&quot;&gt;thrown since data[:people][1][:qualifications][0] is nil&lt;/h1&gt;
+
+&lt;p&gt;data.dig(:people, 0, :qualifications, 0, :skill)&lt;/p&gt;
+&lt;h1 id=&quot;-oil-change-1&quot;&gt;=&amp;gt; Oil Change&lt;/h1&gt;
+&lt;p&gt;data.dig(:people, 1, :qualifications, 0, :skill)&lt;/p&gt;
+&lt;h1 id=&quot;-nil&quot;&gt;=&amp;gt; nil&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;h3 id=&quot;arraydig&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Array#dig&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;The dig method for Array works similarly:&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+data = [
+  [10, [10, 4]],
+  [15, [15, 3]],
+  [20]
+]&lt;/p&gt;
+
+&lt;p&gt;data[0][1][0]&lt;/p&gt;
+&lt;h1 id=&quot;-10&quot;&gt;=&amp;gt; 10&lt;/h1&gt;
+&lt;p&gt;data[1][1][0]&lt;/p&gt;
+&lt;h1 id=&quot;-15&quot;&gt;=&amp;gt; 15&lt;/h1&gt;
+&lt;p&gt;data[2][1][0]&lt;/p&gt;
+&lt;h1 id=&quot;-nomethoderror-undefined-method--for-nilnilclass-1&quot;&gt;=&amp;gt; NoMethodError: undefined method `[]’ for nil:NilClass&lt;/h1&gt;
+
+&lt;p&gt;data.dig(0, 1, 0)&lt;/p&gt;
+&lt;h1 id=&quot;-10-1&quot;&gt;=&amp;gt; 10&lt;/h1&gt;
+&lt;p&gt;data.dig(1, 1, 0)&lt;/p&gt;
+&lt;h1 id=&quot;-15-1&quot;&gt;=&amp;gt; 15&lt;/h1&gt;
+&lt;p&gt;data.dig(2, 1, 0)&lt;/p&gt;
+&lt;h1 id=&quot;-nil-1&quot;&gt;=&amp;gt; nil&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;safe-navigation-operator&quot;&gt;Safe Navigation Operator&lt;/h2&gt;
+
+&lt;p&gt;This is something that I hope people will use sparingly since it seems like it
+would be a smell otherwise. The “safe navigation” operator allows you to call
+a method on a variable that might be nil. Other languages, such as C# and Swift,
+have a similar feature.&lt;/p&gt;
+
+&lt;p&gt;In Ruby it looks like this: &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}&lt;/p&gt;
+&lt;h1 id=&quot;assume-nilly-is-nil-because-user-was-not-found&quot;&gt;assume nilly is nil because User was not found&lt;/h1&gt;
+&lt;p&gt;nilly = User.find_by(username: “nilly”)&lt;/p&gt;
+
+&lt;h1 id=&quot;before-ruby-23&quot;&gt;Before Ruby 2.3&lt;/h1&gt;
+&lt;p&gt;nilly.notify!           # NoMethodError error because nilly is nil!
+nilly &amp;amp;&amp;amp; nilly.notify!  # avoid NoMethodError using short-circuit conditional&lt;/p&gt;
+
+&lt;h1 id=&quot;after-ruby-23&quot;&gt;After Ruby 2.3&lt;/h1&gt;
+&lt;p&gt;nilly&amp;amp;.notify!          # will only call notify! if nilly is not nil&lt;/p&gt;
+&lt;h1 id=&quot;-nil-----------------just-returns-nil-when-object-is-nil&quot;&gt;=&amp;gt; nil                # just returns nil when object is nil&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;I can see this coming in handy in some situations, but I would consider using a
+&lt;a href=&quot;https://www.google.com/search?q=null+object+pattern&quot;&gt;null object pattern&lt;/a&gt;
+if I frequently found myself calling methods on something that is possibly nil.&lt;/p&gt;
+
+&lt;h2 id=&quot;did_you_mean&quot;&gt;did_you_mean&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/yuki24/did_you_mean&quot;&gt;did_you_mean gem&lt;/a&gt; is a nice little
+tool that provides helpful suggestions when you mispell or tpyo a word. It’s
+also nice when you might have a good idea of a method name, but need a
+little help.&lt;/p&gt;
+
+&lt;p&gt;Check it out:&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+data = [1, 2, 3, 4]&lt;/p&gt;
+
+&lt;p&gt;data.puhs(5)&lt;/p&gt;
+&lt;h1 id=&quot;nomethoderror-undefined-method-puhs-for-1-2-3-4array&quot;&gt;NoMethodError: undefined method `puhs’ for [1, 2, 3, 4]:Array&lt;/h1&gt;
+&lt;h1 id=&quot;did-you-mean--push&quot;&gt;Did you mean?  push&lt;/h1&gt;
+&lt;h1 id=&quot;puts&quot;&gt;puts&lt;/h1&gt;
+&lt;p&gt;data.push(5)&lt;/p&gt;
+
+&lt;p&gt;data.sliver(2,5)&lt;/p&gt;
+&lt;h1 id=&quot;nomethoderror-undefined-method-sliver-for-1-2-3-4-5array&quot;&gt;NoMethodError: undefined method `sliver’ for [1, 2, 3, 4, 5]:Array&lt;/h1&gt;
+&lt;h1 id=&quot;did-you-mean--slice&quot;&gt;Did you mean?  slice&lt;/h1&gt;
+&lt;h1 id=&quot;slice&quot;&gt;slice!&lt;/h1&gt;
+
+&lt;p&gt;data.slice(2,5)&lt;/p&gt;
+&lt;h1 id=&quot;-3-4-5&quot;&gt;=&amp;gt; [3, 4, 5]&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;What do you like about this release?&lt;/p&gt;
+
+&lt;h2 id=&quot;sources-and-info&quot;&gt;Sources and Info&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released/&quot;&gt;Ruby 2.3 release announcement&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Hash#dig (&lt;a href=&quot;http://ruby-doc.org/core-2.3.0/Hash.html#method-i-dig&quot;&gt;docs&lt;/a&gt;),
+Array#dig (&lt;a href=&quot;http://ruby-doc.org/core-2.3.0/Array.html#method-i-dig&quot;&gt;docs&lt;/a&gt;) –
+&lt;a href=&quot;https://bugs.ruby-lang.org/issues/11643&quot;&gt;discussion&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Safe Navigation Operator –
+&lt;a href=&quot;https://bugs.ruby-lang.org/issues/11537&quot;&gt;discussion&lt;/a&gt;,
+&lt;a href=&quot;https://github.com/ruby/ruby/commit/a356fe1c3550892902103f66928426ac8279e072&quot;&gt;commit&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;did_you_mean –
+&lt;a href=&quot;https://bugs.ruby-lang.org/issues/11252&quot;&gt;discussion&lt;/a&gt;,
+&lt;a href=&quot;https://github.com/yuki24/did_you_mean&quot;&gt;gem homepage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+<summary>It’s beginning to feel like tradition –– for the second yearnow,the Ruby core team has shipped a minor point update on Christmas Day.This year gifting the world Ruby 2.3.</summary>
+</entry>
+<entry>
+<title>Slack bot for API Documentation</title>
+<link href="https://ronniemlr.com/2015/09/05/slack-bot-api-documentation/" rel="alternate" type="text/html" title="Slack bot for API Documentation" />
+<published>2015-09-05T00:00:00-07:00</published>
+<updated>2015-09-05T00:00:00-07:00</updated>
+<id>https://ronniemlr.com/2015/09/05/slack-bot-api-documentation</id>
+<content type="html" xml:base="https://ronniemlr.com/2015/09/05/slack-bot-api-documentation/">&lt;p&gt;The number of Slack bots, Slack plug-ins and other integrations available
+recently seems to have skyrocketed. There are plug-ins to help facilitate &lt;a href=&quot;https://twitter.com/moriogawa/status/629485213849157632/&quot;&gt;live
+blogging&lt;/a&gt;, bots that
+can &lt;a href=&quot;https://www.roomino.com/&quot;&gt;book rooms for your team&lt;/a&gt; (hopefully better than
+your company’s travel department), there’s even a Slack bot that will
+&lt;a href=&quot;http://christinac.github.io/ellie-slack/&quot;&gt;listen to all of your frustrations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At work we switched to Slack recently and there are many things I’ve been
+wanting to try. One being to create a bot that will give API documentation
+and example responses.&lt;/p&gt;
+
+&lt;p&gt;In order to do this we’ll take a simple JSON schema, parse it a bit,
+then provide a sample response based on the schema. To handle this I’m
+leaning heavily on both &lt;a href=&quot;http://github.com/interagent/prmd&quot;&gt;Prmd&lt;/a&gt;,
+a tool for managing JSON schemas and generating documentation from them and
+for the Slack integration, the excellent
+&lt;a href=&quot;http://github.com/dblock/slack-ruby-bot&quot;&gt;slack-ruby-bot&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;creating-a-json-schema&quot;&gt;Creating a JSON Schema&lt;/h2&gt;
+
+&lt;p&gt;I just recently started diving into JSON schema, so I’m still fairly new myself.
+I found the online book &lt;em&gt;&lt;a href=&quot;http://spacetelescope.github.io/understanding-json-schema/&quot;&gt;Understanding JSON
+Schema&lt;/a&gt;&lt;/em&gt; to be a
+great resource. For the purposes of this blog post I’m going to use a generic “person”
+schema. This person object will have a first name, last name, and an email address.&lt;/p&gt;
+
+&lt;p&gt;We’ll use Prmd to combine a &lt;code class=&quot;highlighter-rouge&quot;&gt;meta.yml&lt;/code&gt; and a &lt;code class=&quot;highlighter-rouge&quot;&gt;person.yml&lt;/code&gt; file into our
+&lt;code class=&quot;highlighter-rouge&quot;&gt;schema.json&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;meta.yml&lt;/figcaption&gt;
+{% highlight yaml %}
+id: &quot;person-api&quot;
+description: &quot;Person Example API&quot;
+title: &quot;Person Example API&quot;
+links:
+  - href: &quot;https://api.example.com&quot;
+    rel: &quot;self&quot;
+definitions:
+  identity:
+    &quot;$ref&quot;: &quot;#/definitions/id&quot;
+  id:
+    description: &quot;Unique identifier of a resource.&quot;
+    example: &quot;1dc3567e-acd4-4819-afd5-21d0ef677dcd&quot;
+    readOnly: true
+    format: &quot;uuid&quot;
+    type: &quot;string&quot;
+{% endhighlight %}
+&lt;/figure&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;person.yml&lt;/figcaption&gt;
+{% highlight yaml %}
+id: &quot;person&quot;
+title: &quot;Person&quot;
+properties:
+  id:
+    &quot;$ref&quot;: &quot;#/definitions/id&quot;
+  first_name:
+    description: &quot;The person's first name.&quot;
+    example: &quot;Jean-Luc&quot;
+    type: &quot;string&quot;
+  last_name:
+    description: &quot;The person's last name.&quot;
+    example: &quot;Picard&quot;
+    type: &quot;string&quot;
+  email_address:
+    description: &quot;The person's email address.&quot;
+    example: &quot;locutus@borg.hive&quot;
+    format: &quot;email&quot;
+    type: &quot;string&quot;
+definitions:
+  person:
+    description: &quot;A single person&quot;
+    properties:
+      id:
+        &quot;$ref&quot;: &quot;#/id&quot;
+      first_name:
+        &quot;$ref&quot;: &quot;#/first_name&quot;
+      last_name:
+        &quot;$ref&quot;: &quot;#/last_name&quot;
+      email_address:
+        &quot;$ref&quot;: &quot;#/email_address&quot;
+    type: &quot;object&quot;
+links:
+  - title: &quot;Person details&quot;
+    description: &quot;Get the details of a person&quot;
+    method: GET
+    href: &quot;/person/{#/definitions/identity}&quot;
+    targetSchema:
+      &quot;$ref&quot;: &quot;#/person&quot;
+{% endhighlight %}
+&lt;/figure&gt;
+
+&lt;p&gt;Combining these into a single schema file is easy:&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+prmd combine –meta meta.yml person.yml &amp;gt; schema.json
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;This produces:&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;schema.json&lt;/figcaption&gt;
+{% highlight javascript %}
+{
+  &quot;$schema&quot;: &quot;http://interagent.github.io/interagent-hyper-schema&quot;,
+  &quot;type&quot;: [
+    &quot;object&quot;
+  ],
+  &quot;definitions&quot;: {
+    &quot;identity&quot;: {
+      &quot;$ref&quot;: &quot;#/definitions/id&quot;
+    },
+    &quot;id&quot;: {
+      &quot;description&quot;: &quot;Unique identifier of a resource.&quot;,
+      &quot;example&quot;: &quot;1dc3567e-acd4-4819-afd5-21d0ef677dcd&quot;,
+      &quot;readOnly&quot;: true,
+      &quot;format&quot;: &quot;uuid&quot;,
+      &quot;type&quot;: [
+        &quot;string&quot;
+      ]
+    },
+    &quot;person&quot;: {
+      &quot;title&quot;: &quot;Person&quot;,
+      &quot;properties&quot;: {
+        &quot;id&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/id&quot;
+        },
+        &quot;first_name&quot;: {
+          &quot;description&quot;: &quot;The person's first name.&quot;,
+          &quot;example&quot;: &quot;Jean-Luc&quot;,
+          &quot;type&quot;: [
+            &quot;string&quot;
+          ]
+        },
+        &quot;last_name&quot;: {
+          &quot;description&quot;: &quot;The person's last name.&quot;,
+          &quot;example&quot;: &quot;Picard&quot;,
+          &quot;type&quot;: [
+            &quot;string&quot;
+          ]
+        },
+        &quot;email_address&quot;: {
+          &quot;description&quot;: &quot;The person's email address.&quot;,
+          &quot;example&quot;: &quot;locutus@borg.hive&quot;,
+          &quot;format&quot;: &quot;email&quot;,
+          &quot;type&quot;: [
+            &quot;string&quot;
+          ]
+        }
+      },
+      &quot;definitions&quot;: {
+        &quot;person&quot;: {
+          &quot;description&quot;: &quot;A single person&quot;,
+          &quot;properties&quot;: {
+            &quot;id&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/id&quot;
+            },
+            &quot;first_name&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/first_name&quot;
+            },
+            &quot;last_name&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/last_name&quot;
+            },
+            &quot;email_address&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/email_address&quot;
+            }
+          },
+          &quot;type&quot;: [
+            &quot;object&quot;
+          ]
+        }
+      },
+      &quot;links&quot;: [
+        {
+          &quot;title&quot;: &quot;Person details&quot;,
+          &quot;description&quot;: &quot;Get the details of a person&quot;,
+          &quot;method&quot;: &quot;GET&quot;,
+          &quot;href&quot;: &quot;/person/{#/definitions/identity}&quot;,
+          &quot;targetSchema&quot;: {
+            &quot;$ref&quot;: &quot;#/definitions/person&quot;
+          }
+        }
+      ]
+    }
+  },
+  &quot;properties&quot;: {
+    &quot;person&quot;: {
+      &quot;$ref&quot;: &quot;#/definitions/person&quot;
+    }
+  },
+  &quot;id&quot;: &quot;person-api&quot;,
+  &quot;description&quot;: &quot;Person Example API&quot;,
+  &quot;title&quot;: &quot;Person Example API&quot;,
+  &quot;links&quot;: [
+    {
+      &quot;href&quot;: &quot;https://api.example.com&quot;,
+      &quot;rel&quot;: &quot;self&quot;
+    }
+  ]
+}
+{% endhighlight %}
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;creating-a-basic-slack-bot&quot;&gt;Creating a basic Slack bot&lt;/h2&gt;
+
+&lt;p&gt;We will need the following files:&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+docutron/
+  response.rb
+docutron.rb
+Gemfile
+schema.json # the generated output from above
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h3 id=&quot;gemfile&quot;&gt;Gemfile&lt;/h3&gt;
+
+&lt;p&gt;{% highlight ruby %}
+source ‘http://rubygems.org’&lt;/p&gt;
+
+&lt;p&gt;gem ‘slack-ruby-bot’
+gem ‘prmd’
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;docutronrb&quot;&gt;docutron.rb&lt;/h2&gt;
+
+&lt;p&gt;This will be the main entry point into the bot when a webhook payload is received.&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby linenos=table %}
+require ‘slack-ruby-bot’
+require_relative ‘docutron/response’&lt;/p&gt;
+
+&lt;p&gt;module Docutron
+  class App &amp;lt; SlackRubyBot::App
+  end&lt;/p&gt;
+
+&lt;p&gt;class SlackBot &amp;lt; SlackRubyBot::Commands::Base
+    DOC_REQUEST = /^(?&lt;request_method&gt;\w*) (?&lt;resource&gt;\w*)$/&lt;/resource&gt;&lt;/request_method&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;match DOC_REQUEST do |client, data, match|
+  method, resource = match[:request_method], match[:resource]
+  response = Docutron::Response.new(method, resource)
+  response.send(client, data.channel)
+end   end end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Docutron::App.instance.run
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;We match against the incoming message using the SlackRubyBot’s &lt;code class=&quot;highlighter-rouge&quot;&gt;.match&lt;/code&gt; method.
+We’re looking for a message in the form of &lt;code class=&quot;highlighter-rouge&quot;&gt;[request method] [resource name]&lt;/code&gt;,
+For instance:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;GET person&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When a message is received, we create a new &lt;code class=&quot;highlighter-rouge&quot;&gt;Docutron::Response&lt;/code&gt; instance and pass
+it the request method and the resource. We then call &lt;code class=&quot;highlighter-rouge&quot;&gt;#send&lt;/code&gt; to respond in the
+Slack channel the message was sent from.&lt;/p&gt;
+
+&lt;h2 id=&quot;docutronresponserb&quot;&gt;docutron/response.rb&lt;/h2&gt;
+
+&lt;p&gt;This is where we’ll do the bulk of the work of loading and parsing the schema,
+choosing the correct schema link for the requested resource, then returning the
+appropriate response.&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby linenos=table %}
+require ‘prmd’&lt;/p&gt;
+
+&lt;p&gt;module Docutron
+  class Response
+    UnknownResponse = “Sorry, I don’t know about that resource.”.freeze&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def initialize(method, resource)
+  @method   = method.upcase
+  @resource = resource
+  @schemata = &quot;#/definitions/#{@resource}&quot;
+  @schema   = Prmd::Schema.new(JSON.parse(File.read('schema.json')))
+end
+
+def link
+  @schema['definitions'][@resource]['links'].detect do |link|
+    link['method'] == @method
+  end or raise UnknownResponse
+end
+
+def json_example
+  if link['rel'] == 'empty'
+  elsif link.has_key?('targetSchema')
+    JSON.pretty_generate(@schema.schema_example(link['targetSchema']))
+  elsif link['rel'] == 'instances'
+    JSON.pretty_generate([@schema.schemata_example(@schemata)])
+  else
+    JSON.pretty_generate(@schema.schemata_example(@schemata))
+  end
+end
+
+def message
+  &quot;```#{json_example}```&quot;
+end
+
+def send(client, channel)
+  client.message text: message, channel: channel
+end   end end {% endhighlight %}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The initializer of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Docutron::Response&lt;/code&gt; class sets up some instance variables
+and creates a new &lt;code class=&quot;highlighter-rouge&quot;&gt;Prmd::Schema&lt;/code&gt; instance using the schema.json data.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;#link&lt;/code&gt; method finds the schema’s link definition for the resource and the request
+method of the incoming Slack message. Our basic person schema defines one link:&lt;/p&gt;
+
+&lt;p&gt;{% highlight json %}
+{
+  “title”: “Person details”,
+  “description”: “Get the details of a person”,
+  “method”: “GET”,
+  “href”: “/person/{#/definitions/identity}”,
+  “targetSchema”: {
+    “$ref”: “#/definitions/person”
+  }
+}
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;#json_example&lt;/code&gt; method uses the link to generate a JSON example either using
+the &lt;code class=&quot;highlighter-rouge&quot;&gt;targetSchema&lt;/code&gt; of the link if it exists, or by using a default json
+reference for the resource, in this case &lt;code class=&quot;highlighter-rouge&quot;&gt;#/definitions/person&lt;/code&gt;. If the link has
+a rel of “instances”, it wraps the response in an array. This
+method is adapted from &lt;a href=&quot;https://github.com/interagent/prmd/blob/master/lib/prmd/templates/schemata/link.md.erb&quot;&gt;Prmd’s link.md.erb
+template&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The important bit here is the &lt;code class=&quot;highlighter-rouge&quot;&gt;@schema.schemata_example(@schemata)&lt;/code&gt; which
+returns a JSON object based on the properties defined for a given “schemata” and
+the example values defined in the schema. For person it looks like this:&lt;/p&gt;
+
+&lt;p&gt;{% highlight json %}
+{
+  “id”: “1dc3567e-acd4-4819-afd5-21d0ef677dcd”,
+  “first_name”: “Jean-Luc”,
+  “last_name”: “Picard”,
+  “email_address”: “locutus@borg.hive”
+}
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;Finally, the &lt;code class=&quot;highlighter-rouge&quot;&gt;#message&lt;/code&gt; method wraps the JSON example in triple back ticks so
+that Slack will format the message as preformatted text. The &lt;code class=&quot;highlighter-rouge&quot;&gt;#send&lt;/code&gt; method as
+you recall is what our Slack bot actually calls to send the message.&lt;/p&gt;
+
+&lt;h2 id=&quot;configure-slack&quot;&gt;Configure Slack&lt;/h2&gt;
+
+&lt;p&gt;The final step to run this basic Slack bot is to configure your team’s
+integrations. First create a new bot by going to the &lt;a href=&quot;https://slack.com/services/new/bot&quot;&gt;Add Bot&lt;/a&gt;
+page. Create a new bot and obtain the bot’s API token. You’ll need this to start the bot.
+Next, from the &lt;a href=&quot;https://slack.com/services/new/outgoing-webhook&quot;&gt;Add Outgoing Webhooks&lt;/a&gt;
+page create a new outgoing webhook and choose a specific
+channel for your bot to monitor.&lt;/p&gt;
+
+&lt;p&gt;To run the bot use the command:&lt;/p&gt;
+
+&lt;p&gt;{% highlight text %}
+SLACK_API_TOKEN=bot_api_token_here ruby docutron.rb
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/slackbot-docutron.gif&quot; alt=&quot;Slackbot: Docutron&quot; class=&quot;console-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;just-the-beginning&quot;&gt;Just the beginning&lt;/h2&gt;
+
+&lt;p&gt;For the documentation to be truly useful, you’ll of course want more
+information. Maybe some details about each property, for example.
+Prmd has templates to handle generating that which could be
+adapted for docutron, but I leave that as an exercise for the reader.&lt;/p&gt;
+
+&lt;p&gt;Happy Slacking!&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://github.com/mlr/docutron&quot;&gt;Docutron source code&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://spacetelescope.github.io/understanding-json-schema/&quot;&gt;Understanding JSON Schema&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/dblock/slack-ruby-bot&quot;&gt;slack-ruby-bot&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/interagent/prmd&quot;&gt;Prmd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+<summary>The number of Slack bots, Slack plug-ins and other integrations availablerecently seems to have skyrocketed. There are plug-ins to help facilitate liveblogging, bots thatcan book rooms for your team (hopefully better thanyour company’s travel department), there’s even a Slack bot that willlisten to all of your frustrations.</summary>
+</entry>
+<entry>
+<title>Vim plugins lost in the Vundle</title>
+<link href="https://ronniemlr.com/2015/07/12/vim-plugins-lost-in-the-vundle/" rel="alternate" type="text/html" title="Vim plugins lost in the Vundle" />
+<published>2015-07-12T00:00:00-07:00</published>
+<updated>2015-07-12T00:00:00-07:00</updated>
+<id>https://ronniemlr.com/2015/07/12/vim-plugins-lost-in-the-vundle</id>
+<content type="html" xml:base="https://ronniemlr.com/2015/07/12/vim-plugins-lost-in-the-vundle/">&lt;p&gt;Once in a while I try to audit my vim configuration, plugins, etc. Although I try
+to be vigilant against it, I inevitably end up with plugins that go unused for
+months and cause some minor wtf moments when I see them later and can’t remember
+what they’re for.&lt;/p&gt;
+
+&lt;p&gt;Even worse: it’s a vicious, time consuming cycle. I find myself having a
+hard time parting from some of these plugins after I rediscover their purpose.
+So I end up refreshing my knowledge of their mappings, using them for a few
+days, and forgetting about them again because for whatever reason they just aren’t
+sticking as part of my workflow.&lt;/p&gt;
+
+&lt;p&gt;In an effort to document some this discovery and once and for all expunge
+some of these plugins from my Vundle, I decided it’s worth writing up a quick
+review of a few plugins I have tried, but just haven’t stuck.&lt;/p&gt;
+
+&lt;h2 id=&quot;vundle-organization&quot;&gt;Vundle organization&lt;/h2&gt;
+
+&lt;p&gt;As you’ve probably inferred, I currently use
+&lt;a href=&quot;https://github.com/VundleVim/Vundle.vim&quot;&gt;&lt;em&gt;Vundle&lt;/em&gt;&lt;/a&gt; to manage my vim bundle.
+I’ve considered trying &lt;a href=&quot;https://github.com/tpope/vim-pathogen&quot;&gt;Tim Pope’s &lt;em&gt;Pathogen&lt;/em&gt;&lt;/a&gt;,
+but that’s a topic for another post. Anyway, my
+&lt;a href=&quot;https://github.com/mlr/dotfiles/blob/master/vimrc.bundles&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.vimrc.bundles&lt;/code&gt;&lt;/a&gt;
+file looks like this:&lt;/p&gt;
+
+&lt;p&gt;{% highlight vim linenos=table %}
+set nocompatible
+filetype off&lt;/p&gt;
+
+&lt;p&gt;set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()&lt;/p&gt;
+
+&lt;p&gt;” Let Vundle manage Vundle
+“ Define bundles via Github repos
+Bundle ‘gmarik/vundle’&lt;/p&gt;
+
+&lt;p&gt;” Core enhancements
+Bundle ‘chriskempson/base16-vim’
+Bundle ‘danro/rename.vim’
+Bundle ‘itchyny/lightline.vim’
+Bundle ‘vim-scripts/ShowTrailingWhitespace’
+Bundle ‘vim-scripts/DeleteTrailingWhitespace’
+Bundle ‘tpope/vim-unimpaired’&lt;/p&gt;
+
+&lt;p&gt;” IDE-like enhancements
+Bundle ‘scrooloose/nerdtree’
+Bundle ‘scrooloose/syntastic’
+Bundle ‘kien/ctrlp.vim’
+Bundle ‘rking/ag.vim’
+Bundle ‘nathanaelkane/vim-indent-guides’
+Bundle ‘tpope/vim-fugitive’
+Bundle ‘gregsexton/gitv’
+Bundle ‘benmills/vimux’
+Bundle ‘jgdavey/vim-turbux’&lt;/p&gt;
+
+&lt;p&gt;” Code editing enhancements
+Bundle ‘tmhedberg/vim-matchit’
+Bundle ‘tpope/vim-endwise’
+Bundle ‘tpope/vim-surround’
+Bundle ‘vim-scripts/tComment’
+Bundle ‘godlygeek/tabular’
+Bundle ‘goldfeld/vim-seek’
+Bundle ‘PeterRincker/vim-argumentative’
+Bundle ‘tommcdo/vim-exchange.git’
+Bundle ‘terryma/vim-expand-region’
+Bundle ‘kana/vim-textobj-user’
+Bundle ‘nelstrom/vim-textobj-rubyblock’
+Bundle ‘jgdavey/vim-blockle’&lt;/p&gt;
+
+&lt;p&gt;” File type handlers
+Bundle ‘xenoterracide/html.vim’
+Bundle ‘vim-ruby/vim-ruby’
+Bundle ‘tpope/vim-bundler’
+Bundle ‘tpope/vim-rails’
+Bundle ‘tpope/vim-haml’
+Bundle ‘tpope/vim-markdown’
+Bundle ‘mustache/vim-mustache-handlebars’
+Bundle ‘kchmck/vim-coffee-script’
+Bundle ‘slim-template/vim-slim.git’&lt;/p&gt;
+
+&lt;p&gt;” Snippets
+Bundle ‘MarcWeber/vim-addon-mw-utils’
+Bundle ‘tomtom/tlib_vim’
+Bundle ‘garbas/vim-snipmate’&lt;/p&gt;
+
+&lt;p&gt;filetype on
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;As you can see it’s organized into 5 semi-defined sections:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Core enhancements&lt;/li&gt;
+  &lt;li&gt;IDE-like enhancements&lt;/li&gt;
+  &lt;li&gt;Code editing enhancements&lt;/li&gt;
+  &lt;li&gt;File type handlers&lt;/li&gt;
+  &lt;li&gt;Snippets&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Sections 1, 4 and 5 tend to be fairly unchanging. Sections 2 and 3 are where the
+most churn tends to happens. There’s four plugins in particular that I wanted to
+review for removal:&lt;/p&gt;
+
+&lt;p&gt;{% highlight vim %}
+Bundle ‘goldfeld/vim-seek’
+Bundle ‘PeterRincker/vim-argumentative’
+Bundle ‘tommcdo/vim-exchange.git’
+Bundle ‘terryma/vim-expand-region’
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;vim-seek&quot;&gt;Vim seek&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/goldfeld/vim-seek&quot;&gt;https://github.com/goldfeld/vim-seek&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Seek makes navigating long lines effortless, acting like f but taking two characters.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/vim-bundle-vim-seek.png&quot; alt=&quot;Vim seek install date&quot; class=&quot;console-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I remember installing vim-seek because my habit when writing code tends to be to
+use the &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; character to motion jump around to the part of the line I need to change.
+The problem comes when the line has more than one of a given character, which tends
+to happen more often than not. Vim seek maps the &lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; character to behave similar
+to find, but takes two characters then jumps to the first instance of
+those two characters.&lt;/p&gt;
+
+&lt;p&gt;This works great, but I found myself forgetting the key mapping was there.
+Furthermore, I simply adjusted my habit from tending to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; key to
+invoke find to using the &lt;code class=&quot;highlighter-rouge&quot;&gt;/&lt;/code&gt; key to invoke a pattern search and typing a couple
+characters to search within the whole file.&lt;/p&gt;
+
+&lt;p&gt;Since the search is made relative to the current cursor position it
+usually works well. This also has the added bonus of not needing to be
+on the same line as the search term and I can use &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;shift+/&lt;/code&gt;) similar
+to &lt;code class=&quot;highlighter-rouge&quot;&gt;F&lt;/code&gt; to search backward. Now I tend to just type &lt;code class=&quot;highlighter-rouge&quot;&gt;/&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; and begin
+typing the code I’m trying to jump to.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: removed from bundle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;argumentativevim&quot;&gt;argumentative.vim&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/PeterRincker/vim-argumentative&quot;&gt;https://github.com/PeterRincker/vim-argumentative&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Argumentative aids with manipulating and moving between function arguments.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As can be seen in the example below, argumentative lets you easily swap the
+order of method arguments. Argumentative defines the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;,&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;,&lt;/code&gt; mappings. You
+simply place the cursor on one argument and use the former to swap it right and
+the latter to swap it left.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/vim-bundle-vim-argumentative.gif&quot; alt=&quot;Vim argumentative usage&quot; class=&quot;console-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In addition, it defines two new text objects &lt;code class=&quot;highlighter-rouge&quot;&gt;a,&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;i,&lt;/code&gt; which allows you to
+further manipulate function arguments. For instance &lt;code class=&quot;highlighter-rouge&quot;&gt;vi,&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;va,&lt;/code&gt; can be used to
+make a visual selection inside the method argument under the cursor or select around it, respectively.&lt;/p&gt;
+
+&lt;p&gt;Although I still love the idea of this plugin, I have not noticed myself using
+it after having installed it over a year ago. Swapping the order of arguments is
+just not something I do often enough to develop a muscle memory for the
+key mappings.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: removed from bundle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;exchangevim&quot;&gt;exchange.vim&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/tommcdo/vim-exchange&quot;&gt;https://github.com/tommcdo/vim-exchange&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Easy text exchange operator for Vim&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This plugin allows you to quickly swap two lines or two large regions of text.
+Vimcasts provides an excellent cover of exchange.vim’s features in their vimcast
+&lt;a href=&quot;http://vimcasts.org/episodes/swapping-two-regions-of-text-with-exchange-vim/&quot;&gt;&lt;em&gt;Swapping two regions of text with
+exchange.vim&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Similar to argumentative.vim, this is a plugin I must have installed figuring I
+would use it a lot. Even as of writing this it still feels like this is something
+I do often enough to warrant custom key mappings for.&lt;/p&gt;
+
+&lt;p&gt;In practice though, I tend to just visually select and cut a chunk of code then
+use motion keys to jump to the position I want it to be, then paste. I rarely
+entirely swap two lines or pieces of code with one another.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: removed from bundle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;vim-expand-region&quot;&gt;Vim expand region&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/terryma/vim-expand-region&quot;&gt;https://github.com/terryma/vim-expand-region&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Vim plugin that allows you to visually select increasingly larger regions of
+text using the same key combination.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/vim-bundle-vim-expand-region.gif&quot; alt=&quot;Vim expand region usage&quot; class=&quot;console-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;_&lt;/code&gt; key mappings provided by vim-expand-region, you can easily
+grow and shrink a visual selection as seen above.&lt;/p&gt;
+
+&lt;p&gt;Since I don’t typically visually select some piece of text before operating on
+it, I don’t need to modify my selection very often. I tend to just yank or change
+inside of whatever text object I’m in. For example &lt;code class=&quot;highlighter-rouge&quot;&gt;yi(&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;ci[&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I do frequently select entire blocks of code, for instance an if statement to
+indent further, but in that case I typically place my cursor on the &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; or the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;end&lt;/code&gt; and do &lt;code class=&quot;highlighter-rouge&quot;&gt;V%&lt;/code&gt; to select to the entire block. The &lt;code class=&quot;highlighter-rouge&quot;&gt;%&lt;/code&gt; mapping comes from the
+excellent &lt;a href=&quot;https://github.com/tmhedberg/matchit&quot;&gt;vim-matchit&lt;/a&gt; plugin.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: removed from bundle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;rip-plugins&quot;&gt;RIP plugins&lt;/h2&gt;
+
+&lt;p&gt;I ended up removing all four plugins I reviewed today. I think they provide great
+functionality, but in the end I used them less times than I can count on one hand
+and they had been installed for over a year on average.&lt;/p&gt;
+
+&lt;p&gt;On a positive note, I can now look to this write-up if I stumble upon any of
+these plugins in the future and want to give any of them another try.&lt;/p&gt;
+</content>
+<summary>Once in a while I try to audit my vim configuration, plugins, etc. Although I tryto be vigilant against it, I inevitably end up with plugins that go unused formonths and cause some minor wtf moments when I see them later and can’t rememberwhat they’re for.</summary>
+</entry>
+<entry>
+<title>RailsConf 2015, Atlanta Georgia</title>
+<link href="https://ronniemlr.com/2015/04/24/rails-conf-2015/" rel="alternate" type="text/html" title="RailsConf 2015, Atlanta Georgia" />
+<published>2015-04-24T00:00:00-07:00</published>
+<updated>2015-04-24T00:00:00-07:00</updated>
+<id>https://ronniemlr.com/2015/04/24/rails-conf-2015</id>
+<content type="html" xml:base="https://ronniemlr.com/2015/04/24/rails-conf-2015/">&lt;p&gt;RailsConf 2015 was hosted in the towering downtown Atlanta, Georgia.
+I was grateful to have been sent to attend this year thanks to my
+&lt;a href=&quot;http://crowdcompass.com&quot;&gt;rather awesome employer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/posts/rails-conf-2015.jpg&quot; alt=&quot;Atlanta, Georgia&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Rails 5 was a large topic of discussion during DHH’s opening keynote.
+A couple of the big feature announcements were Turbolinks 3 and Action Cable.
+Despite my tongue-in-cheek post title, I’m actually looking forward to trying
+both of these features.&lt;/p&gt;
+
+&lt;p&gt;Back when I built &lt;a href=&quot;http://www.workstiming.com&quot;&gt;WorksTiming&lt;/a&gt; I ended up keeping
+Turbolinks enabled. For the mostly-static dashboards it uses on the backend, the
+standard functionality provided by Rails 4.x works pretty great; the only caveat
+being of course the DOM on ready listener issue which actually
+&lt;a href=&quot;http://stackoverflow.com/a/18770589&quot;&gt;isn’t that difficult to fix&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I also settled on using &lt;a href=&quot;http://pusher.com&quot;&gt;Pusher&lt;/a&gt; to provide live updating
+features using websockets. I’ve been on the lookout for a better alternative
+since, with some &lt;a href=&quot;https://github.com/websocket-rails/websocket-rails&quot;&gt;promising possibilities&lt;/a&gt;,
+but having a websocket story integrated into the core of Rails is a welcome
+addition.&lt;/p&gt;
+
+&lt;p&gt;Another great announcement in Rails 5 is the integration of the Rails API work
+that’s been happening to make a slimmer starting point for building API
+only or JS heavy applications. Read more about this decision direct from
+one who helped make it happen: &lt;a href=&quot;http://wyeworks.com/blog/2015/4/20/rails-api-is-going-to-be-included-in-rails-5&quot;&gt;Santiago Pastorino: Rails API to be part of
+Rails 5&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;All in all I had a great time this week at the conference and look forward to
+following the development of Rails 5. Check out the &lt;a href=&quot;https://www.youtube.com/watch?v=oMlX9i9Icno&quot;&gt;keynote
+accouncements&lt;/a&gt;
+on Confreaks’ YouTube channel if you missed it.&lt;/p&gt;
+</content>
+<summary>RailsConf 2015 was hosted in the towering downtown Atlanta, Georgia.I was grateful to have been sent to attend this year thanks to myrather awesome employer.</summary>
+</entry>
+<entry>
+<title>Trying out new features of Ruby 2.2</title>
+<link href="https://ronniemlr.com/2014/12/25/trying-out-new-features-of-ruby-2.2/" rel="alternate" type="text/html" title="Trying out new features of Ruby 2.2" />
+<published>2014-12-25T00:00:00-08:00</published>
+<updated>2014-12-25T00:00:00-08:00</updated>
+<id>https://ronniemlr.com/2014/12/25/trying-out-new-features-of-ruby-2.2</id>
+<content type="html" xml:base="https://ronniemlr.com/2014/12/25/trying-out-new-features-of-ruby-2.2/">&lt;p&gt;The Ruby core team shipped an awesome new version –
+&lt;a href=&quot;https://www.ruby-lang.org/en/news/2014/12/25/ruby-2-2-0-released&quot;&gt;Ruby 2.2.0&lt;/a&gt;
+– on Christmas day. What an awesome gift! Notable enhancements include
+both incremental garbage and symbol garbage collection.&lt;/p&gt;
+
+&lt;p&gt;Both of these together should provide noticeable improvements to memory usage
+and will allow the Rails core team to “&lt;a href=&quot;http://weblog.rubyonrails.org/2014/8/20/Rails-4-2-beta1/#maintenance-consequences-and-rails-5-0&quot;&gt;shed a lot of weight&lt;/a&gt;”
+with regards to user input and how strings are handled.&lt;/p&gt;
+
+&lt;p&gt;Let’s try out a couple of the new features, namely &lt;code class=&quot;highlighter-rouge&quot;&gt;Enumerable#slice_after&lt;/code&gt; and
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Enumerable#slice_when&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;install-ruby-220&quot;&gt;Install Ruby 2.2.0&lt;/h2&gt;
+
+&lt;p&gt;I really enjoy &lt;a href=&quot;https://github.com/postmodern/ruby-install&quot;&gt;ruby-install&lt;/a&gt;, so
+that’s how I installed the new version on my system. If you’re not already using
+it, I highly recommend it.&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+ruby-install -u http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.bz2 ruby 2.2
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;Once that’s done downloading and compiling, I simply use
+&lt;a href=&quot;https://github.com/postmodern/chruby&quot;&gt;chruby&lt;/a&gt; to switch to the new version.&lt;/p&gt;
+
+&lt;p&gt;{% highlight bash %}
+chruby 2.2
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;enumerableslice_after&quot;&gt;Enumerable#slice_after&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#slice_after&lt;/code&gt; is a counterpart to the already existing &lt;code class=&quot;highlighter-rouge&quot;&gt;#slice_before&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This method lets you split an enumerator with each item being grouped into a new
+chunk when the result of the block is true.  So in the example below, you can
+see a new chunk is created after each odd number.&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+[0,2,4,1,2,4,5,3,1,4,2].slice_after(&amp;amp;:odd?).to_a&lt;/p&gt;
+&lt;h1 id=&quot;-0-2-4-1-2-4-5-3-1-4-2&quot;&gt;=&amp;gt; [[0, 2, 4, 1], [2, 4, 5], [3], [1], [4, 2]]&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;h2 id=&quot;enumerableslice_when&quot;&gt;Enumerable#slice_when&lt;/h2&gt;
+
+&lt;p&gt;This method allows you to slice the enumerable by comparing adjacent elements.
+When the block is true a new chunk is created. Say you have an array of numbers
+and you want to list them where subsequent numbers are grouped into ranges,
+like “1, 5, 9-12, 15” for example.&lt;/p&gt;
+
+&lt;p&gt;{% highlight ruby %}
+numbers = [1, 5, 9, 10, 11, 12, 15]
+grouped = numbers.slice_when { |i, j| i+1 != j }
+p grouped.to_a&lt;/p&gt;
+&lt;h1 id=&quot;-1-5-9-10-11-12-15&quot;&gt;=&amp;gt; [[1], [5], [9, 10, 11, 12], [15]]&lt;/h1&gt;
+
+&lt;p&gt;ranges = grouped.map { |a| a.length &amp;lt; 3 ? a : “#{a.first}-#{a.last}” }
+p ranges&lt;/p&gt;
+&lt;h1 id=&quot;-1-5-9-12-15&quot;&gt;=&amp;gt; [[1], [5], “9-12”, [15]]&lt;/h1&gt;
+
+&lt;p&gt;p ranges.join(“, “)&lt;/p&gt;
+&lt;h1 id=&quot;-1-5-9-12-15-1&quot;&gt;=&amp;gt; “1, 5, 9-12, 15”&lt;/h1&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;Let me know what you like about this release. Go forth and be productive!&lt;/p&gt;
+
+&lt;h2 id=&quot;sources-and-info&quot;&gt;Sources and Info&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ruby-lang.org/en/news/2014/12/25/ruby-2-2-0-released/&quot;&gt;Ruby 2.2 release announcement&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Enumerable#slice_after –
+&lt;a href=&quot;http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-slice_after&quot;&gt;documentation&lt;/a&gt;,
+&lt;a href=&quot;https://bugs.ruby-lang.org/issues/9071&quot;&gt;discussion&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Enumerable#slice_when –
+&lt;a href=&quot;http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-slice_when&quot;&gt;documentation&lt;/a&gt;,
+&lt;a href=&quot;https://bugs.ruby-lang.org/issues/9826&quot;&gt;discussion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+<summary>The Ruby core team shipped an awesome new version –Ruby 2.2.0– on Christmas day. What an awesome gift! Notable enhancements includeboth incremental garbage and symbol garbage collection.</summary>
+</entry>
+</feed>

@@ -114,7 +114,7 @@ Bundle 'terryma/vim-expand-region'
 
 > Seek makes navigating long lines effortless, acting like f but taking two characters.
 
-![Vim seek install date]({{site.url}}/images/posts/vim-bundle-vim-seek.png){: .console-image }
+![Vim seek install date](/images/posts/vim-bundle-vim-seek.png){: .console-image }
 
 I remember installing vim-seek because my habit when writing code tends to be to
 use the `f` character to motion jump around to the part of the line I need to change.
@@ -147,7 +147,7 @@ order of method arguments. Argumentative defines the `>,` and `<,` mappings. You
 simply place the cursor on one argument and use the former to swap it right and
 the latter to swap it left.
 
-![Vim argumentative usage]({{site.url}}/images/posts/vim-bundle-vim-argumentative.gif){: .console-image }
+![Vim argumentative usage](/images/posts/vim-bundle-vim-argumentative.gif){: .console-image }
 
 In addition, it defines two new text objects `a,` and `i,` which allows you to
 further manipulate function arguments. For instance `vi,` and `va,` can be used to
@@ -188,7 +188,7 @@ entirely swap two lines or pieces of code with one another.
 > Vim plugin that allows you to visually select increasingly larger regions of
 > text using the same key combination.
 
-![Vim expand region usage]({{site.url}}/images/posts/vim-bundle-vim-expand-region.gif){: .console-image }
+![Vim expand region usage](/images/posts/vim-bundle-vim-expand-region.gif){: .console-image }
 
 Using the `+` and `_` key mappings provided by vim-expand-region, you can easily
 grow and shrink a visual selection as seen above.

@@ -1,18 +1,4 @@
 @charset "UTF-8";
-html p, body p {
-  line-height: 28px; }
-
-#name {
-  font-family: "Lucida Bright", Baskerville, serif; }
-
-#container h1, #container h2, #container h3, #container h4, #container h5, #container h6 {
-  font-family: "Lucida Bright", Baskerville, serif; }
-
-#content.index ul li a {
-  font-family: "Lucida Sans", Verdana, sans-serif; }
-#content.index span.blog-post-date {
-  font-family: "Lucida Console", "Monaco", monospace; }
-
 @font-face {
   font-family: 'Mono Social Icons Font';
   src: url("MonoSocialIconsFont-1.10.eot");
@@ -99,47 +85,47 @@ footer ul#profiles:first-child {
 #wrapper .one.columns,
 .container ul.one#profiles,
 #wrapper ul.one#profiles {
-  width: 6.83333%; }
+  width: 6.8333333333%; }
 
 .container .two.columns, #wrapper .two.columns, .container ul.two#profiles, #wrapper ul.two#profiles {
-  width: 15.16667%; }
+  width: 15.1666666667%; }
 
 .container .three.columns, #wrapper .three.columns, .container ul.three#profiles, #wrapper ul.three#profiles {
   width: 23.5%; }
 
 .container .four.columns, #wrapper .four.columns, .container ul.four#profiles, #wrapper ul.four#profiles {
-  width: 31.83333%; }
+  width: 31.8333333333%; }
 
 .container .five.columns, #wrapper .five.columns, .container ul.five#profiles, #wrapper ul.five#profiles {
-  width: 40.16667%; }
+  width: 40.1666666667%; }
 
 .container .six.columns, #wrapper .six.columns, .container ul.six#profiles, #wrapper ul.six#profiles {
   width: 48.5%; }
 
 .container .seven.columns, #wrapper .seven.columns, .container ul.seven#profiles, #wrapper ul.seven#profiles {
-  width: 56.83333%; }
+  width: 56.8333333333%; }
 
 .container .eight.columns, #wrapper .eight.columns, .container ul.eight#profiles, #wrapper ul.eight#profiles {
-  width: 65.16667%; }
+  width: 65.1666666667%; }
 
 .container .nine.columns, #wrapper .nine.columns, .container ul.nine#profiles, #wrapper ul.nine#profiles {
   width: 73.5%; }
 
 .container .ten.columns, #wrapper .ten.columns, .container ul.ten#profiles, #wrapper ul.ten#profiles {
-  width: 81.83333%; }
+  width: 81.8333333333%; }
 
 .container .eleven.columns, #wrapper .eleven.columns, .container ul.eleven#profiles, #wrapper ul.eleven#profiles {
-  width: 90.16667%; }
+  width: 90.1666666667%; }
 
 .container .twelve.columns, #wrapper .twelve.columns, .container ul#profiles, #wrapper ul#profiles {
   width: 100%;
   margin-left: 0; }
 
 .container .one-third.column, #wrapper .one-third.column {
-  width: 31.83333%; }
+  width: 31.8333333333%; }
 
 .container .two-thirds.column, #wrapper .two-thirds.column {
-  width: 65.16667%; }
+  width: 65.1666666667%; }
 
 .container .one-half.column, #wrapper .one-half.column {
   width: 48.5%; }
@@ -150,46 +136,46 @@ footer ul#profiles:first-child {
 #wrapper .offset-by-one.columns,
 .container ul.offset-by-one#profiles,
 #wrapper ul.offset-by-one#profiles {
-  margin-left: 6.83333%; }
+  margin-left: 6.8333333333%; }
 
 .container .offset-by-two.column, #wrapper .offset-by-two.column {
-  margin-left: 15.16667%; }
+  margin-left: 15.1666666667%; }
 
 .container .offset-by-three.column, #wrapper .offset-by-three.column {
   margin-left: 23.5%; }
 
 .container .offset-by-four.column, #wrapper .offset-by-four.column {
-  margin-left: 31.83333%; }
+  margin-left: 31.8333333333%; }
 
 .container .offset-by-five.column, #wrapper .offset-by-five.column {
-  margin-left: 40.16667%; }
+  margin-left: 40.1666666667%; }
 
 .container .offset-by-six.column, #wrapper .offset-by-six.column {
   margin-left: 48.5%; }
 
 .container .offset-by-seven.column, #wrapper .offset-by-seven.column {
-  margin-left: 56.83333%; }
+  margin-left: 56.8333333333%; }
 
 .container .offset-by-eight.column, #wrapper .offset-by-eight.column {
-  margin-left: 65.16667%; }
+  margin-left: 65.1666666667%; }
 
 .container .offset-by-nine.column, #wrapper .offset-by-nine.column {
   margin-left: 73.5%; }
 
 .container .offset-by-ten.column, #wrapper .offset-by-ten.column {
-  margin-left: 81.83333%; }
+  margin-left: 81.8333333333%; }
 
 .container .offset-by-eleven.column, #wrapper .offset-by-eleven.column {
-  margin-left: 90.16667%; }
+  margin-left: 90.1666666667%; }
 
 .container .offset-by-one-third.column, #wrapper .offset-by-one-third.column {
-  margin-left: 31.83333%; }
+  margin-left: 31.8333333333%; }
 
 .container .offset-by-two-thirds.column, #wrapper .offset-by-two-thirds.column {
-  margin-left: 65.16667%; }
+  margin-left: 65.1666666667%; }
 
 .container .offset-by-one-half.column, #wrapper .offset-by-one-half.column {
-  margin-left: 6.83333%; }
+  margin-left: 6.8333333333%; }
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -204,8 +190,8 @@ body {
   /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
-  font-family: "Lucida Sans", Verdana, Helvetica, sans-serif;
-  color: #222222; }
+  font-family: "Lucida Sans", Verdana, sans-serif;
+  color: #111111; }
 
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -563,7 +549,8 @@ there.
 #content.blog-post h1:first-child {
   margin-bottom: 0px; }
   #content.blog-post h1:first-child a {
-    color: #222; }
+    color: #111111;
+    border: none; }
 #content.blog-post h1:first-child + h3 {
   margin-bottom: 0px; }
 #content.blog-post div.post-meta {
@@ -738,42 +725,50 @@ figure {
   margin-left: 10px;
   list-style: disc; }
 #content.page.resume h2 {
-  border-bottom: 1px dotted #b1b1b1;
   padding-bottom: 5px;
   width: 90%; }
 #content.page.resume h3 {
+  border-top: 1px solid #e1e1e1;
   margin-bottom: -5px;
   padding-bottom: 5px;
+  padding-top: 20px;
   font-size: 1.2em; }
+#content.page.resume h2 + h3 {
+  border-top: none;
+  padding-top: 5px; }
 #content.page.resume h4 {
   font-size: 1em; }
 
 html, body {
-  color: #222; }
+  color: #111111; }
+  html p, body p {
+    line-height: 28px; }
 
 body {
   background: #fff; }
 
 a {
   text-decoration: none;
-  color: #222; }
+  color: #111111; }
 
 header {
   padding-top: 25px; }
   header #name {
+    text-align: center;
+    font-family: "Lucida Bright", Baskerville, serif;
     font-variant: small-caps;
-    letter-spacing: .1em;
     font-size: 28px;
     font-weight: bold;
-    text-align: center; }
+    letter-spacing: .1em; }
   header nav {
     text-align: center;
-    margin-top: 8px; }
+    font-weight: bold;
+    margin-top: 10px; }
     header nav ul {
       font-size: 1.1em;
       list-style: none;
-      padding: 0px;
-      margin: 0 0 15px; }
+      margin: 0 0 15px;
+      padding: 0px; }
       header nav ul li {
         display: inline-block;
         padding: 0px 8px; }
@@ -781,13 +776,18 @@ header {
           padding-bottom: 7px; }
       header nav ul li.active a {
         padding-bottom: 5px;
-        border-bottom: 2px solid #444; }
+        border-bottom: 2px solid #333333; }
+      header nav ul li:first-child {
+        padding-left: 5px; }
 
+#container h1, #container h2, #container h3, #container h4, #container h5, #container h6 {
+  font-family: "Lora", "Lucida Bright", Baskerville, serif;
+  color: #111111; }
 #container a {
-  color: #217fbb;
+  color: #206ecc;
   border-bottom: 1px solid transparent; }
 #container a:hover {
-  border-bottom: 1px solid #222; }
+  border-bottom: 1px solid #111111; }
 #container a:visited {
   color: #bb7f21; }
 
@@ -798,9 +798,12 @@ header {
     border: none;
     padding-bottom: 0px; }
   #content.index ul li a {
-    color: #217fbb;
+    color: #206ecc;
     font-size: 16px;
-    letter-spacing: .03em; }
+    letter-spacing: .03em;
+    font-family: "Lucida Sans", Verdana, sans-serif; }
+#content.index span.blog-post-date {
+  font-family: "Lucida Console", "Monaco", monospace; }
 
 #content.code h3 {
   margin-top: 35px; }
@@ -813,7 +816,7 @@ header {
     margin: -20px 0px 10px; }
 
 #about-me {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #e1e1e1;
   padding-top: 30px;
   font-size: 15px; }
 
@@ -826,6 +829,6 @@ ul#profiles {
     list-style: none;
     float: left; }
   ul#profiles a {
-    color: #bbb; }
+    color: #bbbbbb; }
   ul#profiles a:hover {
-    color: #888; }
+    color: #333333; }
