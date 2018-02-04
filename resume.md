@@ -24,11 +24,6 @@ and other collaboration.
 
 #### February 2017 &ndash; Present
 
-I work in the business applications department where I help to maintain the
-stability and correctness of our partnership, financial, and billing systems.  I
-work with my team to deliver timely and accurate information for finance
-reporting and auditing.
-
 ### Software Engineer - CrowdCompass by Cvent
 
 #### January 2015 &ndash; February 2017

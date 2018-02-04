@@ -1,12 +1,4 @@
 @media (max-width: $larger-than-desktop) {
-  header {
-    nav {
-      ul li:first-child {
-        margin-left: -14px;
-      }
-    }
-  }
-
   #content.page.index {
     li {
       flex-direction: column !important;
@@ -26,6 +18,14 @@
 }
 
 @media (max-width: $larger-than-tablet) {
+  header {
+    nav {
+      ul li:first-child {
+        margin-left: -4px;
+      }
+    }
+  }
+
   body #content.blog-post {
     h1 {
       font-size: 2.8rem;
