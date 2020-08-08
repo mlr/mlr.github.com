@@ -34,10 +34,12 @@
   $primary-color: #33C3F0;
 $secondary-color: #bbbbbb;
    $border-color: #bbbbbb;
-     $link-color: #1EAEDB;
-     $font-color: #111111;
      $light-gray: #e1e1e1;
-      $dark-gray: #333333;
+           $gray: #777777;
+      $dark-gray: #252525;
+    $darker-gray: #151515;
+     $font-color: $light-gray;
+     $link-color: #0DCDDE;
 
 // Grid Variables
 $container-width: 680px;
@@ -56,7 +58,7 @@ $container-width: 680px;
 $larger-than-desktophd: 1200px;
 
 // Typography
-$font-family: "Lucida Sans", Verdana, sans-serif;
+$font-family: Verdana, sans-serif;
 
 // Misc
 $global-radius:4px;
@@ -367,7 +369,7 @@ hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   border-width: 0;
-  border-top: 1px solid $light-gray;
+  border-top: 1px dashed $gray;
 }
 
 /* Clearing

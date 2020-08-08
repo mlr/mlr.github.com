@@ -19,12 +19,12 @@ html, body {
 }
 
 body {
-  background: #fff;
+  background: $dark-gray;
 }
 
 a {
   text-decoration: none;
-  color: $font-color;
+  color: $link-color;
 }
 
 #wrapper {
@@ -38,21 +38,29 @@ header {
   #name {
     @extend .u-full-width;
     text-align: center;
-    font-family: "Lucida Bright", Baskerville, serif;
-    font-variant: small-caps;
+    font-family: "Sora", sans-serif;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 500;
     letter-spacing: .1em;
+
+    a {
+      color: $light-gray;
+    }
+
+    a:hover {
+      color: #fff;
+    }
   }
 
   nav {
     @extend .u-full-width;
     text-align: center;
-    font-weight: bold;
+    text-transform: lowercase;
+    font-weight: 700;
     margin-top: 10px;
 
     ul {
-      font-size: 1.1em;
+      font-size: 0.95em;
       list-style: none;
       text-align: center;
       padding: 0px;
@@ -62,10 +70,17 @@ header {
         margin: 0 auto;
 
         a {
-          margin-left: 15px;
+          padding: 0px 10px;
+          border-radius: 2px;
+          margin-left: 5px;
           text-align: center;
           display: block;
           padding-bottom: 4px;
+          color: $light-gray;
+        }
+
+        a:hover {
+          color: #fff;
         }
       }
 
@@ -85,12 +100,13 @@ header {
   @extend .row;
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Lora", "Lucida Bright", Baskerville, serif;
+    font-family: Sora, sans-serif;
+    font-weight: 500;
     color: $font-color;
   }
 
   a {
-    color: #206ecc;
+    color: $link-color;
     border-bottom: 1px solid transparent;
   }
 
@@ -99,13 +115,12 @@ header {
   }
 
   a:visited {
-    color: #bb7f21;
+    color: darken($link-color, 10%);
   }
 }
 
 #content.index {
   ul li {
-    border-bottom: 1px dotted $light-gray;
     padding: 3px 0 10px;
 
     &:last-child {
@@ -114,10 +129,11 @@ header {
     }
 
     a {
-      color: #206ecc;
+      color: $link-color;
       font-size: 16px;
       letter-spacing: .03em;
       font-family: $font-family;
+      padding: 5px 0 5px;
     }
   }
 
@@ -146,9 +162,9 @@ header {
 }
 
 #about-me {
-  border-top: 1px solid $light-gray;
-  padding-top: 30px;
-  font-size: 15px;
+  border-top: 1px dashed $gray;
+  padding: 20px 10px 20px 10px;
+  font-size: .9em;
 }
 
 footer {
@@ -159,8 +175,8 @@ ul#profiles {
   @extend .twelve;
   @extend .columns;
   font-size: 42px;
-  margin-top: -45px;
-  margin-left: -15px !important;
+  margin-top: -50px;
+  margin-left: -5px !important;
 
   li {
     margin-right: 15px;
@@ -169,5 +185,5 @@ ul#profiles {
   }
 
   a { color: $border-color; }
-  a:hover { color: $dark-gray; }
+  a:hover { color: $light-gray; }
 }

@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<div id="wrapper">
+<div id="wrapper"{% if page.name %} class="{{ page.name | split: '.' | first }}"{% endif %}>
   <header>
     <div id="name"><a href="/">Ronnie Miller</a></div>
     <nav>
