@@ -1,18 +1,49 @@
+#wrapper.resume {
+  header, #about-me, footer {
+    display: none;
+  }
+}
+
 #content.page.resume {
+  font-size: 0.95em;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
   p {
-    width: 97%;
+    width: 92.2%;
+  }
+
+  div#contact-info + p {
+    margin-bottom: 40px;
+  }
+
+  #name {
+    h1 {
+      margin-top: 0px;
+      margin-bottom: 5px;
+    }
+
+    a {
+      color: $font-color;
+    }
   }
 
   #contact-info {
-    ul {
-      text-align: center;
+    font-size: 1.1em;
+
+    ol {
       padding: 0px;
       margin: 0px;
       margin-bottom: 25px;
 
       li {
+        margin-left: 0px;
         list-style: none;
       }
+    }
+
+    a {
+      font-size: 0.9em;
     }
   }
 
@@ -21,13 +52,17 @@
     list-style: disc;
   }
 
+  ul li a {
+    color: $font-color;
+  }
+
   h2 {
     padding-bottom: 5px;
     width: 90%;
   }
 
   h3 {
-    border-top: 1px solid $light-gray;
+    border-top: 1px dashed $gray;
     margin-bottom: -5px;
     padding-bottom: 5px;
     padding-top: 20px;
@@ -41,5 +76,6 @@
 
   h4 {
     font-size: 1em;
+    color: $gray;
   }
 }

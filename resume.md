@@ -3,29 +3,43 @@ title: Resume
 permalink: /resume/index.html
 ---
 
-<div id="contact-info">
-  <ul>
-    <li><a href="https://linkedin.com/in/ronniemlr">linkedin.com/in/ronniemlr</a></li>
-    <li><a href="https://github.com/mlr">github.com/mlr</a></li>
-  </ul>
+<div id="name">
+  <h1><a href="/">Ronnie Miller</a></h1>
 </div>
 
-## About
+<div id="contact-info">
+  <ol>
+    <li><a href="https://github.com/mlr">github.com/mlr</a></li>
+    <li><a href="https://linkedin.com/in/ronniemlr">linkedin.com/in/ronniemlr</a></li>
+  </ol>
+</div>
 
-I am a highly experienced software engineer and teacher-at-heart. I utilize over
-a decade of programming knowledge and experience to create powerful web-based
-software tools. My goal is to build great software with a talented team, to
-learn and improve my craft and to share knowledge through pairing
-and other collaboration.
+I am a software engineer with over 13 years of experience in a broad range of problem domains.
+I combine a product&#8209;focused mindset with deep technical experience to find creative solutions that delight customers.
+I seek to amplify my impact and level up those around me through pairing, workshops and other mentoring opportunities.
+I instinctively act as a voice for the user in planning and decision making.
 
 ## Work Experience
 
-### Software Engineer - New Relic, Inc.
+### Senior Software Engineer - New Relic, Inc.
+#### January 2019 &ndash; Present
 
-#### February 2017 &ndash; Present
+* Collaborate to design and build systems for usage rating and cost estimation
+* Instrument and improve resiliency of consumption data transmission systems
+* Mentor through pairing, leading technical workshops, and organizing [game days](https://blog.newrelic.com/engineering/how-to-run-a-game-day/)
+* Help form strategically critical team in complex environment with turbulent priorities
+
+### Software Engineer - New Relic, Inc.
+#### February 2017 &ndash; January 2019
+
+* Help drive efforts to extract legacy subscription billing to vendor platform
+* Configure and manage Kafka producers for distributing platform data
+* Design, develop and maintain platform REST and GraphQL APIs
+* Onboard and mentor engineers through pairing and workshops
+* Improve security and access control of internal systems and tools
+* Lead automation efforts to reduce repetition and team toil
 
 ### Software Engineer - CrowdCompass by Cvent
-
 #### January 2015 &ndash; February 2017
 
 I work closely with our product, quality and operations teams to build features
@@ -40,7 +54,6 @@ decisions.
 * Served as a Technical Lead of the backend platforms team.
 
 ### Software Engineer - Advanced Industrial Services
-
 #### August 2012 &ndash; September 2014
 
 I collaborate with the President, CTO and Operations Managers to develop
@@ -48,7 +61,6 @@ internal software tools to standardize and improve internal project scheduling,
 fleet management and GPS tracking, project data collection and reporting, and more.
 
 ### Software Developer - Freelance
-
 #### May 2008 &ndash; December 2015
 
 As a freelance software developer and consultant I am directly involved in every stage
@@ -64,7 +76,6 @@ PSD to markup conversion; JavaScript and many of its frameworks such as React an
 jQuery, jQuery UI, and more.
 
 ### Web Developer - The Marcom Group
-
 #### October 2007 &ndash; May 2010
 
 * Converted PSDs to HTML/CSS
@@ -80,7 +91,6 @@ jQuery, jQuery UI, and more.
 ## Education
 
 ### B.S. in Computer Information Systems, Business Administration
-
 #### California State University-Chico - August 2008 &ndash; May 2012
 
 * Studied wide range of languages; Assembly, C, C++, Java, Python, Obj-C and Ruby

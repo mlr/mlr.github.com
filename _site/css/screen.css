@@ -715,32 +715,53 @@ figure {
   code {
     word-wrap: nowrap !important;
     display: inline-block; } }
-#content.page.resume p {
-  width: 97%; }
-#content.page.resume #contact-info ul {
-  text-align: center;
-  padding: 0px;
-  margin: 0px;
-  margin-bottom: 25px; }
-  #content.page.resume #contact-info ul li {
-    list-style: none; }
-#content.page.resume ul li {
-  margin-left: 10px;
-  list-style: disc; }
-#content.page.resume h2 {
-  padding-bottom: 5px;
-  width: 90%; }
-#content.page.resume h3 {
-  border-top: 1px solid #e1e1e1;
-  margin-bottom: -5px;
-  padding-bottom: 5px;
-  padding-top: 20px;
-  font-size: 1.2em; }
-#content.page.resume h2 + h3 {
-  border-top: none;
-  padding-top: 5px; }
-#content.page.resume h4 {
-  font-size: 1em; }
+#wrapper.resume header, #wrapper.resume #about-me, #wrapper.resume footer {
+  display: none; }
+
+#content.page.resume {
+  font-size: 0.95em;
+  margin-top: 50px;
+  margin-bottom: 50px; }
+  #content.page.resume p {
+    width: 92.2%; }
+  #content.page.resume div#contact-info + p {
+    margin-bottom: 40px; }
+  #content.page.resume #name h1 {
+    margin-top: 0px;
+    margin-bottom: 5px; }
+  #content.page.resume #name a {
+    color: #e1e1e1; }
+  #content.page.resume #contact-info {
+    font-size: 1.1em; }
+    #content.page.resume #contact-info ol {
+      padding: 0px;
+      margin: 0px;
+      margin-bottom: 25px; }
+      #content.page.resume #contact-info ol li {
+        margin-left: 0px;
+        list-style: none; }
+    #content.page.resume #contact-info a {
+      font-size: 0.9em; }
+  #content.page.resume ul li {
+    margin-left: 10px;
+    list-style: disc; }
+  #content.page.resume ul li a {
+    color: #e1e1e1; }
+  #content.page.resume h2 {
+    padding-bottom: 5px;
+    width: 90%; }
+  #content.page.resume h3 {
+    border-top: 1px dashed #777777;
+    margin-bottom: -5px;
+    padding-bottom: 5px;
+    padding-top: 20px;
+    font-size: 1.2em; }
+  #content.page.resume h2 + h3 {
+    border-top: none;
+    padding-top: 5px; }
+  #content.page.resume h4 {
+    font-size: 1em;
+    color: #777777; }
 
 html, body {
   color: #e1e1e1; }
