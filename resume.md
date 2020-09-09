@@ -50,38 +50,25 @@ I instinctively act as a voice for the user in planning and decision making.
 ### Software Engineer - CrowdCompass by Cvent
 #### January 2015 &ndash; February 2017
 
-I work closely with our product, quality and operations teams to build features
-that are both technically efficient and backward compatible while also providing
-a great experience for our users. I also help mentor other team members and
-interns, participate in code reviews and provide feedback on architectural
-decisions.
-
-* Reduced costs by migrating third-party dependencies to AWS equivalents.
-* Built REST microservices for custom email templating and delivery.
-* Mentored several interns and on-boarded new developers.
-* Served as a Technical Lead of the backend platforms team.
+* Reduced costs by migrating third-party dependencies to AWS equivalents
+* Built REST microservices for custom email templating and delivery
+* Mentored several interns and on-boarded new developers
+* Served as a Technical Lead of the backend platforms team
 
 ### Software Engineer - Advanced Industrial Services
 #### August 2012 &ndash; September 2014
 
-I collaborate with the President, CTO and Operations Managers to develop
-internal software tools to standardize and improve internal project scheduling,
-fleet management and GPS tracking, project data collection and reporting, and more.
+* Collaborated with stakeholders throughout the company including President, CTO, Operations Managers, and Field Technicians
+* Developed internal software tools to streamline billing management, project scheduling, and fleet tracking
+* Leveraged Twilio to create unique telephone survey and employee trainings
 
 ### Software Developer - Freelance
 #### May 2008 &ndash; December 2015
 
-As a freelance software developer and consultant I am directly involved in every stage
-of web and software products; from RFPs, to initial concepts, to information gathering,
-to design, development, launch, and maintenance.
-
-My typical tools include Ruby/Ruby on Rails and PostgreSQL; however, I continually expand
-my skill set to provide the best solutions for any given project. I have many years of
-experience with PHP and its frameworks, so I leverage those tools when needed.
-
-I'm also very skilled in front-end technologies: HTML5 & CSS3 including pixel perfect
-PSD to markup conversion; JavaScript and many of its frameworks such as React and
-jQuery, jQuery UI, and more.
+* Created response to RFPs, statements of work, and proofs of concept to secure bids
+* Built web and mobile software using primarily Ruby on Rails and React
+* Helped migrate existing and legacy websites to new applications
+* Deployed and managed infrastructure for clients and customers
 
 ### Web Developer - The Marcom Group
 #### October 2007 &ndash; May 2010
