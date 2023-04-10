@@ -110,9 +110,30 @@
     background: #777;
   }
 
+  // These aren't great
   &.rails-conf-2015 {
     p img {
       border: none;
+    }
+  }
+
+  &.transitioning-to-notebook-style-format img {
+    box-shadow: 0 0 15px 3px rgba(70, 70, 70, 0.95);
+    outline: 2px solid #ccc;
+    shape-outside: ellipse(28% 58% at 110px 175px);
+    border-bottom-left-radius: 25% 100%;
+    border-bottom-right-radius: 25% 100%;
+    border-top-left-radius: 25% 100%;
+    border-top-right-radius: 25% 100%;
+    max-height: 400px;
+    margin: 15px 0px 40px 80px;
+    float: right;
+  }
+
+  @media (max-width: $larger-than-phablet) {
+    &.transitioning-to-notebook-style-format img {
+      float: none;
+      margin: 30px auto;
     }
   }
 
