@@ -14,15 +14,33 @@ permalink: /resume/index.html
   </ol>
 </div>
 
-I am a software engineer with over 13 years of experience in a broad range of problem domains.
+I am a software engineer with over 16 years of experience in a broad range of problem domains.
 I combine a product&#8209;focused mindset with deep technical experience to find creative solutions that delight customers.
-I seek to amplify my impact and level up those around me through pairing, workshops and other mentoring opportunities.
 I instinctively act as a voice for the user in planning and decision making.
+I am most satisfied when I can deploy technology and a pragmatic approach to solve real world problems for real people.
 
 ## Work Experience
 
+### Staff Developer, Technical Officer - KABI, LLC.
+#### April 2022 &ndash; Present
+
+* Expand product offerings including texting, voice, and partner integrations
+* Influence product &amp; engineering roadmap and company strategy
+* Define and improve product delivery and IT processes
+* Operationalize third-party integration support
+
+### Managing Software Engineer - DataStax
+#### November 2020 - April 2022
+
+* Coach for Frontend engineering team (Nov ‘20 - Sept ‘21)
+* Coach for Stargate team, leading Stargate OSS project (Sept ‘21 - April ‘22)
+* Interpret company vision and product requirements into understandable, executable work
+* Coordinate and unblock development across multiple different functional teams
+* Work with team members to define and measure career development and growth goals
+* Represent the team to stakeholders including executive leadership, product, design and others
+
 ### Senior Software Engineer - New Relic, Inc.
-#### January 2019 &ndash; Present
+#### January 2019 &ndash; November 2020
 
 * Collaborate to design and build systems for usage rating and cost estimation
 * Instrument and improve resiliency of consumption data transmission systems
@@ -40,7 +58,7 @@ I instinctively act as a voice for the user in planning and decision making.
 * Lead automation efforts to reduce repetition and team toil
 
 ### Lead Developer, Technical Officer - KABI, LLC.
-#### October 2015 &ndash; Present; Part-time
+#### October 2015 &ndash; April 2022; Part-time
 
 * Responsible for technical design and development of patented SaaS products for the automotive industry
 * Manage infrastructure for mission critical SaaS products used by auto dealerships nationwide

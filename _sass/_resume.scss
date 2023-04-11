@@ -10,7 +10,7 @@
   margin-bottom: 50px;
 
   p {
-    width: 92.2%;
+    width: 100%;
   }
 
   div#contact-info + p {
@@ -45,6 +45,10 @@
     a {
       font-size: 0.9em;
     }
+  }
+
+  ul {
+    width: 92%;
   }
 
   ul li {
