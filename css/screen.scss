@@ -117,6 +117,12 @@ header {
   a:visited {
     color: darken($link-color, 10%);
   }
+
+  h1, h2, h3 {
+    a {
+      color: $font-color;
+    }
+  }
 }
 
 #content.index {
@@ -142,7 +148,7 @@ header {
   }
 }
 
-#content.code {
+#content.work {
   h3 {
     margin-top: 35px;
 
@@ -158,6 +164,11 @@ header {
       float: left;
       margin: -20px 0px 10px;
     }
+  }
+
+  ul li {
+    list-style: circle;
+    margin-left: 25px;
   }
 }
 

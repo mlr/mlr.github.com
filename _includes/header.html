@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en">
 <head>
 {% include head.html %}
 </head>
@@ -11,7 +11,7 @@
     <nav>
       <ul>
         <li{% if page.url == '/index.html' or page.url contains '/201' %} class="active"{% endif %}><a href="/">Notes</a></li>
-        <li{% if page.url contains '/code/'   %} class="active"{% endif %}><a href="/code">Work</a></li>
+        <li{% if page.url contains '/work/'   %} class="active"{% endif %}><a href="/work">Work</a></li>
         <li{% if page.url contains '/resume/' %} class="active"{% endif %}><a href="/resume">Resume</a></li>
       </ul>
     </nav>

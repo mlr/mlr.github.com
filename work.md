@@ -1,6 +1,6 @@
 ---
-title: Code
-permalink: /code/index.html
+title: Work
+permalink: /work/index.html
 ---
 
 ### WorksTiming
