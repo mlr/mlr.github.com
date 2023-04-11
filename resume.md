@@ -24,6 +24,8 @@ I am most satisfied when I can deploy technology and a pragmatic approach to sol
 ### Staff Developer, Technical Officer - KABI, LLC.
 #### April 2022 &ndash; Present
 
+* Responsible for technical design and development of patented, automotive&#8209;focused software as a service products
+* Manage infrastructure for mission critical SaaS products used by automotive dealerships nationwide
 * Expand product offerings including texting, voice, and partner integrations
 * Influence product &amp; engineering roadmap and company strategy
 * Define and improve product delivery and IT processes
@@ -56,14 +58,6 @@ I am most satisfied when I can deploy technology and a pragmatic approach to sol
 * Onboard and mentor engineers through pairing and workshops
 * Improve security and access control of internal systems and tools
 * Lead automation efforts to reduce repetition and team toil
-
-### Lead Developer, Technical Officer - KABI, LLC.
-#### October 2015 &ndash; April 2022; Part-time
-
-* Responsible for technical design and development of patented SaaS products for the automotive industry
-* Manage infrastructure for mission critical SaaS products used by auto dealerships nationwide
-* Help coordinate development of intersecting technical projects driven by a small team of engineers
-* Contribute to the overall product direction balancing customer feedback and business goals
 
 ### Software Engineer - CrowdCompass by Cvent
 #### January 2015 &ndash; February 2017
