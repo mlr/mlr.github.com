@@ -24,6 +24,7 @@ jobs:
         pip3 install awscli s3cmd
     - name: Deploy to S3
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        S3_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        S3_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        CLOUD_FRONT_ID: ${{ secrets.CLOUD_FRONT_ID }}
       run: bundle exec rake deploy
