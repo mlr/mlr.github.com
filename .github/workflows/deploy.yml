@@ -1,0 +1,25 @@
+name: Deploy to S3
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby environment
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.4 # Replace with the version used in your project
+    - name: Install dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y python3-pip
+        gem install bundler
+        bundle install
+        pip3 install awscli s3cmd
+    - name: Deploy to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: bundle exec rake deploy
