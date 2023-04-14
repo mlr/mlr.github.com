@@ -76,14 +76,6 @@ table.highlighttable, .highlight, .highlight pre {
 figure {
   margin: 0px;
 
-  figcaption {
-    margin: -5px 0 -10px;
-    font-size: 1.35rem;
-
-    font-family: Consolas, monospace;
-    color: #888;
-  }
-
   code {
     table {
       margin-bottom: 0px;
@@ -120,6 +112,14 @@ figure {
       content: "\A";
     }
   }
+}
+
+figcaption {
+  margin: -5px 0 -10px;
+  font-size: 1.35rem;
+
+  font-family: Consolas, monospace;
+  color: #888;
 }
 
 @media (max-width: $larger-than-tablet) {
