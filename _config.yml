@@ -8,6 +8,8 @@ author:
   uri: http://ronniemlr.com
 permalink: pretty
 redirects: yes
+feed:
+  path: atom.xml
 plugins:
   - jekyll-emoji
   - jekyll-feed
