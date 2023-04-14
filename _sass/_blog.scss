@@ -103,6 +103,10 @@
     &.smaller {
       width: 75%;
     }
+
+    &.borderless {
+      border: none;
+    }
   }
 
   p img.console-image  {

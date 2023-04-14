@@ -11,7 +11,7 @@ jobs:
     - name: Set up Ruby environment
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.4 # Replace with the version used in your project
+        ruby-version: 2.7.6
     - name: Install dependencies
       run: |
         sudo apt-get update && sudo apt-get install -y python3-pip
