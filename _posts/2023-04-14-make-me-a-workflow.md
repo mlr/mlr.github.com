@@ -129,7 +129,7 @@ Update: Yes, It did!
 
 Changed:
 
-* Bumped checkout to `actions/checkout@v2`
+* Bumped checkout to `actions/checkout@v3`
 * Switched to compatible Java version
 * Added Cloudfront ID to secrets
 
