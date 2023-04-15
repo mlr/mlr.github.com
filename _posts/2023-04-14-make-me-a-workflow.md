@@ -108,7 +108,7 @@ deployment script requires. These environment variables are stored as secrets in
 Github, so they're not exposed in the Github Actions file.
 ````
 
-# Literally, the only thing I had to do:
+## One thing before running, even left a comment
 
 ```text
 - ruby-version: 2.7.4 # Replace with the version used in your project
@@ -119,8 +119,20 @@ Github, so they're not exposed in the Github Actions file.
 
 Thanks GPT.
 
+Did it work? Stay tuned.
+
 <pre>
 *    *     *     *     *
 </pre>
 
-Did it work? Stay tuned.
+Update: Yes, It did!
+
+Changed:
+
+* Bumped checkout to `actions/checkout@v2`
+* Switched to compatible Java version
+* Added Cloudfront ID to secrets
+
+Don't forget to:
+
+* Add environment secrets to Github repo secrets
