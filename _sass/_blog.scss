@@ -83,9 +83,20 @@
     color: #888;
 
     & > div {
-      display: inline;
+      // display: inline;
       margin-top: 5px;
-      float: left;
+      // float: left;
+    }
+
+    div.post-tags {
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          margin: 0;
+          display: inline-block;
+        }
+      }
     }
   }
 
