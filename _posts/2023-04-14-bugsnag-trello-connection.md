@@ -10,7 +10,7 @@ Anyway, after frustrating trial and error, I finally managed to figure out the s
 
 Here they are:
 
-1. Create or visit your Trello Power-Ups](https://trello.com/power-ups/admin/) admin page.
+1. Create or visit your [Trello Power-Ups](https://trello.com/power-ups/admin/) admin page.
 
     ![Visit Power-ups Page](/images/posts/bugsnag-trello/visit-power-ups.png){: .console-image.center }
 
