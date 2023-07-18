@@ -3,3 +3,4 @@
 .agignore
 .env
 _site
+node_modules
