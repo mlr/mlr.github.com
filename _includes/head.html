@@ -1,10 +1,10 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta http-equiv="content-language" content="en-us" />
   <meta name="robots" content="index, follow" />
-  <meta name="description" content="{{ site.description }}" />
-  <meta name="keywords" content="{{ site.keywords }}" />
+  <meta name="description" content="{% if page.description %}{{ page.description | strip_newlines }} - {% endif %}{{ site.description }}" />
+  <meta name="keywords" content="{% if page.keywords %}{{ page.keywords | strip_newlines }}, {% endif %}{{ site.keywords }}" />
   <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}Ronnie Miller - Software Developer">
-  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description | strip_newlines }} - {% endif %}{{ site.description }}">
   <meta property="og:image" content="https://ronniemlr.com/images/me.jpg">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{% if page.title %}{{ page.title }} - {% endif %}Ronnie Miller - Software Developer</title>
